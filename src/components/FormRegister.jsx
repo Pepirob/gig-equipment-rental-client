@@ -32,7 +32,13 @@ function FormRegister() {
     <>
       <form>
         <label htmlFor="email">Email</label>
-        <input type="email" name="email" value={email} onChange={handleInput} />
+        <input
+          type="email"
+          name="email"
+          value={email}
+          onChange={handleInput}
+          autoComplete="email"
+        />
         <br />
         <br />
         <label htmlFor="username">Username</label>
@@ -41,6 +47,7 @@ function FormRegister() {
           name="username"
           value={userName}
           onChange={handleInput}
+          autoComplete="username"
         />
         <br />
         <br />
@@ -60,6 +67,7 @@ function FormRegister() {
           pattern="^\+[1-9]\d{1,14}$"
           value={phoneNumber}
           onChange={handleInput}
+          autoComplete="tel"
         />
         <br />
         <br />
@@ -69,6 +77,7 @@ function FormRegister() {
           name="password"
           value={password}
           onChange={handleInput}
+          autoComplete="new-password"
         />
         <br />
         <br />
