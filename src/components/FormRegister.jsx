@@ -9,6 +9,8 @@ function FormRegister() {
   const [location, setLocation] = useState("");
   const [phoneNumber, setPhoneNumber] = useState("");
   const [password, setPassword] = useState("");
+  const [isFetching, setIsFetching] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
 
   const handleInput = (event) => {
     const value = event.target.value;
@@ -35,10 +37,15 @@ function FormRegister() {
     event.preventDefault();
 
     try {
+      setIsFetching(true);
+
       await signupService({ email, username, location, phoneNumber, password });
+
+      setIsFetching(false);
       redirect("/");
     } catch (error) {
-      console.log(error);
+      setIsFetching(false);
+      setErrorMessage(error.response.data.errorMessage);
     }
   };
 
@@ -95,7 +102,10 @@ function FormRegister() {
         />
         <br />
         <br />
-        <button onClick={handleSubmit}>SUBMIT</button>
+        {errorMessage.length ? <p>{errorMessage}</p> : null}
+        <button onClick={handleSubmit} disabled={isFetching}>
+          SUBMIT
+        </button>
       </form>
     </>
   );
