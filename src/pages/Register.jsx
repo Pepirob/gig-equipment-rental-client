@@ -1,14 +1,14 @@
 import Navigation from "../components/Navigation";
 
-function Home() {
+function Register() {
   return (
     <>
       <header>
         <Navigation />
       </header>
-      <main>Home</main>
+      <main>Register</main>
     </>
   );
 }
 
-export default Home;
+export default Register;
