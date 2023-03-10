@@ -6,6 +6,7 @@ import Error from "./pages/errors/Error";
 import NotFound from "./pages/errors/NotFound";
 import Login from "./pages/auth/Login";
 import Dashboard from "./pages/Dashboard";
+import IsPrivate from "./hoc/isPrivate";
 
 function App() {
   return (
@@ -14,7 +15,14 @@ function App() {
         <Route path="/" element={<Home />} />
         <Route path="/register" element={<Register />} />
         <Route path="/login" element={<Login />} />
-        <Route path="/dashboard" element={<Dashboard />} />
+        <Route
+          path="/dashboard"
+          element={
+            <IsPrivate>
+              <Dashboard />
+            </IsPrivate>
+          }
+        />
 
         <Route path="/error" element={<Error />} />
         <Route path="*" element={<NotFound />} />
