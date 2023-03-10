@@ -1,5 +1,5 @@
-import FormRegister from "../components/FormRegister";
-import Navigation from "../components/Navigation";
+import FormRegister from "../../components/FormRegister";
+import Navigation from "../../components/Navigation";
 
 function Register() {
   return (

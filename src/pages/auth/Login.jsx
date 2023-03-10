@@ -1,5 +1,5 @@
-import Navigation from "../components/Navigation";
-import FormLogin from "../components/FormLogin";
+import Navigation from "../../components/Navigation";
+import FormLogin from "../../components/FormLogin";
 
 function Login() {
   return (
