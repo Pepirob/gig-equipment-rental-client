@@ -104,7 +104,7 @@ function FormRegister() {
         <br />
         {errorMessage.length ? <p>{errorMessage}</p> : null}
         <button onClick={handleSubmit} disabled={isFetching}>
-          SUBMIT
+          SIGNUP
         </button>
       </form>
     </>

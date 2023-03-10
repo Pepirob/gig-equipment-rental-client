@@ -4,4 +4,8 @@ const signupService = (newUser) => {
   return service.post("/auth/signup", newUser);
 };
 
-export { signupService };
+const loginService = (credentials) => {
+  return service.post("/auth/login", credentials);
+};
+
+export { signupService, loginService };

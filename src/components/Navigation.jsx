@@ -9,6 +9,9 @@ function Navigation() {
       <Link style={{ marginRight: "1rem" }} to="/register">
         Register
       </Link>
+      <Link style={{ marginRight: "1rem" }} to="/login">
+        Login
+      </Link>
     </nav>
   );
 }
