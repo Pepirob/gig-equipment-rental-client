@@ -8,4 +8,8 @@ const loginService = (credentials) => {
   return service.post("/auth/login", credentials);
 };
 
-export { signupService, loginService };
+const verifyService = () => {
+  return service.get("/auth/verify");
+};
+
+export { signupService, loginService, verifyService };

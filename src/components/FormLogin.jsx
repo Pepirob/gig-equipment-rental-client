@@ -1,7 +1,12 @@
-import { useState } from "react";
+import { useState, useContext } from "react";
+import { useNavigate } from "react-router-dom";
+import { AuthContext } from "../context/auth.context";
 import { loginService } from "../services/auth.services";
 
 function FormLogin() {
+  const redirect = useNavigate();
+
+  const { authenticateUser } = useContext(AuthContext);
   const [identifier, setIdentifier] = useState("");
   const [password, setPassword] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
@@ -15,14 +20,28 @@ function FormLogin() {
     }
   };
 
-  const handleSubmit = async () => {
+  const handleLogin = async (event) => {
+    event.preventDefault();
+
     try {
       setIsFetching(true);
-      await loginService({ identifier, password });
+      const response = await loginService({ identifier, password });
+
+      localStorage.setItem("authToken", response.data.authToken);
+
+      authenticateUser();
+
       setIsFetching(false);
+      redirect("/");
     } catch (error) {
       setIsFetching(false);
-      setErrorMessage(error.response.data.errorMessage);
+
+      if (error.response.status === 400) {
+        // mostramos al usuario como solventar el problema
+        setErrorMessage(error.response.data.errorMessage);
+      } else {
+        redirect("/error");
+      }
     }
   };
   return (
@@ -50,7 +69,7 @@ function FormLogin() {
         <br />
 
         {errorMessage.length ? <p>{errorMessage}</p> : null}
-        <button onClick={handleSubmit} disabled={isFetching}>
+        <button onClick={handleLogin} disabled={isFetching}>
           LOGIN
         </button>
       </form>
