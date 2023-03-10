@@ -1,7 +1,10 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { signupService } from "../services/auth.services";
 
 function FormRegister() {
-  const [userName, setUserName] = useState("");
+  const redirect = useNavigate();
+  const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [location, setLocation] = useState("");
   const [phoneNumber, setPhoneNumber] = useState("");
@@ -14,7 +17,7 @@ function FormRegister() {
         setEmail(value);
         break;
       case "username":
-        setUserName(value);
+        setUsername(value);
         break;
       case "location":
         setLocation(value);
@@ -25,6 +28,17 @@ function FormRegister() {
       case "password":
         setPassword(value);
         break;
+    }
+  };
+
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+
+    try {
+      await signupService({ email, username, location, phoneNumber, password });
+      redirect("/");
+    } catch (error) {
+      console.log(error);
     }
   };
 
@@ -41,11 +55,11 @@ function FormRegister() {
         />
         <br />
         <br />
-        <label htmlFor="username">Username</label>
+        <label htmlFor="username">username</label>
         <input
           type="text"
           name="username"
-          value={userName}
+          value={username}
           onChange={handleInput}
           autoComplete="username"
         />
@@ -81,6 +95,7 @@ function FormRegister() {
         />
         <br />
         <br />
+        <button onClick={handleSubmit}>SUBMIT</button>
       </form>
     </>
   );
