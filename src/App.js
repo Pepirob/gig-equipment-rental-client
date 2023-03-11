@@ -7,6 +7,7 @@ import NotFound from "./pages/errors/NotFound";
 import Login from "./pages/auth/Login";
 import Dashboard from "./pages/Dashboard";
 import IsPrivate from "./hoc/isPrivate";
+import Profile from "./pages/Profile";
 
 function App() {
   return (
@@ -23,6 +24,7 @@ function App() {
             </IsPrivate>
           }
         />
+        <Route path="/profile" element={<Profile />} />
 
         <Route path="/error" element={<Error />} />
         <Route path="*" element={<NotFound />} />
