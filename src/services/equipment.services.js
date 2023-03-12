@@ -8,4 +8,8 @@ const equipmentDetailsService = (equipmentId) => {
   return service.get(`/equipment/${equipmentId}`);
 };
 
-export { myEquipmentService, equipmentDetailsService };
+const updateEquipmentService = (equipmentId, body) => {
+  return service.get(`equipment/${equipmentId}`, body);
+};
+
+export { myEquipmentService, equipmentDetailsService, updateEquipmentService };
