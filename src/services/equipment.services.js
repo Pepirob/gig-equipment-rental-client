@@ -9,7 +9,7 @@ const equipmentDetailsService = (equipmentId) => {
 };
 
 const updateEquipmentService = (equipmentId, body) => {
-  return service.get(`equipment/${equipmentId}`, body);
+  return service.patch(`equipment/${equipmentId}`, body);
 };
 
 export { myEquipmentService, equipmentDetailsService, updateEquipmentService };
