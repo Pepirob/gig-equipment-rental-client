@@ -2,7 +2,7 @@ import React, { useContext } from "react";
 import { Link } from "react-router-dom";
 import { AuthContext } from "../context/auth.context";
 
-function DetailsEquipment({ equipment }) {
+function SheetEquipment({ equipment }) {
   const { loggedUser } = useContext(AuthContext);
 
   return (
@@ -30,4 +30,4 @@ function DetailsEquipment({ equipment }) {
   );
 }
 
-export default DetailsEquipment;
+export default SheetEquipment;

@@ -8,7 +8,7 @@ import Login from "./pages/auth/Login";
 import Dashboard from "./pages/Dashboard";
 import IsPrivate from "./hoc/isPrivate";
 import MyEquipment from "./pages/MyEquipment";
-import Equipment from "./pages/Equipment";
+import EquipmentDetails from "./pages/EquipmentDetails";
 import Profile from "./pages/Profile";
 import ProfileEdit from "./pages/ProfileEdit";
 import EquipmentEdit from "./pages/EquipmentEdit";
@@ -52,7 +52,7 @@ function App() {
             </IsPrivate>
           }
         />
-        <Route path="/equipment/:equipmentId" element={<Equipment />} />
+        <Route path="/equipment/:equipmentId" element={<EquipmentDetails />} />
         <Route
           path="/equipment/:equipmentId/edit"
           element={
