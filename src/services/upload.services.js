@@ -3,4 +3,6 @@ import service from "./config.services";
 const uploadEquipmentImgService = (img) =>
   service.post("/upload/equipmentImg", img);
 
-export { uploadEquipmentImgService };
+const uploadUserImgService = (img) => service.post("/upload/userImg", img);
+
+export { uploadUserImgService, uploadEquipmentImgService };

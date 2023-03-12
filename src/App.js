@@ -9,6 +9,8 @@ import Dashboard from "./pages/Dashboard";
 import IsPrivate from "./hoc/isPrivate";
 import MyEquipment from "./pages/MyEquipment";
 import Equipment from "./pages/Equipment";
+import Profile from "./pages/Profile";
+import ProfileEdit from "./pages/ProfileEdit";
 
 function App() {
   return (
@@ -25,10 +27,25 @@ function App() {
             </IsPrivate>
           }
         />
+        <Route
+          path="/profile"
+          element={
+            <IsPrivate>
+              <Profile />
+            </IsPrivate>
+          }
+        />
+        <Route
+          path="/profile/edit"
+          element={
+            <IsPrivate>
+              <ProfileEdit />
+            </IsPrivate>
+          }
+        />
         <Route path="/my-equipment" element={<MyEquipment />} />
         <Route path="/equipment/:equipmentId" element={<Equipment />} />
 
-        {/* error paths */}
         <Route path="/error" element={<Error />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
