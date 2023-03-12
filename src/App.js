@@ -7,8 +7,8 @@ import NotFound from "./pages/errors/NotFound";
 import Login from "./pages/auth/Login";
 import Dashboard from "./pages/Dashboard";
 import IsPrivate from "./hoc/isPrivate";
-import ListEquipment from "./pages/ListEquipment";
-import EquipmentDetails from "./pages/EquipmentDetails";
+import MyEquipment from "./pages/MyEquipment";
+import Equipment from "./pages/Equipment";
 
 function App() {
   return (
@@ -25,8 +25,8 @@ function App() {
             </IsPrivate>
           }
         />
-        <Route path="/my-equipment" element={<ListEquipment />} />
-        <Route path="/equipment/:equipmentId" element={<EquipmentDetails />} />
+        <Route path="/my-equipment" element={<MyEquipment />} />
+        <Route path="/equipment/:equipmentId" element={<Equipment />} />
 
         {/* error paths */}
         <Route path="/error" element={<Error />} />
