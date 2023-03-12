@@ -24,9 +24,7 @@ function SheetEquipment({ equipment }) {
         <>
           <Link to={`/equipment/${equipment._id}/edit`}>Edit</Link>
         </>
-      ) : (
-        <Link>Rent</Link>
-      )}
+      ) : null}
     </>
   );
 }
