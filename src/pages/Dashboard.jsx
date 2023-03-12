@@ -22,6 +22,7 @@ function Dashboard() {
       </header>
       <main>
         <h1>Dashboard</h1>
+        <Link to="/my-equipment">Equipment</Link>
         <section>
           <Link to="/profile">Profile</Link>
         </section>

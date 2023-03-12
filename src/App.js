@@ -7,8 +7,11 @@ import NotFound from "./pages/errors/NotFound";
 import Login from "./pages/auth/Login";
 import Dashboard from "./pages/Dashboard";
 import IsPrivate from "./hoc/isPrivate";
+import MyEquipment from "./pages/MyEquipment";
+import Equipment from "./pages/Equipment";
 import Profile from "./pages/Profile";
 import ProfileEdit from "./pages/ProfileEdit";
+import EquipmentEdit from "./pages/EquipmentEdit";
 
 function App() {
   return (
@@ -38,6 +41,23 @@ function App() {
           element={
             <IsPrivate>
               <ProfileEdit />
+            </IsPrivate>
+          }
+        />
+        <Route
+          path="/my-equipment"
+          element={
+            <IsPrivate>
+              <MyEquipment />
+            </IsPrivate>
+          }
+        />
+        <Route path="/equipment/:equipmentId" element={<Equipment />} />
+        <Route
+          path="/equipment/:equipmentId/edit"
+          element={
+            <IsPrivate>
+              <EquipmentEdit />
             </IsPrivate>
           }
         />
