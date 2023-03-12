@@ -27,7 +27,7 @@ function EquipmentEdit() {
   return (
     <>
       <header>
-        <Link to="">Back</Link>
+        <Link to={`/equipment/${equipmentId}`}>Back</Link>
       </header>
       <main>
         {isFetching ? (
