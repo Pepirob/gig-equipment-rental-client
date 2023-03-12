@@ -4,8 +4,8 @@ const myEquipmentService = () => {
   return service.get("/equipment/my-equipment");
 };
 
-const equipmentDetailsService = (equipId) => {
-  return service.get(`/equipment/${equipId}`);
+const equipmentDetailsService = (equipmentId) => {
+  return service.get(`/equipment/${equipmentId}`);
 };
 
 export { myEquipmentService, equipmentDetailsService };
