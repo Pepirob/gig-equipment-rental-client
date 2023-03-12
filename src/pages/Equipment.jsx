@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
+import PaymentIntent from "../hoc/PaymentIntent";
 import DetailsEquipment from "../components/DetailsEquipment";
 import { equipmentDetailsService } from "../services/equipment.services";
 
@@ -9,6 +10,7 @@ function Equipment() {
   const { equipmentId } = params;
   const [equipmentDetails, setEquipmentDetails] = useState(null);
   const [isFetching, setIsFetching] = useState(true);
+  const [showPaymentIntent, setShowPaymentIntent] = useState(false);
 
   useEffect(() => {
     getData();
@@ -35,6 +37,17 @@ function Equipment() {
         ) : (
           <article>
             <DetailsEquipment equipment={equipmentDetails} />
+            <section>
+              <div>
+                {showPaymentIntent === false ? (
+                  <button onClick={() => setShowPaymentIntent(true)}>
+                    RENT
+                  </button>
+                ) : (
+                  <PaymentIntent productDetails={equipmentDetails} />
+                )}
+              </div>
+            </section>
           </article>
         )}
       </main>
