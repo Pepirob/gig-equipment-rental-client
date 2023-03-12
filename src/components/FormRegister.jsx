@@ -18,9 +18,6 @@ function FormRegister() {
       case "email":
         setEmail(value);
         break;
-      case "username":
-        setUsername(value);
-        break;
       case "location":
         setLocation(value);
         break;
@@ -30,6 +27,8 @@ function FormRegister() {
       case "password":
         setPassword(value);
         break;
+      default:
+        setUsername(value);
     }
   };
 
