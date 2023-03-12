@@ -1,8 +1,9 @@
 import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import ListEquipment from "../components/ListEquipment";
 import { myEquipmentService } from "../services/equipment.services";
 
-function ListEquipment() {
+function MyEquipment() {
   const redirect = useNavigate();
   const [myEquipment, setMyequipment] = useState(null);
   const [isFetching, setIsFetching] = useState(true);
@@ -20,7 +21,6 @@ function ListEquipment() {
       redirect("/error");
     }
   };
-
   return (
     <>
       <header>
@@ -28,23 +28,16 @@ function ListEquipment() {
       </header>
       <main>
         <h2>My equipment</h2>
-        {isFetching === true ? (
-          <h2>... Buscando</h2>
+        {isFetching ? (
+          <h1>...Buscando</h1>
         ) : (
-          myEquipment.map((equip) => {
-            return (
-              <>
-                <img src={equip.img} alt="equip" width="100" />
-                <Link to={`/equipment/${equip._id}`}>
-                  <h3>{equip.name} </h3>
-                </Link>
-              </>
-            );
-          })
+          <ul>
+            <ListEquipment equipment={myEquipment} />
+          </ul>
         )}
       </main>
     </>
   );
 }
 
-export default ListEquipment;
+export default MyEquipment;

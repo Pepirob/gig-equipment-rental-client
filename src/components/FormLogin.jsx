@@ -37,7 +37,6 @@ function FormLogin() {
       setIsFetching(false);
 
       if (error.response.status === 400) {
-        // mostramos al usuario como solventar el problema
         setErrorMessage(error.response.data.errorMessage);
       } else {
         redirect("/error");
