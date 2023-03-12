@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { uploadUserImgService } from "../services/upload.services";
 
-function FormProfileEdit() {
+function FormProfileEdit({ userData }) {
   const redirect = useNavigate;
   const [imgUrl, setImgUrl] = useState(null);
   const [username, setUsername] = useState("");
@@ -15,7 +15,6 @@ function FormProfileEdit() {
     }
 
     setIsUploading(true);
-
     const uploadData = new FormData();
     uploadData.append("image", event.target.files[0]);
     try {
@@ -41,11 +40,8 @@ function FormProfileEdit() {
 
   return (
     <>
-      {imgUrl ? (
-        <div>
-          <img src={imgUrl} alt="img" width={200} />
-        </div>
-      ) : null}
+      <img src={imgUrl ? imgUrl : userData.img} alt="img" width={200} />
+
       <form>
         <label>Image: </label>
         <input
@@ -61,7 +57,7 @@ function FormProfileEdit() {
         <input
           type="text"
           name="username"
-          value={username}
+          value={userData.username}
           onChange={handleInput}
           autoComplete="username"
         />
