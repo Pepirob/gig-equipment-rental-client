@@ -30,7 +30,7 @@ function Equipment() {
   return (
     <>
       <header>
-        <Link to="/my-equipment">Back</Link>{" "}
+        <Link to="/">Home</Link> <Link to="/dashboard">Dashboard</Link>{" "}
       </header>
       <main>
         {isFetching === true ? (

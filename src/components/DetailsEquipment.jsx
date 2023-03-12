@@ -19,10 +19,12 @@ function DetailsEquipment({ equipment }) {
           <p style={{ color: "red" }}>Rented</p>
         </>
       )}
-      {loggedUser._id === equipment.owner && (
+      {loggedUser._id === equipment.owner ? (
         <>
           <Link to={`/equipment/${equipment._id}/edit`}>Edit</Link>
         </>
+      ) : (
+        <Link>Rent</Link>
       )}
     </>
   );
