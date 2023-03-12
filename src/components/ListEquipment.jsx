@@ -1,15 +1,12 @@
-import { Link } from "react-router-dom";
+import ItemEquipment from "./ItemEquipment";
 
 function ListEquipment({ equipment }) {
   return (
     <>
-      {equipment.map((equip) => {
+      {equipment.map((item) => {
         return (
-          <li key={equip._id}>
-            <img src={equip.img} alt="equip" width="100" />
-            <Link to={`/equipment/${equip._id}`}>
-              <h3>{equip.name} </h3>
-            </Link>
+          <li key={item._id}>
+            <ItemEquipment key={item._id} item={item} />
           </li>
         );
       })}
