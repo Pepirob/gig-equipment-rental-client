@@ -47,9 +47,13 @@ function FormProfileEdit({ userData }) {
       setIsFetching(true);
 
       if (imgUrl) {
-        updateUserService(userData._id, { ...userData, username, img: imgUrl });
+        await updateUserService(userData._id, {
+          ...userData,
+          username,
+          img: imgUrl,
+        });
       } else {
-        updateUserService(userData._id, { ...userData, username });
+        await updateUserService(userData._id, { ...userData, username });
       }
 
       setIsFetching(false);
