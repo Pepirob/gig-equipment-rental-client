@@ -22,6 +22,9 @@ function Dashboard() {
       </header>
       <main>
         <h1>Dashboard</h1>
+        <section>
+          <Link to="/profile">Profile</Link>
+        </section>
       </main>
     </>
   );
