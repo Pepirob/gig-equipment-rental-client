@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { loadStripe } from "@stripe/stripe-js";
 import { Elements } from "@stripe/react-stripe-js";
-import CheckoutForm from "./CheckoutForm";
+import FormCheckout from "../components/FormCheckout";
 import { createPaymentIntentService } from "../services/payment.services";
 
 const stripePromise = loadStripe(process.env.REACT_APP_STRIPE_PUBLISHABLE_KEY);
@@ -32,7 +32,7 @@ function PaymentIntent({ productDetails }) {
     <div className="App">
       {clientSecret && (
         <Elements options={options} stripe={stripePromise}>
-          <CheckoutForm />
+          <FormCheckout />
         </Elements>
       )}
     </div>
