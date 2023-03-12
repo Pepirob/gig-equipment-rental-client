@@ -19,7 +19,8 @@ function SheetEquipment({ equipment }) {
           <p style={{ color: "red" }}>Rented</p>
         </>
       )}
-      {loggedUser._id === equipment.owner ? (
+      {/* // TODO: move to tools component */}
+      {loggedUser?._id === equipment.owner ? (
         <>
           <Link to={`/equipment/${equipment._id}/edit`}>Edit</Link>
         </>
