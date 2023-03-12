@@ -7,7 +7,7 @@ function DetailsEquipment({ equipment }) {
 
   return (
     <>
-      <h2>{equipment.name}</h2>
+      <h1>{equipment.name}</h1>
       <img src={equipment.img} alt="equip" width="100" />
       <p>{equipment.description}</p>
       <p>Price per day: {equipment.pricePerDay}€</p>

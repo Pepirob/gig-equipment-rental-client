@@ -30,13 +30,12 @@ function Equipment() {
         <Link to="/my-equipment">Back</Link>{" "}
       </header>
       <main>
-        <h2>Details</h2>
         {isFetching === true ? (
           <h2>...Buscando</h2>
         ) : (
-          <>
+          <article>
             <DetailsEquipment equipment={equipmentDetails} />
-          </>
+          </article>
         )}
       </main>
     </>
