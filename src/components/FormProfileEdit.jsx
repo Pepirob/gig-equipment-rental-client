@@ -87,7 +87,6 @@ function FormProfileEdit({ userData }) {
           name="username"
           value={username}
           onChange={handleInput}
-          autoComplete="username"
         />
         <br />
         <br />
