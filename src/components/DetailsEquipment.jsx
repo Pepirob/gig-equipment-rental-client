@@ -1,9 +1,10 @@
 import React, { useContext } from "react";
+import { Link } from "react-router-dom";
 import { AuthContext } from "../context/auth.context";
 
-function DetailsEquipment({ equipment, handleEditButton }) {
+function DetailsEquipment({ equipment }) {
   const { loggedUser } = useContext(AuthContext);
-  console.log(loggedUser);
+
   return (
     <>
       <h2>{equipment.name}</h2>
@@ -20,8 +21,7 @@ function DetailsEquipment({ equipment, handleEditButton }) {
       )}
       {loggedUser._id === equipment.owner && (
         <>
-          <button onClick={handleEditButton}>Edit</button>
-          <button>Delete</button>
+          <Link to={`/equipment/${equipment._id}/edit`}>Edit</Link>
         </>
       )}
     </>
