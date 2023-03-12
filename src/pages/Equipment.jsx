@@ -1,8 +1,9 @@
 import { useEffect, useState } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
+import { equipmentDetailsService } from "../services/equipment.services";
 import PaymentIntent from "../hoc/PaymentIntent";
 import DetailsEquipment from "../components/DetailsEquipment";
-import { equipmentDetailsService } from "../services/equipment.services";
+import FormCheckout from "../components/FormCheckout";
 
 function Equipment() {
   const redirect = useNavigate();
@@ -44,7 +45,9 @@ function Equipment() {
                     RENT
                   </button>
                 ) : (
-                  <PaymentIntent productDetails={equipmentDetails} />
+                  <PaymentIntent productDetails={equipmentDetails}>
+                    <FormCheckout />
+                  </PaymentIntent>
                 )}
               </div>
             </section>
