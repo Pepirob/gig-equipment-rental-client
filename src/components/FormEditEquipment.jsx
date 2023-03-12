@@ -7,11 +7,13 @@ function FormEditEquipment({ equipmentData }) {
   const redirect = useNavigate();
   const [name, setName] = useState("");
   const [imgUrl, setImgUrl] = useState(null);
+  const [isAvailable, setIsAvailable] = useState(equipmentData.isAvailable);
   const [isUploading, setIsUploading] = useState(false);
   const [isFetching, setIsFetching] = useState(false);
 
   useEffect(() => {
     setName(equipmentData.name);
+    setIsAvailable(equipmentData.isAvailable);
   }, []);
 
   const handleFileUpload = async (event) => {
@@ -36,6 +38,9 @@ function FormEditEquipment({ equipmentData }) {
   const handleInput = (event) => {
     const value = event.target.value;
     switch (event.target.name) {
+      case "isAvailable":
+        setIsAvailable(!isAvailable);
+        break;
       default:
         setName(value);
     }
@@ -52,9 +57,14 @@ function FormEditEquipment({ equipmentData }) {
           ...equipmentData,
           name,
           img: imgUrl,
+          isAvailable,
         });
       } else {
-        updateEquipmentService(equipmentData._id, { ...equipmentData, name });
+        updateEquipmentService(equipmentData._id, {
+          ...equipmentData,
+          name,
+          isAvailable,
+        });
       }
       setIsFetching(false);
       redirect(`/equipment/${equipmentData._id}`);
@@ -82,6 +92,16 @@ function FormEditEquipment({ equipmentData }) {
         <br />
         <label htmlFor="name">Name</label>
         <input type="text" name="name" value={name} onChange={handleInput} />
+        <br />
+        <br />
+        <label htmlFor="isAvailable">Available</label>
+        <input
+          type="checkbox"
+          name="isAvailable"
+          checked={isAvailable}
+          value={isAvailable}
+          onChange={handleInput}
+        />
         <br />
         <br />
         <button onClick={handleSubmit} disabled={isFetching}>
