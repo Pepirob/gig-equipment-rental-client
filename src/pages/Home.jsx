@@ -34,6 +34,7 @@ function Home() {
         <h1>Home</h1>
         <SearchForm setSearchInput={setSearchInput} />
         {!isFetching && <ListEquipment equipment={availableEquipment} />}
+        {!isFetching && availableEquipment.length === 0 && <h2>No results</h2>}
       </main>
     </>
   );
