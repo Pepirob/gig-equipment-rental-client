@@ -18,6 +18,7 @@ function Equipment() {
   const [showPaymentIntent, setShowPaymentIntent] = useState(false);
   const [totalDays, setTotalDays] = useState(MIN_DAYS);
   const [showTotalDays, setShowTotalDays] = useState(false);
+  const [showPayButton, setShowPayButton] = useState(false);
 
   useEffect(() => {
     getData();
@@ -38,6 +39,7 @@ function Equipment() {
 
     if (isLoggedIn) {
       setShowTotalDays(true);
+      setShowPayButton(true);
     } else {
       redirect("/login");
     }
@@ -47,6 +49,7 @@ function Equipment() {
 
     if (isLoggedIn) {
       setShowPaymentIntent(true);
+      setShowPayButton(false);
     } else {
       redirect("/login");
     }
@@ -80,7 +83,7 @@ function Equipment() {
                       equipmentDetails.deposit}
                     €
                   </h2>
-                  <button onClick={handleRent}>PAY</button>
+                  {showPayButton && <button onClick={handleRent}>PAY</button>}
                 </>
               )}
 
