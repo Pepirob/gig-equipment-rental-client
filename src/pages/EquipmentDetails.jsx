@@ -76,13 +76,9 @@ function Equipment() {
                   <FormTotalPrice
                     setTotalDays={setTotalDays}
                     totalDays={totalDays}
+                    pricePerDay={equipmentDetails.pricePerDay}
+                    deposit={equipmentDetails.deposit}
                   />
-                  <h2>
-                    Total Price:
-                    {equipmentDetails.pricePerDay * totalDays +
-                      equipmentDetails.deposit}
-                    €
-                  </h2>
                   {showPayButton && <button onClick={handleRent}>PAY</button>}
                 </>
               )}

@@ -1,4 +1,4 @@
-function FormTotalPrice({ setTotalDays, totalDays }) {
+function FormTotalPrice({ pricePerDay, deposit, setTotalDays, totalDays }) {
   const handleInput = (event) => {
     setTotalDays(event.target.value);
   };
@@ -15,6 +15,10 @@ function FormTotalPrice({ setTotalDays, totalDays }) {
         />
         <br />
         <br />
+        <h2>
+          Total Price:
+          {pricePerDay * totalDays + deposit}€
+        </h2>
       </form>
     </>
   );
