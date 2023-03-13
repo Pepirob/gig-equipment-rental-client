@@ -1,6 +1,6 @@
 import { useEffect, useState, useContext } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
-import { equipmentDetailsService } from "../services/equipment.services";
+import { getEquipmentDetailsService } from "../services/equipment.services";
 import { AuthContext } from "../context/auth.context";
 import PaymentIntent from "../hoc/PaymentIntent";
 import SheetEquipment from "../components/SheetEquipment";
@@ -21,7 +21,7 @@ function Equipment() {
 
   const getData = async () => {
     try {
-      const response = await equipmentDetailsService(equipmentId);
+      const response = await getEquipmentDetailsService(equipmentId);
       setEquipmentDetails(response.data);
       setIsFetching(false);
     } catch (error) {
