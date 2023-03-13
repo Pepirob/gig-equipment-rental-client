@@ -21,6 +21,7 @@ function MyEquipment() {
       redirect("/error");
     }
   };
+
   return (
     <>
       <header>
