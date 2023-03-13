@@ -1,6 +1,6 @@
 import { useEffect, useState, useContext } from "react";
 import { AuthContext } from "../context/auth.context";
-import { getUserService } from "../services/user.services";
+import { deleteUserService, getUserService } from "../services/user.services";
 import { Link, useNavigate } from "react-router-dom";
 import UserDetails from "../components/UserDetails";
 
@@ -24,6 +24,16 @@ function Profile() {
     }
   };
 
+  const handleDelete = async (event) => {
+    event.preventDefault();
+
+    try {
+      await deleteUserService(loggedUser._id);
+    } catch (error) {
+      redirect("/error");
+    }
+  };
+
   return (
     <>
       <header>
@@ -35,7 +45,10 @@ function Profile() {
         ) : (
           <>
             <UserDetails user={userData} />
-            <Link to={`/profile/edit`}>EDIT</Link>
+            <Link to={`/profile/edit`}>EDIT PROFILE</Link>
+            <br />
+            <br />
+            <button onClick={handleDelete}>DELETE ACCOUNT</button>
           </>
         )}
       </main>

@@ -5,4 +5,8 @@ const getUserService = (userId) => service.get(`/user/${userId}`);
 const updateUserService = (userId, body) =>
   service.patch(`/user/${userId}`, body);
 
-export { getUserService, updateUserService };
+const deleteUserService = (userId) => {
+  service.delete(`/user/${userId}`);
+};
+
+export { getUserService, updateUserService, deleteUserService };
