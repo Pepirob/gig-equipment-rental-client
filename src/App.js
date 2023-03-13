@@ -12,6 +12,7 @@ import EquipmentDetails from "./pages/EquipmentDetails";
 import Profile from "./pages/Profile";
 import ProfileEdit from "./pages/ProfileEdit";
 import EquipmentEdit from "./pages/EquipmentEdit";
+import PaymentSuccess from "./components/PaymentSuccess";
 
 function App() {
   return (
@@ -61,6 +62,7 @@ function App() {
             </IsPrivate>
           }
         />
+        <Route path="/payment-success" element={<PaymentSuccess />} />
 
         <Route path="/error" element={<Error />} />
         <Route path="*" element={<NotFound />} />

@@ -54,7 +54,8 @@ function FormCheckout() {
     const { error } = await stripe.confirmPayment({
       elements,
       confirmParams: {
-        return_url: `${process.env.REACT_APP_CLIENT_URL}`,
+        // todo refactor payment-succeed page
+        return_url: `${process.env.REACT_APP_CLIENT_URL}/payment-success`,
       },
     });
 

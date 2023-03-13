@@ -4,4 +4,8 @@ const createPaymentIntentService = (productId) => {
   return service.post("/transaction/create-payment-intent", productId);
 };
 
-export { createPaymentIntentService };
+const updatePaymentIntentService = (paymentIntentInfo) => {
+  return service.patch("/transaction/update-payment-intent", paymentIntentInfo);
+};
+
+export { createPaymentIntentService, updatePaymentIntentService };
