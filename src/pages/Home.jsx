@@ -2,20 +2,27 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import ListEquipment from "../components/ListEquipment";
 import Navigation from "../components/Navigation";
-import { availableEquipmentService } from "../services/equipment.services";
+import SearchForm from "../components/SearchForm";
+import useDebounce from "../hooks/useDebounce";
+import {
+  getLocatedEquipmentService,
+  getAvailableEquipmentService,
+} from "../services/equipment.services";
 
 function Home() {
   const redirect = useNavigate();
   const [availableEquipment, setAvailableEquipment] = useState(null);
   const [isFetching, setIsFetching] = useState(true);
+  const [searchInput, setSearchInput] = useState("");
 
-  useEffect(() => {
-    getData();
-  }, []);
+  useDebounce(searchInput, 500, () => getData());
 
   const getData = async () => {
     try {
-      const response = await availableEquipmentService();
+      const response = await (searchInput
+        ? getLocatedEquipmentService(searchInput)
+        : getAvailableEquipmentService());
+
       setAvailableEquipment(response.data);
       setIsFetching(false);
     } catch (error) {
@@ -30,7 +37,9 @@ function Home() {
       </header>
       <main>
         <h1>Home</h1>
+        <SearchForm setSearchInput={setSearchInput} />
         {!isFetching && <ListEquipment equipment={availableEquipment} />}
+        {!isFetching && availableEquipment.length === 0 && <h2>No results</h2>}
       </main>
     </>
   );
