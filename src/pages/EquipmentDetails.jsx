@@ -1,11 +1,13 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useContext } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { equipmentDetailsService } from "../services/equipment.services";
+import { AuthContext } from "../context/auth.context";
 import PaymentIntent from "../hoc/PaymentIntent";
 import SheetEquipment from "../components/SheetEquipment";
 import FormCheckout from "../components/FormCheckout";
 
 function Equipment() {
+  const { isLoggedIn } = useContext(AuthContext);
   const redirect = useNavigate();
   const params = useParams();
   const { equipmentId } = params;
@@ -27,6 +29,16 @@ function Equipment() {
     }
   };
 
+  const handleRent = (event) => {
+    event.preventDefault();
+
+    if (isLoggedIn) {
+      setShowPaymentIntent(true);
+    } else {
+      redirect("/login");
+    }
+  };
+
   return (
     <>
       <header>
@@ -39,17 +51,13 @@ function Equipment() {
           <article>
             <SheetEquipment equipment={equipmentDetails} />
             <section>
-              <div>
-                {showPaymentIntent === false ? (
-                  <button onClick={() => setShowPaymentIntent(true)}>
-                    RENT
-                  </button>
-                ) : (
-                  <PaymentIntent productDetails={equipmentDetails}>
-                    <FormCheckout />
-                  </PaymentIntent>
-                )}
-              </div>
+              {!showPaymentIntent && <button onClick={handleRent}>RENT</button>}
+
+              {showPaymentIntent && (
+                <PaymentIntent productDetails={equipmentDetails}>
+                  <FormCheckout />
+                </PaymentIntent>
+              )}
             </section>
           </article>
         )}
