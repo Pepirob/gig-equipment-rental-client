@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import FormEditEquipment from "../components/FormEditEquipment";
-import { equipmentDetailsService } from "../services/equipment.services";
+import { getEquipmentDetailsService } from "../services/equipment.services";
 
 function EquipmentEdit() {
   const redirect = useNavigate();
@@ -16,7 +16,7 @@ function EquipmentEdit() {
 
   const getData = async () => {
     try {
-      const response = await equipmentDetailsService(equipmentId);
+      const response = await getEquipmentDetailsService(equipmentId);
       setEquipment(response.data);
       setIsFetching(false);
     } catch (error) {

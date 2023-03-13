@@ -8,11 +8,11 @@ const getLocatedEquipmentService = (searchQuery) => {
   return service.get(`/equipment?location=${searchQuery}`);
 };
 
-const myEquipmentService = () => {
+const getMyEquipmentService = () => {
   return service.get("/equipment/my-equipment");
 };
 
-const equipmentDetailsService = (equipmentId) => {
+const getEquipmentDetailsService = (equipmentId) => {
   return service.get(`/equipment/${equipmentId}`);
 };
 
@@ -21,8 +21,8 @@ const updateEquipmentService = (equipmentId, body) => {
 };
 
 export {
-  myEquipmentService,
-  equipmentDetailsService,
+  getMyEquipmentService,
+  getEquipmentDetailsService,
   updateEquipmentService,
   getAvailableEquipmentService,
   getLocatedEquipmentService,
