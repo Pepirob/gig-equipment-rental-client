@@ -1,9 +1,21 @@
 import { useContext } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { AuthContext } from "../context/auth.context";
+import { deleteEquipmentService } from "../services/equipment.services";
 
 function SheetEquipment({ equipment }) {
+  const redirect = useNavigate();
   const { loggedUser } = useContext(AuthContext);
+  const { _id, owner } = equipment;
+
+  const handleDelete = async () => {
+    try {
+      await deleteEquipmentService(_id, owner);
+      redirect("/dashboard");
+    } catch (error) {
+      redirect("/error");
+    }
+  };
 
   return (
     <>
@@ -23,6 +35,7 @@ function SheetEquipment({ equipment }) {
       {loggedUser?._id === equipment.owner ? (
         <>
           <Link to={`/equipment/${equipment._id}/edit`}>Edit</Link>
+          <button onClick={handleDelete}>DELETE</button>
         </>
       ) : null}
     </>
