@@ -1,7 +1,11 @@
 import service from "./config.services";
 
-const availableEquipmentService = (query, searchQuery) => {
-  return service.get(`/equipment?${query}=${searchQuery}`);
+const getAvailableEquipmentService = () => {
+  return service.get("/equipment");
+};
+
+const getLocatedEquipmentService = (searchQuery) => {
+  return service.get(`/equipment?location=${searchQuery}`);
 };
 
 const myEquipmentService = () => {
@@ -20,5 +24,6 @@ export {
   myEquipmentService,
   equipmentDetailsService,
   updateEquipmentService,
-  availableEquipmentService,
+  getAvailableEquipmentService,
+  getLocatedEquipmentService,
 };

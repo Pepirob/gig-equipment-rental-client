@@ -4,7 +4,10 @@ import ListEquipment from "../components/ListEquipment";
 import Navigation from "../components/Navigation";
 import SearchForm from "../components/SearchForm";
 import useDebounce from "../hooks/useDebounce";
-import { availableEquipmentService } from "../services/equipment.services";
+import {
+  getLocatedEquipmentService,
+  getAvailableEquipmentService,
+} from "../services/equipment.services";
 
 function Home() {
   const redirect = useNavigate();
@@ -15,9 +18,11 @@ function Home() {
   useDebounce(searchInput, 500, () => getData());
 
   const getData = async () => {
-    const query = searchInput ? searchInput : "";
     try {
-      const response = await availableEquipmentService("location", query);
+      const response = await (searchInput
+        ? getLocatedEquipmentService(searchInput)
+        : getAvailableEquipmentService());
+
       setAvailableEquipment(response.data);
       setIsFetching(false);
     } catch (error) {
