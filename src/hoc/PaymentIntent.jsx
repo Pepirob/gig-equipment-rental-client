@@ -13,7 +13,10 @@ function PaymentIntent(props) {
   }, []);
 
   const handleUseEffect = async () => {
-    const response = await createPaymentIntentService(props.productDetails);
+    const response = await createPaymentIntentService(
+      props.productDetails,
+      props.totalDays
+    );
     setClientSecret(response.data.clientSecret);
   };
 

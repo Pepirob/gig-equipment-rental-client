@@ -5,8 +5,10 @@ import { AuthContext } from "../context/auth.context";
 import PaymentIntent from "../hoc/PaymentIntent";
 import SheetEquipment from "../components/SheetEquipment";
 import FormCheckout from "../components/FormCheckout";
+import FormTotalPrice from "../components/FormTotalPrice";
 
 function Equipment() {
+  const MIN_DAYS = 1;
   const { isLoggedIn } = useContext(AuthContext);
   const redirect = useNavigate();
   const params = useParams();
@@ -14,6 +16,9 @@ function Equipment() {
   const [equipmentDetails, setEquipmentDetails] = useState(null);
   const [isFetching, setIsFetching] = useState(true);
   const [showPaymentIntent, setShowPaymentIntent] = useState(false);
+  const [totalDays, setTotalDays] = useState(MIN_DAYS);
+  const [showTotalDays, setShowTotalDays] = useState(false);
+  const [showPayButton, setShowPayButton] = useState(false);
 
   useEffect(() => {
     getData();
@@ -29,11 +34,22 @@ function Equipment() {
     }
   };
 
+  const handleTotalPrice = (event) => {
+    event.preventDefault();
+
+    if (isLoggedIn) {
+      setShowTotalDays(true);
+      setShowPayButton(true);
+    } else {
+      redirect("/login");
+    }
+  };
   const handleRent = (event) => {
     event.preventDefault();
 
     if (isLoggedIn) {
       setShowPaymentIntent(true);
+      setShowPayButton(false);
     } else {
       redirect("/login");
     }
@@ -42,7 +58,7 @@ function Equipment() {
   return (
     <>
       <header>
-        <Link to="/">Home</Link> <Link to="/dashboard">Dashboard</Link>{" "}
+        <Link to="/">Home</Link> <Link to="/dashboard">Dashboard</Link>
       </header>
       <main>
         {isFetching === true ? (
@@ -51,10 +67,27 @@ function Equipment() {
           <article>
             <SheetEquipment equipment={equipmentDetails} />
             <section>
-              {!showPaymentIntent && <button onClick={handleRent}>RENT</button>}
+              {!showTotalDays && (
+                <button onClick={handleTotalPrice}>RENT</button>
+              )}
+
+              {showTotalDays && (
+                <>
+                  <FormTotalPrice
+                    setTotalDays={setTotalDays}
+                    totalDays={totalDays}
+                    pricePerDay={equipmentDetails.pricePerDay}
+                    deposit={equipmentDetails.deposit}
+                  />
+                  {showPayButton && <button onClick={handleRent}>PAY</button>}
+                </>
+              )}
 
               {showPaymentIntent && (
-                <PaymentIntent productDetails={equipmentDetails}>
+                <PaymentIntent
+                  productDetails={equipmentDetails}
+                  totalDays={totalDays}
+                >
                   <FormCheckout />
                 </PaymentIntent>
               )}

@@ -1,7 +1,10 @@
 import service from "./config.services";
 
-const createPaymentIntentService = (productId) => {
-  return service.post("/transaction/create-payment-intent", productId);
+const createPaymentIntentService = (productId, totalDays) => {
+  return service.post(
+    `/transaction/create-payment-intent?totalDays=${totalDays}`,
+    productId
+  );
 };
 
 const updatePaymentIntentService = (paymentIntentInfo) => {
