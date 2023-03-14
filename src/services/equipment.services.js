@@ -24,6 +24,10 @@ const deleteSingleEquipmentService = (equipmentId, ownerId) => {
   return service.delete(`equipment/${equipmentId}?ownerId=${ownerId}`);
 };
 
+const deleteAllEquipmentService = (ownerId) => {
+  return service.delete(`equipment/all/${ownerId}`);
+};
+
 export {
   getMyEquipmentService,
   getEquipmentDetailsService,
@@ -31,4 +35,5 @@ export {
   getAvailableEquipmentService,
   getLocatedEquipmentService,
   deleteSingleEquipmentService,
+  deleteAllEquipmentService,
 };

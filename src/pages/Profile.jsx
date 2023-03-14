@@ -3,6 +3,7 @@ import { AuthContext } from "../context/auth.context";
 import { deleteUserService, getUserService } from "../services/user.services";
 import { Link, useNavigate } from "react-router-dom";
 import UserDetails from "../components/UserDetails";
+import { deleteAllEquipmentService } from "../services/equipment.services";
 
 function Profile() {
   const redirect = useNavigate();
@@ -30,6 +31,7 @@ function Profile() {
 
     try {
       await deleteUserService(loggedUser._id);
+      await deleteAllEquipmentService(loggedUser._id);
 
       localStorage.removeItem("authToken");
       authenticateUser();
