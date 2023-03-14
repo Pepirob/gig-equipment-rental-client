@@ -6,7 +6,7 @@ import UserDetails from "../components/UserDetails";
 
 function Profile() {
   const redirect = useNavigate();
-  const { loggedUser } = useContext(AuthContext);
+  const { loggedUser, authenticateUser } = useContext(AuthContext);
   const [userData, setUserData] = useState(null);
   const [isFetching, setIsFetching] = useState(true);
 
@@ -29,6 +29,10 @@ function Profile() {
 
     try {
       await deleteUserService(loggedUser._id);
+
+      localStorage.removeItem("authToken");
+      authenticateUser();
+      redirect("/");
     } catch (error) {
       redirect("/error");
     }
