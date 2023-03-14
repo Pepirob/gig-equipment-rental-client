@@ -18,7 +18,9 @@ function Dashboard() {
     <>
       <header>
         <Link to="/">Home</Link>
-        <span onClick={handleLogout}>Logout</span>
+        <span style={{ color: "red" }} onClick={handleLogout}>
+          Logout
+        </span>
       </header>
       <main>
         <h1>Dashboard</h1>
