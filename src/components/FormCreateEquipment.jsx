@@ -14,7 +14,7 @@ function FormCreateEquipment() {
   const [isFetching, setIsFetching] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
 
-  const handleInputs = (event) => {
+  const handleInput = (event) => {
     const value = event.target.value;
     switch (event.target.name) {
       case "name":
@@ -92,7 +92,7 @@ function FormCreateEquipment() {
         <br />
         <br />
         <label htmlFor="name">Name: </label>
-        <input type="text" name="name" value={name} onChange={handleInputs} />
+        <input type="text" name="name" value={name} onChange={handleInput} />
         <br />
         <br />
         <label htmlFor="description">Description: </label>
@@ -100,7 +100,7 @@ function FormCreateEquipment() {
           type="textarea"
           name="description"
           value={description}
-          onChange={handleInputs}
+          onChange={handleInput}
         />
         <br />
         <br />
@@ -110,7 +110,7 @@ function FormCreateEquipment() {
           type="number"
           name="pricePerDay"
           value={pricePerDay}
-          onChange={handleInputs}
+          onChange={handleInput}
         />
         <br />
         <br />
@@ -120,7 +120,7 @@ function FormCreateEquipment() {
           type="number"
           name="deposit"
           value={deposit}
-          onChange={handleInputs}
+          onChange={handleInput}
         />
         <br />
         <br />
