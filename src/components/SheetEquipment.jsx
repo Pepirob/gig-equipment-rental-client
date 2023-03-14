@@ -1,4 +1,4 @@
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { AuthContext } from "../context/auth.context";
 import { deleteEquipmentService } from "../services/equipment.services";
@@ -7,13 +7,14 @@ function SheetEquipment({ equipment }) {
   const redirect = useNavigate();
   const { loggedUser } = useContext(AuthContext);
   const { _id, owner } = equipment;
+  const [errorMessage, setErrorMessage] = useState("");
 
   const handleDelete = async () => {
     try {
       await deleteEquipmentService(_id, owner);
       redirect("/dashboard");
     } catch (error) {
-      redirect("/error");
+      setErrorMessage(error.response.data);
     }
   };
 
@@ -36,6 +37,7 @@ function SheetEquipment({ equipment }) {
         <>
           <Link to={`/equipment/${equipment._id}/edit`}>Edit</Link>
           <button onClick={handleDelete}>DELETE</button>
+          {errorMessage && <p>{errorMessage}</p>}
         </>
       ) : null}
     </>
