@@ -26,7 +26,7 @@ function Navigation() {
             Dashboard
           </Link>
           <Link style={{ marginRight: "1rem" }} to="/create-equipment">
-            Publish your gear
+            Publish your equipment
           </Link>
         </>
       )}
