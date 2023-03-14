@@ -2,6 +2,7 @@ import { useContext, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { AuthContext } from "../context/auth.context";
 import { deleteEquipmentService } from "../services/equipment.services";
+import { deleteTransactionsByEquipmentService } from "../services/transactions.services";
 
 function SheetEquipment({ equipment }) {
   const redirect = useNavigate();
@@ -12,6 +13,7 @@ function SheetEquipment({ equipment }) {
   const handleDelete = async () => {
     try {
       await deleteEquipmentService(_id, owner);
+      await deleteTransactionsByEquipmentService(_id);
       redirect("/dashboard");
     } catch (error) {
       setErrorMessage(error.response.data);
