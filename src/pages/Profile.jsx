@@ -9,6 +9,7 @@ function Profile() {
   const { loggedUser, authenticateUser } = useContext(AuthContext);
   const [userData, setUserData] = useState(null);
   const [isFetching, setIsFetching] = useState(true);
+  const [errorMessage, setErrorMessage] = useState("");
 
   useEffect(() => {
     getData();
@@ -34,7 +35,7 @@ function Profile() {
       authenticateUser();
       redirect("/");
     } catch (error) {
-      redirect("/error");
+      setErrorMessage(error.response.data);
     }
   };
 
@@ -53,6 +54,7 @@ function Profile() {
             <br />
             <br />
             <button onClick={handleDelete}>DELETE ACCOUNT</button>
+            {errorMessage && <p>{errorMessage}</p>}
           </>
         )}
       </main>
