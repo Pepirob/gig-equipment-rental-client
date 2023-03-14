@@ -22,8 +22,9 @@ function Dashboard() {
       </header>
       <main>
         <h1>Dashboard</h1>
-        <Link to="/my-equipment">Equipment</Link>
         <section>
+          <Link to="/my-equipment">Equipment</Link>
+          <Link to="/my-transactions">Transactions</Link>
           <Link to="/profile">Profile</Link>
         </section>
       </main>
