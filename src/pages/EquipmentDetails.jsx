@@ -9,7 +9,7 @@ import FormTotalPrice from "../components/FormTotalPrice";
 
 function Equipment() {
   const MIN_DAYS = 1;
-  const { isLoggedIn } = useContext(AuthContext);
+  const { isLoggedIn, loggedUser } = useContext(AuthContext);
   const redirect = useNavigate();
   const params = useParams();
   const { equipmentId } = params;
@@ -67,11 +67,11 @@ function Equipment() {
           <article>
             <SheetEquipment equipment={equipmentDetails} />
             <section>
-              {!showTotalDays && (
+              {!showTotalDays && loggedUser?._id !== equipmentDetails.owner && (
                 <button onClick={handleTotalPrice}>RENT</button>
               )}
 
-              {showTotalDays && (
+              {showTotalDays && loggedUser?._id !== equipmentDetails.owner && (
                 <>
                   <FormTotalPrice
                     setTotalDays={setTotalDays}
@@ -83,14 +83,15 @@ function Equipment() {
                 </>
               )}
 
-              {showPaymentIntent && (
-                <PaymentIntent
-                  productDetails={equipmentDetails}
-                  totalDays={totalDays}
-                >
-                  <FormCheckout />
-                </PaymentIntent>
-              )}
+              {showPaymentIntent &&
+                loggedUser?._id !== equipmentDetails.owner && (
+                  <PaymentIntent
+                    productDetails={equipmentDetails}
+                    totalDays={totalDays}
+                  >
+                    <FormCheckout />
+                  </PaymentIntent>
+                )}
             </section>
           </article>
         )}
