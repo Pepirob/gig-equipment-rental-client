@@ -20,7 +20,7 @@ const updateEquipmentService = (equipmentId, body) => {
   return service.patch(`equipment/${equipmentId}`, body);
 };
 
-const deleteEquipmentService = (equipmentId, ownerId) => {
+const deleteSingleEquipmentService = (equipmentId, ownerId) => {
   return service.delete(`equipment/${equipmentId}?ownerId=${ownerId}`);
 };
 
@@ -30,5 +30,5 @@ export {
   updateEquipmentService,
   getAvailableEquipmentService,
   getLocatedEquipmentService,
-  deleteEquipmentService,
+  deleteSingleEquipmentService,
 };
