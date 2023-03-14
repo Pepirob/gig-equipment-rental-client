@@ -5,14 +5,20 @@ import { uploadEquipmentImgService } from "../services/upload.services";
 
 function FormEditEquipment({ equipmentData }) {
   const redirect = useNavigate();
-  const [name, setName] = useState("");
   const [imgUrl, setImgUrl] = useState(null);
+  const [name, setName] = useState("");
+  const [description, setDescription] = useState("");
+  const [pricePerDay, setPricePerDay] = useState(0);
+  const [deposit, setDeposit] = useState(0);
   const [isAvailable, setIsAvailable] = useState(equipmentData.isAvailable);
   const [isUploading, setIsUploading] = useState(false);
   const [isFetching, setIsFetching] = useState(false);
 
   useEffect(() => {
     setName(equipmentData.name);
+    setDescription(equipmentData.description);
+    setPricePerDay(equipmentData.pricePerDay);
+    setDeposit(equipmentData.deposit);
     setIsAvailable(equipmentData.isAvailable);
   }, []);
 
@@ -38,6 +44,18 @@ function FormEditEquipment({ equipmentData }) {
   const handleInput = (event) => {
     const value = event.target.value;
     switch (event.target.name) {
+      case "name":
+        setName(value);
+        break;
+      case "description":
+        setDescription(value);
+        break;
+      case "pricePerDay":
+        setPricePerDay(value);
+        break;
+      case "deposit":
+        setDeposit(value);
+        break;
       case "isAvailable":
         setIsAvailable(!isAvailable);
         break;
@@ -54,15 +72,19 @@ function FormEditEquipment({ equipmentData }) {
 
       if (imgUrl) {
         await updateEquipmentService(equipmentData._id, {
-          ...equipmentData,
           name,
+          description,
+          pricePerDay,
+          deposit,
           img: imgUrl,
           isAvailable,
         });
       } else {
         updateEquipmentService(equipmentData._id, {
-          ...equipmentData,
           name,
+          description,
+          pricePerDay,
+          deposit,
           isAvailable,
         });
       }
@@ -92,6 +114,35 @@ function FormEditEquipment({ equipmentData }) {
         <br />
         <label htmlFor="name">Name</label>
         <input type="text" name="name" value={name} onChange={handleInput} />
+        <br />
+        <br />
+        <label htmlFor="description">Description: </label>
+        <input
+          type="textarea"
+          name="description"
+          value={description}
+          onChange={handleInput}
+        />
+        <br />
+        <br />
+        <label htmlFor="pricePerDay">Price per Day: </label>
+        <input
+          min={0}
+          type="number"
+          name="pricePerDay"
+          value={pricePerDay}
+          onChange={handleInput}
+        />
+        <br />
+        <br />
+        <label htmlFor="deposit">Deposit: </label>
+        <input
+          min={0}
+          type="number"
+          name="deposit"
+          value={deposit}
+          onChange={handleInput}
+        />
         <br />
         <br />
         <label htmlFor="isAvailable">Available</label>
