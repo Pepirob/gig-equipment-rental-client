@@ -1,9 +1,11 @@
-import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
-import { updateEquipmentService } from "../services/equipment.services";
+import { useState } from "react";
+import { useNavigate } from "react-router";
+import { createEquipmentService } from "../services/equipment.services";
 import { uploadEquipmentImgService } from "../services/upload.services";
 
-function FormEditEquipment({ equipmentData }) {
+function FormCreateEquipment() {
+  const DEFAULT_IMG_URL =
+    "https://cdn-icons-png.flaticon.com/512/1249/1249374.png";
   const redirect = useNavigate();
   const [imgUrl, setImgUrl] = useState(null);
   const [name, setName] = useState("");
@@ -12,32 +14,7 @@ function FormEditEquipment({ equipmentData }) {
   const [deposit, setDeposit] = useState(0);
   const [isUploading, setIsUploading] = useState(false);
   const [isFetching, setIsFetching] = useState(false);
-
-  useEffect(() => {
-    setName(equipmentData.name);
-    setDescription(equipmentData.description);
-    setPricePerDay(equipmentData.pricePerDay);
-    setDeposit(equipmentData.deposit);
-  }, []);
-
-  const handleFileUpload = async (event) => {
-    if (!event.target.files[0]) {
-      return;
-    }
-
-    setIsUploading(true);
-    const uploadData = new FormData();
-    uploadData.append("image", event.target.files[0]);
-
-    try {
-      const response = await uploadEquipmentImgService(uploadData);
-      setImgUrl(response.data.equipmentImgUrl);
-      setIsUploading(false);
-      console.log(imgUrl);
-    } catch (error) {
-      redirect("/error");
-    }
-  };
+  const [errorMessage, setErrorMessage] = useState("");
 
   const handleInput = (event) => {
     const value = event.target.value;
@@ -59,46 +36,60 @@ function FormEditEquipment({ equipmentData }) {
     }
   };
 
-  const handleSubmit = async (event) => {
-    event.preventDefault();
+  const handleFileUpload = async (event) => {
+    if (!event.target.files[0]) {
+      return;
+    }
+
+    setIsUploading(true);
+    const uploadData = new FormData();
+    uploadData.append("image", event.target.files[0]);
+
+    try {
+      const response = await uploadEquipmentImgService(uploadData);
+      setImgUrl(response.data.equipmentImgUrl);
+      setIsUploading(false);
+    } catch (error) {
+      redirect("/error");
+    }
+  };
+
+  const handleSubmit = async () => {
+    const newEquipment = {
+      imgUrl,
+      name,
+      description,
+      pricePerDay,
+      deposit,
+    };
 
     try {
       setIsFetching(true);
+      const response = await createEquipmentService(newEquipment);
 
-      if (imgUrl) {
-        await updateEquipmentService(equipmentData._id, {
-          ...equipmentData,
-          name,
-          description,
-          pricePerDay,
-          deposit,
-          img: imgUrl,
-        });
-      } else {
-        updateEquipmentService(equipmentData._id, {
-          ...equipmentData,
-          name,
-          description,
-          pricePerDay,
-          deposit,
-        });
-      }
       setIsFetching(false);
-      redirect(`/equipment/${equipmentData._id}`);
+      redirect(`/equipment/${response.data}`);
     } catch (error) {
-      redirect("/error");
+      setIsFetching(false);
+
+      if (error.response.status === 400) {
+        setErrorMessage(error.response.data.errorMessage);
+      } else {
+        redirect("/error");
+      }
     }
   };
 
   return (
     <>
       <img
-        src={imgUrl ? imgUrl : equipmentData.img}
-        alt={`A pic of ${equipmentData.name}`}
+        src={imgUrl ? imgUrl : DEFAULT_IMG_URL}
+        alt="New Equipment pic"
         width="100"
       />
+
       <form>
-        <label htmlFor="img">Image</label>
+        <label htmlFor="img">Upload image</label>
         <input
           type="file"
           name="img"
@@ -107,7 +98,7 @@ function FormEditEquipment({ equipmentData }) {
         />
         <br />
         <br />
-        <label htmlFor="name">Name</label>
+        <label htmlFor="name">Name: </label>
         <input type="text" name="name" value={name} onChange={handleInput} />
         <br />
         <br />
@@ -140,12 +131,13 @@ function FormEditEquipment({ equipmentData }) {
         />
         <br />
         <br />
+        {errorMessage.length ? <p>{errorMessage}</p> : null}
         <button onClick={handleSubmit} disabled={isFetching}>
-          UPDATE
+          PUBLISH
         </button>
       </form>
     </>
   );
 }
 
-export default FormEditEquipment;
+export default FormCreateEquipment;
