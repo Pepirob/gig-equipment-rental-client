@@ -1,5 +1,9 @@
 import service from "./config.services";
 
+const createEquipmentService = (body) => {
+  return service.post("/equipment", body);
+};
+
 const getAvailableEquipmentService = () => {
   return service.get("/equipment");
 };
@@ -29,6 +33,7 @@ const deleteAllEquipmentService = (ownerId) => {
 };
 
 export {
+  createEquipmentService,
   getMyEquipmentService,
   getEquipmentDetailsService,
   updateEquipmentService,

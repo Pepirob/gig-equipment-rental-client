@@ -7,7 +7,7 @@ function EquipmentEdit() {
   const redirect = useNavigate();
   const params = useParams();
   const { equipmentId } = params;
-  const [equipmentData, setEquipment] = useState(null);
+  const [equipment, setEquipment] = useState(null);
   const [isFetching, setIsFetching] = useState(true);
 
   useEffect(() => {
@@ -34,8 +34,8 @@ function EquipmentEdit() {
           <h2>...Buscando</h2>
         ) : (
           <>
-            <h1>Edit Equipment</h1>
-            <FormEditEquipment equipmentData={equipmentData} />
+            <h1>Edit Equipment: {equipment.name} </h1>
+            <FormEditEquipment equipmentData={equipment} />
           </>
         )}
       </main>
