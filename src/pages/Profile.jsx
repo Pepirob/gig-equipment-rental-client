@@ -35,9 +35,9 @@ function Profile() {
       await deleteTransactionsByUserService(loggedUser._id);
       await deleteAllEquipmentService(loggedUser._id);
 
-      // localStorage.removeItem("authToken");
-      // authenticateUser();
-      // redirect("/");
+      localStorage.removeItem("authToken");
+      authenticateUser();
+      redirect("/");
     } catch (error) {
       setErrorMessage(error.response.data);
     }
