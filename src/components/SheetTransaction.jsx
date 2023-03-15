@@ -35,10 +35,11 @@ function SheetTransaction({ transaction }) {
       <img src={transaction.equipment.img} width="100" />
       <p>Price per Day: {transaction.equipment.pricePerDay}</p>
       <p>Deposit: {transaction.equipment.deposit}</p>
+      <p>State: {transaction.state}</p>
       {!isFetching && <Link to="">{equipment.owner.username}</Link>}
 
       <p>
-        Periodo de alquiler:
+        Renting period:{" "}
         <span>
           {transactionCreatedDay.getDate()}/
           {transactionCreatedDay.getMonth() + 1}/
