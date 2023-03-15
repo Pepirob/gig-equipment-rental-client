@@ -1,11 +1,13 @@
 import { useEffect, useState } from "react";
 import { Link, useNavigate, useLocation } from "react-router-dom";
 import { updatePaymentIntentService } from "../services/payment.services";
+import SheetTransaction from "./SheetTransaction";
 
 const PaymentSuccess = () => {
   const navigate = useNavigate();
   const location = useLocation();
 
+  const [transaction, setTransaction] = useState(null);
   const [isFetching, setIsFetching] = useState(true);
 
   useEffect(() => {
@@ -26,8 +28,10 @@ const PaymentSuccess = () => {
     };
 
     try {
-      await updatePaymentIntentService(paymentIntentInfo);
+      const response = await updatePaymentIntentService(paymentIntentInfo);
+      console.log(response);
       setIsFetching(false);
+      setTransaction(response.data);
     } catch (error) {
       navigate("/error");
     }
@@ -40,10 +44,16 @@ const PaymentSuccess = () => {
   return (
     <>
       {/* // todo redirect to owner */}
-      <div>
-        <h1>Thank you for your order!</h1>
-        <Link to={"/"}>Go back to Home</Link>
-      </div>
+      <>
+        <header>
+          <h1>Thank you for your order!</h1>
+          <Link to={"/"}>Go back to Home</Link>
+        </header>
+        <main>
+          <h3>Details:</h3>
+          <SheetTransaction transaction={transaction} />
+        </main>
+      </>
     </>
   );
 };
