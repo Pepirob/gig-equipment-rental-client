@@ -68,7 +68,7 @@ function Equipment() {
             <>
               {equipmentDetails ? (
                 <>
-                  <SheetEquipment equipment={equipmentDetails} />
+                  <SheetEquipment item={equipmentDetails} />
                   <section>
                     {!showTotalDays &&
                       loggedUser?._id !== equipmentDetails.owner && (

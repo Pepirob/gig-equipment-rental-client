@@ -4,16 +4,17 @@ import { AuthContext } from "../context/auth.context";
 import { deleteSingleEquipmentService } from "../services/equipment.services";
 import { deleteTransactionsByEquipmentService } from "../services/transactions.services";
 
-function SheetEquipment({ equipment }) {
+function SheetEquipment({ item }) {
   const redirect = useNavigate();
   const { loggedUser } = useContext(AuthContext);
-  const { _id, owner } = equipment;
+  const { _id, owner } = item;
   const [errorMessage, setErrorMessage] = useState("");
 
   const handleDelete = async () => {
     try {
       await deleteSingleEquipmentService(_id, owner);
       await deleteTransactionsByEquipmentService(_id);
+
       redirect("/dashboard");
     } catch (error) {
       setErrorMessage(error.response.data);
@@ -22,12 +23,12 @@ function SheetEquipment({ equipment }) {
 
   return (
     <>
-      <h1>{equipment.name}</h1>
-      <img src={equipment.img} alt="equip" width="100" />
-      <p>{equipment.description}</p>
-      <p>Price per day: {equipment.pricePerDay}€</p>
-      <p>Deposit: {equipment.deposit}€</p>
-      {equipment.isAvailable ? (
+      <h1>{item.name}</h1>
+      <img src={item.img} alt="equip" width="100" />
+      <p>{item.description}</p>
+      <p>Price per day: {item.pricePerDay}€</p>
+      <p>Deposit: {item.deposit}€</p>
+      {item.isAvailable ? (
         <p style={{ color: "green" }}>Available</p>
       ) : (
         <>
@@ -35,9 +36,9 @@ function SheetEquipment({ equipment }) {
         </>
       )}
       {/* // TODO: move to tools component */}
-      {loggedUser?._id === equipment.owner ? (
+      {loggedUser?._id === item.owner ? (
         <>
-          <Link to={`/equipment/${equipment._id}/edit`}>Edit</Link>
+          <Link to={`/equipment/${item._id}/edit`}>Edit</Link>
           <button onClick={handleDelete}>DELETE</button>
           {errorMessage && <p>{errorMessage}</p>}
         </>
