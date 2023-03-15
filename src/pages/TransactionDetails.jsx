@@ -67,13 +67,23 @@ function TransactionDetails() {
       <main>
         {!isFetching && <SheetTransaction transaction={transaction} />}
         {!isFetching && loggedUser._id === transaction.client && (
-          <button onClick={handleDeliveredState}>Mark as delivered</button>
+          <button
+            hidden={transaction.state === "delivered"}
+            onClick={handleDeliveredState}
+          >
+            Mark as delivered
+          </button>
         )}
         {!isFetching && transaction.state === "delivered" && (
           <p>Product delivered</p>
         )}
         {!isFetching && loggedUser._id === transaction.equipment.owner && (
-          <button onClick={handleReturnedState}>Mark as returned</button>
+          <button
+            hidden={transaction.state === "returned"}
+            onClick={handleReturnedState}
+          >
+            Mark as returned
+          </button>
         )}
         {!isFetching && transaction.state === "returned" && (
           <p>Product returned</p>
