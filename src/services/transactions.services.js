@@ -12,8 +12,13 @@ const getTransactionsService = () => {
   return service.get("/transaction");
 };
 
+const deleteTransactionsByUserService = (userId) => {
+  return service.delete(`/transaction/user/${userId}`);
+};
+
 export {
   deleteTransactionsByEquipmentService,
   getTransactionsService,
   getTransactionDetailsService,
+  deleteTransactionsByUserService,
 };

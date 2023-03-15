@@ -75,7 +75,7 @@ function App() {
         <Route path="/payment-success" element={<PaymentSuccess />} />
 
         <Route path="/error" element={<Error />} />
-        <Route path="*" element={<NotFound />} />
+        <Route path="/*" element={<NotFound />} />
       </Routes>
     </div>
   );
