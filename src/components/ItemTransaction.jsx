@@ -8,7 +8,7 @@ function ItemTransaction({ item }) {
     transactionCreatedDay.getDate() + item.daysRented
   );
   const timeDiff = Math.abs(lastDayRent - currentDay.getTime());
-  const remainingDays = Math.ceil(timeDiff / (1000 * 3600 * 24));
+  const remainingDays = Math.round(timeDiff / (1000 * 3600 * 24));
 
   return (
     <li>
