@@ -33,7 +33,6 @@ function FormEditEquipment({ equipmentData }) {
       const response = await uploadEquipmentImgService(uploadData);
       setImgUrl(response.data.equipmentImgUrl);
       setIsUploading(false);
-      console.log(imgUrl);
     } catch (error) {
       redirect("/error");
     }
