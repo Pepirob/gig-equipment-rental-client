@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router";
 import { createEquipmentService } from "../services/equipment.services";
 import { uploadEquipmentImgService } from "../services/upload.services";
@@ -58,7 +58,7 @@ function FormCreateEquipment() {
     event.preventDefault();
 
     const newEquipment = {
-      imgUrl,
+      img: imgUrl,
       name,
       description,
       pricePerDay,
