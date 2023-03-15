@@ -71,7 +71,7 @@ function Equipment() {
                   <SheetEquipment item={equipmentDetails} />
                   <section>
                     {!showTotalDays &&
-                      loggedUser?._id !== equipmentDetails.owner && (
+                      loggedUser?._id !== equipmentDetails.owner._id && (
                         <button onClick={handleTotalPrice}>RENT</button>
                       )}
 
