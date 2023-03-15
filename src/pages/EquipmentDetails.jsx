@@ -27,7 +27,6 @@ function Equipment() {
   const getData = async () => {
     try {
       const response = await getEquipmentDetailsService(equipmentId);
-      console.log(response);
       setEquipmentDetails(response.data);
       setIsFetching(false);
     } catch (error) {
