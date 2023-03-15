@@ -27,7 +27,6 @@ function Equipment() {
   const getData = async () => {
     try {
       const response = await getEquipmentDetailsService(equipmentId);
-      console.log(response);
       setEquipmentDetails(response.data);
       setIsFetching(false);
     } catch (error) {
@@ -45,6 +44,7 @@ function Equipment() {
       redirect("/login");
     }
   };
+
   const handleRent = (event) => {
     event.preventDefault();
 
@@ -55,6 +55,8 @@ function Equipment() {
       redirect("/login");
     }
   };
+
+  const isSomeoneElseEquipment = loggedUser?._id !== equipmentDetails.owner._id;
 
   return (
     <>
@@ -69,37 +71,36 @@ function Equipment() {
             <>
               {equipmentDetails ? (
                 <>
-                  <SheetEquipment equipment={equipmentDetails} />
+                  <SheetEquipment item={equipmentDetails} />
                   <section>
-                    {!showTotalDays &&
-                      loggedUser?._id !== equipmentDetails.owner && (
-                        <button onClick={handleTotalPrice}>RENT</button>
-                      )}
+                    {isSomeoneElseEquipment && (
+                      <>
+                        {showTotalDays ? (
+                          <>
+                            <FormTotalPrice
+                              setTotalDays={setTotalDays}
+                              totalDays={totalDays}
+                              pricePerDay={equipmentDetails.pricePerDay}
+                              deposit={equipmentDetails.deposit}
+                            />
+                            {showPayButton && (
+                              <button onClick={handleRent}>PAY</button>
+                            )}
+                          </>
+                        ) : (
+                          <button onClick={handleTotalPrice}>RENT</button>
+                        )}
+                      </>
+                    )}
 
-                    {showTotalDays &&
-                      loggedUser?._id !== equipmentDetails.owner && (
-                        <>
-                          <FormTotalPrice
-                            setTotalDays={setTotalDays}
-                            totalDays={totalDays}
-                            pricePerDay={equipmentDetails.pricePerDay}
-                            deposit={equipmentDetails.deposit}
-                          />
-                          {showPayButton && (
-                            <button onClick={handleRent}>PAY</button>
-                          )}
-                        </>
-                      )}
-
-                    {showPaymentIntent &&
-                      loggedUser?._id !== equipmentDetails.owner && (
-                        <PaymentIntent
-                          productDetails={equipmentDetails}
-                          totalDays={totalDays}
-                        >
-                          <FormCheckout />
-                        </PaymentIntent>
-                      )}
+                    {showPaymentIntent && isSomeoneElseEquipment && (
+                      <PaymentIntent
+                        productDetails={equipmentDetails}
+                        totalDays={totalDays}
+                      >
+                        <FormCheckout />
+                      </PaymentIntent>
+                    )}
                   </section>
                 </>
               ) : (

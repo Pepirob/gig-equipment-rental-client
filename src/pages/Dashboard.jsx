@@ -25,8 +25,13 @@ function Dashboard() {
       <main>
         <h1>Dashboard</h1>
         <h2>{loggedUser.username}</h2>
-        <Link to="/my-equipment">Equipment</Link>
         <section>
+          <Link to="/my-equipment">Equipment</Link>
+          <br />
+          <br />
+          <Link to="/my-transactions">Transactions</Link>
+          <br />
+          <br />
           <Link to="/profile">Profile</Link>
         </section>
       </main>
