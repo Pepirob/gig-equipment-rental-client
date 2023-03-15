@@ -22,11 +22,12 @@ function Navigation() {
 
       {isLoggedIn && (
         <>
+          {/* // TODO: DRY ON MyEquipment */}
           <Link style={{ marginRight: "1rem" }} to="/dashboard">
             Dashboard
           </Link>
           <Link style={{ marginRight: "1rem" }} to="/create-equipment">
-            Publish your equipment
+            Publish your Equipment
           </Link>
         </>
       )}

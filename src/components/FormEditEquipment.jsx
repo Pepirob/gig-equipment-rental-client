@@ -10,7 +10,6 @@ function FormEditEquipment({ equipmentData }) {
   const [description, setDescription] = useState("");
   const [pricePerDay, setPricePerDay] = useState(0);
   const [deposit, setDeposit] = useState(0);
-  const [isAvailable, setIsAvailable] = useState(equipmentData.isAvailable);
   const [isUploading, setIsUploading] = useState(false);
   const [isFetching, setIsFetching] = useState(false);
 
@@ -19,7 +18,6 @@ function FormEditEquipment({ equipmentData }) {
     setDescription(equipmentData.description);
     setPricePerDay(equipmentData.pricePerDay);
     setDeposit(equipmentData.deposit);
-    setIsAvailable(equipmentData.isAvailable);
   }, []);
 
   const handleFileUpload = async (event) => {
@@ -35,7 +33,6 @@ function FormEditEquipment({ equipmentData }) {
       const response = await uploadEquipmentImgService(uploadData);
       setImgUrl(response.data.equipmentImgUrl);
       setIsUploading(false);
-      console.log(imgUrl);
     } catch (error) {
       redirect("/error");
     }
@@ -56,9 +53,6 @@ function FormEditEquipment({ equipmentData }) {
       case "deposit":
         setDeposit(value);
         break;
-      case "isAvailable":
-        setIsAvailable(!isAvailable);
-        break;
       default:
         setName(value);
     }
@@ -72,20 +66,20 @@ function FormEditEquipment({ equipmentData }) {
 
       if (imgUrl) {
         await updateEquipmentService(equipmentData._id, {
+          ...equipmentData,
           name,
           description,
           pricePerDay,
           deposit,
           img: imgUrl,
-          isAvailable,
         });
       } else {
         updateEquipmentService(equipmentData._id, {
+          ...equipmentData,
           name,
           description,
           pricePerDay,
           deposit,
-          isAvailable,
         });
       }
       setIsFetching(false);
@@ -99,7 +93,7 @@ function FormEditEquipment({ equipmentData }) {
     <>
       <img
         src={imgUrl ? imgUrl : equipmentData.img}
-        alt="equipment pic"
+        alt={`A pic of ${equipmentData.name}`}
         width="100"
       />
       <form>
@@ -141,16 +135,6 @@ function FormEditEquipment({ equipmentData }) {
           type="number"
           name="deposit"
           value={deposit}
-          onChange={handleInput}
-        />
-        <br />
-        <br />
-        <label htmlFor="isAvailable">Available</label>
-        <input
-          type="checkbox"
-          name="isAvailable"
-          checked={isAvailable}
-          value={isAvailable}
           onChange={handleInput}
         />
         <br />

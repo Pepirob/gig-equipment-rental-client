@@ -34,7 +34,7 @@ function ProfileEdit() {
           <h2>...loading data</h2>
         ) : (
           <>
-            <h1>Edit Profile</h1>
+            <h1>Edit {user.username}'s Profile </h1>
             <FormProfileEdit userData={user} />
           </>
         )}
