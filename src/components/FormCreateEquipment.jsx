@@ -81,11 +81,9 @@ function FormCreateEquipment() {
 
   return (
     <>
-      {imgUrl && <img src={imgUrl} alt="equipment pic" width="100" />}
-
       <img
         src={imgUrl ? imgUrl : DEFAULT_IMG_URL}
-        alt="equipment pic"
+        alt="New Equipment pic"
         width="100"
       />
 
