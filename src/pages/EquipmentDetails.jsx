@@ -27,6 +27,7 @@ function Equipment() {
   const getData = async () => {
     try {
       const response = await getEquipmentDetailsService(equipmentId);
+      console.log(response);
       setEquipmentDetails(response.data);
       setIsFetching(false);
     } catch (error) {
@@ -65,34 +66,46 @@ function Equipment() {
           <h2>...Buscando</h2>
         ) : (
           <article>
-            <SheetEquipment equipment={equipmentDetails} />
-            <section>
-              {!showTotalDays && loggedUser?._id !== equipmentDetails.owner && (
-                <button onClick={handleTotalPrice}>RENT</button>
-              )}
-
-              {showTotalDays && loggedUser?._id !== equipmentDetails.owner && (
+            <>
+              {equipmentDetails ? (
                 <>
-                  <FormTotalPrice
-                    setTotalDays={setTotalDays}
-                    totalDays={totalDays}
-                    pricePerDay={equipmentDetails.pricePerDay}
-                    deposit={equipmentDetails.deposit}
-                  />
-                  {showPayButton && <button onClick={handleRent}>PAY</button>}
-                </>
-              )}
+                  <SheetEquipment equipment={equipmentDetails} />
+                  <section>
+                    {!showTotalDays &&
+                      loggedUser?._id !== equipmentDetails.owner && (
+                        <button onClick={handleTotalPrice}>RENT</button>
+                      )}
 
-              {showPaymentIntent &&
-                loggedUser?._id !== equipmentDetails.owner && (
-                  <PaymentIntent
-                    productDetails={equipmentDetails}
-                    totalDays={totalDays}
-                  >
-                    <FormCheckout />
-                  </PaymentIntent>
-                )}
-            </section>
+                    {showTotalDays &&
+                      loggedUser?._id !== equipmentDetails.owner && (
+                        <>
+                          <FormTotalPrice
+                            setTotalDays={setTotalDays}
+                            totalDays={totalDays}
+                            pricePerDay={equipmentDetails.pricePerDay}
+                            deposit={equipmentDetails.deposit}
+                          />
+                          {showPayButton && (
+                            <button onClick={handleRent}>PAY</button>
+                          )}
+                        </>
+                      )}
+
+                    {showPaymentIntent &&
+                      loggedUser?._id !== equipmentDetails.owner && (
+                        <PaymentIntent
+                          productDetails={equipmentDetails}
+                          totalDays={totalDays}
+                        >
+                          <FormCheckout />
+                        </PaymentIntent>
+                      )}
+                  </section>
+                </>
+              ) : (
+                <h2>We're sorry! This equipment isn't currently available</h2>
+              )}
+            </>
           </article>
         )}
       </main>
