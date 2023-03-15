@@ -25,7 +25,12 @@ function MyEquipment() {
   return (
     <>
       <header>
-        <Link to="/dashboard">Back</Link>
+        <Link style={{ marginRight: "1rem" }} to="/dashboard">
+          Dashboard
+        </Link>
+        <Link style={{ marginRight: "1rem" }} to="/create-equipment">
+          Publish your Equipment
+        </Link>
       </header>
       <main>
         <h2>My equipment</h2>
