@@ -44,6 +44,7 @@ function Equipment() {
       redirect("/login");
     }
   };
+
   const handleRent = (event) => {
     event.preventDefault();
 
@@ -54,6 +55,8 @@ function Equipment() {
       redirect("/login");
     }
   };
+
+  const isSomeoneElseEquipment = loggedUser?._id !== equipmentDetails.owner._id;
 
   return (
     <>
@@ -70,7 +73,7 @@ function Equipment() {
                 <>
                   <SheetEquipment item={equipmentDetails} />
                   <section>
-                    {loggedUser?._id !== equipmentDetails.owner._id && (
+                    {isSomeoneElseEquipment && (
                       <>
                         {showTotalDays ? (
                           <>
@@ -90,15 +93,14 @@ function Equipment() {
                       </>
                     )}
 
-                    {showPaymentIntent &&
-                      loggedUser?._id !== equipmentDetails.owner && (
-                        <PaymentIntent
-                          productDetails={equipmentDetails}
-                          totalDays={totalDays}
-                        >
-                          <FormCheckout />
-                        </PaymentIntent>
-                      )}
+                    {showPaymentIntent && isSomeoneElseEquipment && (
+                      <PaymentIntent
+                        productDetails={equipmentDetails}
+                        totalDays={totalDays}
+                      >
+                        <FormCheckout />
+                      </PaymentIntent>
+                    )}
                   </section>
                 </>
               ) : (
