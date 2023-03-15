@@ -12,6 +12,7 @@ function FormEditEquipment({ equipmentData }) {
   const [deposit, setDeposit] = useState(0);
   const [isUploading, setIsUploading] = useState(false);
   const [isFetching, setIsFetching] = useState(false);
+  const [wrongFileMessage, setWrongFileMessage] = useState("");
 
   useEffect(() => {
     setName(equipmentData.name);
@@ -31,10 +32,17 @@ function FormEditEquipment({ equipmentData }) {
 
     try {
       const response = await uploadEquipmentImgService(uploadData);
+
       setImgUrl(response.data.equipmentImgUrl);
       setIsUploading(false);
+      setWrongFileMessage("");
     } catch (error) {
-      redirect("/error");
+      if (error.response.status === 500) {
+        setWrongFileMessage("Allowed image formats are .jpeg, .jpg and .png");
+        setIsUploading(false);
+      } else {
+        redirect("/error");
+      }
     }
   };
 
@@ -104,6 +112,7 @@ function FormEditEquipment({ equipmentData }) {
           disabled={isUploading}
           onChange={handleFileUpload}
         />
+        {wrongFileMessage && <p>{wrongFileMessage}</p>}
         <br />
         <br />
         <label htmlFor="name">Name</label>
@@ -139,7 +148,10 @@ function FormEditEquipment({ equipmentData }) {
         />
         <br />
         <br />
-        <button onClick={handleSubmit} disabled={isUploading || isFetching}>
+        <button
+          onClick={handleSubmit}
+          disabled={isUploading || wrongFileMessage || isFetching}
+        >
           UPDATE
         </button>
       </form>
