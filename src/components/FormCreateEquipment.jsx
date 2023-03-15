@@ -132,7 +132,7 @@ function FormCreateEquipment() {
         <br />
         <br />
         {errorMessage.length ? <p>{errorMessage}</p> : null}
-        <button onClick={handleSubmit} disabled={isFetching}>
+        <button onClick={handleSubmit} disabled={isUploading || isFetching}>
           PUBLISH
         </button>
       </form>
