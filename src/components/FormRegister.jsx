@@ -51,6 +51,16 @@ function FormRegister() {
   return (
     <>
       <form>
+        <label htmlFor="username">Username</label>
+        <input
+          type="text"
+          name="username"
+          value={username}
+          onChange={handleInput}
+          autoComplete="username"
+        />
+        <br />
+        <br />
         <label htmlFor="email">Email</label>
         <input
           type="email"
@@ -58,16 +68,6 @@ function FormRegister() {
           value={email}
           onChange={handleInput}
           autoComplete="email"
-        />
-        <br />
-        <br />
-        <label htmlFor="username">username</label>
-        <input
-          type="text"
-          name="username"
-          value={username}
-          onChange={handleInput}
-          autoComplete="username"
         />
         <br />
         <br />
