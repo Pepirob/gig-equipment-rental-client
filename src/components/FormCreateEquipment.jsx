@@ -16,6 +16,8 @@ function FormCreateEquipment() {
   const [isFetching, setIsFetching] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
 
+  const getImgUrl = () => (imgUrl ? imgUrl : DEFAULT_IMG_URL);
+
   const handleInput = (event) => {
     const value = event.target.value;
     switch (event.target.name) {
@@ -58,7 +60,7 @@ function FormCreateEquipment() {
     event.preventDefault();
 
     const newEquipment = {
-      img: imgUrl,
+      img: getImgUrl(),
       name,
       description,
       pricePerDay,
@@ -84,11 +86,7 @@ function FormCreateEquipment() {
 
   return (
     <>
-      <img
-        src={imgUrl ? imgUrl : DEFAULT_IMG_URL}
-        alt="New Equipment pic"
-        width="100"
-      />
+      <img src={getImgUrl()} alt="New Equipment pic" width="100" />
 
       <form>
         <label htmlFor="img">Upload image</label>
