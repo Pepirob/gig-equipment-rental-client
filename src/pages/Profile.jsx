@@ -54,12 +54,18 @@ function Profile() {
           <h2>...loading data</h2>
         ) : (
           <>
-            <UserDetails user={userData} />
-            <Link to={`/profile/edit`}>EDIT PROFILE</Link>
-            <br />
-            <br />
-            <button onClick={handleDelete}>DELETE ACCOUNT</button>
-            {errorMessage && <p>{errorMessage}</p>}
+            {userData ? (
+              <>
+                <UserDetails user={userData} />
+                <Link to={`/profile/edit`}>EDIT PROFILE</Link>
+                <br />
+                <br />
+                <button onClick={handleDelete}>DELETE ACCOUNT</button>
+                {errorMessage && <p>{errorMessage}</p>}
+              </>
+            ) : (
+              <h2>Sorry, this user isn't currently available!</h2>
+            )}
           </>
         )}
       </main>
