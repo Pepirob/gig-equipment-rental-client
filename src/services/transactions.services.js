@@ -8,4 +8,4 @@ const getTransactionsService = () => {
   return service.get("/transaction");
 };
 
-export { deleteTransactionsByEquipmentService };
+export { deleteTransactionsByEquipmentService, getTransactionsService };
