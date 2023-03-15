@@ -105,6 +105,7 @@ function FormCreateEquipment() {
           onChange={handleFileUpload}
         />
         {wrongFileMessage && <p>{wrongFileMessage}</p>}
+        {isUploading ? <h3>... uploading image</h3> : null}
         <br />
         <br />
         <label htmlFor="name">Name: </label>

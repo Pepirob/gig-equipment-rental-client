@@ -13,6 +13,7 @@ function FormProfileEdit({ userData }) {
   const [location, setLocation] = useState("");
   const [phoneNumber, setPhoneNumber] = useState("");
   const [isFetching, setIsFetching] = useState(false);
+  const [wrongFileMessage, setWrongFileMessage] = useState("");
 
   useEffect(() => {
     setUsername(userData.username);
@@ -32,10 +33,17 @@ function FormProfileEdit({ userData }) {
 
     try {
       const response = await uploadUserImgService(uploadData);
+
       setImgUrl(response.data.userImgUrl);
       setIsUploading(false);
+      setWrongFileMessage("");
     } catch (error) {
-      redirect("/error");
+      if (error.response.status === 500) {
+        setWrongFileMessage("Allowed image formats are .jpeg, .jpg and .png");
+        setIsUploading(false);
+      } else {
+        redirect("/error");
+      }
     }
   };
 
@@ -106,6 +114,7 @@ function FormProfileEdit({ userData }) {
         />
         <br />
         <br />
+        {wrongFileMessage && <p>{wrongFileMessage}</p>}
         {isUploading ? <h3>... uploading image</h3> : null}
         <label htmlFor="username">Username</label>
         <input
