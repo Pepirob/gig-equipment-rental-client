@@ -14,6 +14,8 @@ import ProfileEdit from "./pages/ProfileEdit";
 import EquipmentEdit from "./pages/EquipmentEdit";
 import PaymentSuccess from "./components/PaymentSuccess";
 import CreateEquipment from "./pages/CreateEquipment";
+import MyTransactions from "./pages/MyTransactions";
+import TransactionDetails from "./pages/TransactionDetails";
 
 function App() {
   return (
@@ -63,6 +65,12 @@ function App() {
             </IsPrivate>
           }
         />
+        <Route path="/my-transactions" element={<MyTransactions />} />
+        <Route
+          path="/transaction/:transactionId"
+          element={<TransactionDetails />}
+        />
+
         <Route path="/create-equipment" element={<CreateEquipment />} />
         <Route path="/payment-success" element={<PaymentSuccess />} />
 

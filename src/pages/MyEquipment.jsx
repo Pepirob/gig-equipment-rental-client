@@ -33,13 +33,17 @@ function MyEquipment() {
         </Link>
       </header>
       <main>
-        <h2>My equipment</h2>
+        <h2>My Equipment</h2>
         {isFetching ? (
           <h1>...Buscando</h1>
         ) : (
-          <ul>
-            <ListEquipment equipment={myEquipment} />
-          </ul>
+          <>
+            {myEquipment.length ? (
+              <ListEquipment equipment={myEquipment} />
+            ) : (
+              <h2>You have no equipment</h2>
+            )}
+          </>
         )}
       </main>
     </>
