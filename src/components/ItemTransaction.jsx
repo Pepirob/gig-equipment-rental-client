@@ -13,11 +13,13 @@ function ItemTransaction({ item }) {
   return (
     <li>
       <img src={item.equipment.img} width="100" />
-      <Link to={`/transaction/${item._id}`}>
-        {capitalize(item.equipment.name)}
-      </Link>
-      <p>State: {capitalize(item.state)}</p>
-      <p>Remaining Days:{remainingDays}</p>
+      <div>
+        <Link to={`/transaction/${item._id}`}>
+          {capitalize(item.equipment.name)}
+        </Link>
+        <p>State: {capitalize(item.state)}</p>
+        <p>Remaining Days:{remainingDays}</p>
+      </div>
     </li>
   );
 }

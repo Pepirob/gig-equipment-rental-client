@@ -1,18 +1,12 @@
 import ItemTransaction from "./ItemTransaction";
 
-function ListTransactions({ transactionsAsProvider, transactionsAsClient }) {
+function ListTransactions({ transactions }) {
   return (
-    <>
-      <h2>My equipment</h2>
-      {transactionsAsProvider.map((item) => {
+    <ul>
+      {transactions.map((item) => {
         return <ItemTransaction key={item._id} item={item} />;
       })}
-
-      <h2>Rented equipment</h2>
-      {transactionsAsClient.map((item) => {
-        return <ItemTransaction key={item._id} item={item} />;
-      })}
-    </>
+    </ul>
   );
 }
 
