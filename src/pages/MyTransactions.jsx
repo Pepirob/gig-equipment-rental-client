@@ -37,23 +37,29 @@ function MyTransactions() {
         <Navigation />
       </header>
       <main>
-        <h2>MyTransactions</h2>
+        <h1>My Transactions</h1>
         {isFetching ? (
-          <h1>...Buscando</h1>
+          <h2>...Buscando</h2>
         ) : (
           <>
-            {transactionsAsOwner.length ? (
+            {transactions.length ? (
               <>
-                <h2>As Owner</h2>
-                <ListTransactions transactions={transactionsAsOwner} />
+                {transactionsAsOwner.length ? (
+                  <>
+                    <h2>As Owner</h2>
+                    <ListTransactions transactions={transactionsAsOwner} />
+                  </>
+                ) : null}
+                {transactionsAsClient.length ? (
+                  <>
+                    <h2>As Client</h2>
+                    <ListTransactions transactions={transactionsAsClient} />
+                  </>
+                ) : null}
               </>
-            ) : null}
-            {transactionsAsClient.length ? (
-              <>
-                <h2>As Client</h2>
-                <ListTransactions transactions={transactionsAsClient} />
-              </>
-            ) : null}
+            ) : (
+              <h2>You have no transactions</h2>
+            )}
           </>
         )}
       </main>
