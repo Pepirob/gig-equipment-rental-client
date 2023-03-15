@@ -38,7 +38,7 @@ function SheetTransaction({ transaction }) {
       {!isFetching && <Link to="">{equipment.owner.username}</Link>}
 
       <p>
-        Periodo de alquiler:{" "}
+        Periodo de alquiler:
         <span>
           {transactionCreatedDay.getDate()}/
           {transactionCreatedDay.getMonth() + 1}/
