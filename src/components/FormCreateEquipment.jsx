@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router";
 import { createEquipmentService } from "../services/equipment.services";
 import { uploadEquipmentImgService } from "../services/upload.services";
@@ -15,6 +15,8 @@ function FormCreateEquipment() {
   const [isUploading, setIsUploading] = useState(false);
   const [isFetching, setIsFetching] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
+
+  const getImgUrl = () => (imgUrl ? imgUrl : DEFAULT_IMG_URL);
 
   const handleInput = (event) => {
     const value = event.target.value;
@@ -54,9 +56,11 @@ function FormCreateEquipment() {
     }
   };
 
-  const handleSubmit = async () => {
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+
     const newEquipment = {
-      imgUrl,
+      img: getImgUrl(),
       name,
       description,
       pricePerDay,
@@ -82,11 +86,7 @@ function FormCreateEquipment() {
 
   return (
     <>
-      <img
-        src={imgUrl ? imgUrl : DEFAULT_IMG_URL}
-        alt="New Equipment pic"
-        width="100"
-      />
+      <img src={getImgUrl()} alt="New Equipment pic" width="100" />
 
       <form>
         <label htmlFor="img">Upload image</label>
@@ -132,7 +132,7 @@ function FormCreateEquipment() {
         <br />
         <br />
         {errorMessage.length ? <p>{errorMessage}</p> : null}
-        <button onClick={handleSubmit} disabled={isFetching}>
+        <button onClick={handleSubmit} disabled={isUploading || isFetching}>
           PUBLISH
         </button>
       </form>

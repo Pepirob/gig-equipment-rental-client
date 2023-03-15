@@ -33,7 +33,6 @@ function FormEditEquipment({ equipmentData }) {
       const response = await uploadEquipmentImgService(uploadData);
       setImgUrl(response.data.equipmentImgUrl);
       setIsUploading(false);
-      console.log(imgUrl);
     } catch (error) {
       redirect("/error");
     }
@@ -140,7 +139,7 @@ function FormEditEquipment({ equipmentData }) {
         />
         <br />
         <br />
-        <button onClick={handleSubmit} disabled={isFetching}>
+        <button onClick={handleSubmit} disabled={isUploading || isFetching}>
           UPDATE
         </button>
       </form>
