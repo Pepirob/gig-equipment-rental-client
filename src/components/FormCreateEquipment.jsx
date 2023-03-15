@@ -54,7 +54,9 @@ function FormCreateEquipment() {
     }
   };
 
-  const handleSubmit = async () => {
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+
     const newEquipment = {
       imgUrl,
       name,
