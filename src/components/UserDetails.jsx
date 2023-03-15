@@ -8,6 +8,9 @@ function UserDetails({ user }) {
           alt={`${user.username} profile image`}
           height={100}
         />
+        <h2>{user.location}</h2>
+        <h3>{user.email}</h3>
+        <h3>{user.phoneNumber}</h3>
       </section>
     </>
   );
