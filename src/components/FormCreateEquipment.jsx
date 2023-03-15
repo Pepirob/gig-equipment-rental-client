@@ -62,6 +62,7 @@ function FormCreateEquipment() {
       pricePerDay,
       deposit,
     };
+
     try {
       setIsFetching(true);
       const response = await createEquipmentService(newEquipment);
