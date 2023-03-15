@@ -65,28 +65,30 @@ function TransactionDetails() {
         <Link to="/">Home</Link> <Link to="/dashboard">Dashboard</Link>
       </header>
       <main>
-        {!isFetching && <SheetTransaction transaction={transaction} />}
-        {!isFetching && loggedUser._id === transaction.client && (
-          <button
-            hidden={transaction.state === "delivered"}
-            onClick={handleDeliveredState}
-          >
-            Mark as delivered
-          </button>
-        )}
-        {!isFetching && transaction.state === "delivered" && (
-          <p>Product delivered</p>
-        )}
-        {!isFetching && loggedUser._id === transaction.equipment.owner && (
-          <button
-            hidden={transaction.state === "returned"}
-            onClick={handleReturnedState}
-          >
-            Mark as returned
-          </button>
-        )}
-        {!isFetching && transaction.state === "returned" && (
-          <p>Product returned</p>
+        {isFetching ? (
+          <h2>...buscando</h2>
+        ) : (
+          <>
+            <SheetTransaction transaction={transaction} />
+            {loggedUser._id === transaction.client && (
+              <button
+                hidden={transaction.state === "delivered"}
+                onClick={handleDeliveredState}
+              >
+                Mark as delivered
+              </button>
+            )}
+            {transaction.state === "delivered" && <p>Product delivered</p>}
+            {loggedUser._id === transaction.equipment.owner && (
+              <button
+                hidden={transaction.state === "returned"}
+                onClick={handleReturnedState}
+              >
+                Mark as returned
+              </button>
+            )}
+            {transaction.state === "returned" && <p>Product returned</p>}
+          </>
         )}
       </main>
     </>
