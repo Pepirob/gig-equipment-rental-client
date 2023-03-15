@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useNavigate } from "react-router";
 import { createEquipmentService } from "../services/equipment.services";
 import { uploadEquipmentImgService } from "../services/upload.services";
