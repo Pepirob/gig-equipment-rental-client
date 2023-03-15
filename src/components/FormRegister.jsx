@@ -41,7 +41,7 @@ function FormRegister() {
       await signupService({ email, username, location, phoneNumber, password });
 
       setIsFetching(false);
-      redirect("/");
+      redirect("/login");
     } catch (error) {
       setIsFetching(false);
       setErrorMessage(error.response.data.errorMessage);
