@@ -90,7 +90,7 @@ function FormProfileEdit({ userData }) {
         />
         <br />
         <br />
-        <button onClick={handleSubmit} disabled={isFetching}>
+        <button onClick={handleSubmit} disabled={isUploading || isFetching}>
           UPDATE
         </button>
       </form>
