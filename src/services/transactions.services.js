@@ -12,4 +12,8 @@ const getTransactionsService = () => {
   return service.get("/transaction");
 };
 
-export { deleteTransactionsByEquipmentService, getTransactionsService };
+export {
+  deleteTransactionsByEquipmentService,
+  getTransactionsService,
+  getTransactionDetailsService,
+};

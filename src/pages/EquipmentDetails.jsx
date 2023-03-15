@@ -65,7 +65,7 @@ function Equipment() {
           <h2>...Buscando</h2>
         ) : (
           <article>
-            <SheetEquipment equipment={equipmentDetails} />
+            <SheetEquipment item={equipmentDetails} />
             <section>
               {!showTotalDays && loggedUser?._id !== equipmentDetails.owner && (
                 <button onClick={handleTotalPrice}>RENT</button>
