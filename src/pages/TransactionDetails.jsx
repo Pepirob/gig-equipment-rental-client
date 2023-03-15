@@ -1,6 +1,7 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import SheetTransaction from "../components/SheetTransaction";
+import { AuthContext } from "../context/auth.context";
 import {
   getTransactionDetailsService,
   updateTransactionStateService,
@@ -9,6 +10,7 @@ import {
 function TransactionDetails() {
   const redirect = useNavigate();
   const params = useParams();
+  const { loggedUser } = useContext(AuthContext);
   const { transactionId } = params;
   const [transaction, setTransaction] = useState(null);
   const [isFetching, setIsFetching] = useState(true);
@@ -42,6 +44,21 @@ function TransactionDetails() {
     }
   };
 
+  const handleReturnedState = async () => {
+    try {
+      setIsFetching(true);
+
+      const response = await updateTransactionStateService(transactionId, {
+        state: "returned",
+      });
+
+      setIsFetching(false);
+      setTransaction(response.data);
+    } catch (error) {
+      redirect("/error");
+    }
+  };
+
   return (
     <>
       <header>
@@ -49,10 +66,17 @@ function TransactionDetails() {
       </header>
       <main>
         {!isFetching && <SheetTransaction transaction={transaction} />}
-        {!isFetching && transaction.state === "delivered" ? (
-          <p>Equipment delivered</p>
-        ) : (
+        {!isFetching && loggedUser._id === transaction.client && (
           <button onClick={handleDeliveredState}>Mark as delivered</button>
+        )}
+        {!isFetching && transaction.state === "delivered" && (
+          <p>Product delivered</p>
+        )}
+        {!isFetching && loggedUser._id === transaction.equipment.owner && (
+          <button onClick={handleReturnedState}>Mark as returned</button>
+        )}
+        {!isFetching && transaction.state === "returned" && (
+          <p>Product returned</p>
         )}
       </main>
     </>
