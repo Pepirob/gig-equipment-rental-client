@@ -23,7 +23,7 @@ function MyTransactions() {
       redirect("/error");
     }
   };
-  const transactionsAsProvider = transactions.filter((transaction) => {
+  const transactionsAsOwner = transactions.filter((transaction) => {
     return transaction.equipment.owner === loggedUser._id;
   });
 
@@ -41,12 +41,20 @@ function MyTransactions() {
         {isFetching ? (
           <h1>...Buscando</h1>
         ) : (
-          <ul>
-            <ListTransactions
-              transactionsAsProvider={transactionsAsProvider}
-              transactionsAsClient={transactionsAsClient}
-            />
-          </ul>
+          <>
+            {transactionsAsOwner.length ? (
+              <>
+                <h2>As Owner</h2>
+                <ListTransactions transactions={transactionsAsOwner} />
+              </>
+            ) : null}
+            {transactionsAsClient.length ? (
+              <>
+                <h2>As Client</h2>
+                <ListTransactions transactions={transactionsAsClient} />
+              </>
+            ) : null}
+          </>
         )}
       </main>
     </>
