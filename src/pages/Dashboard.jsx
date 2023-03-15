@@ -4,7 +4,7 @@ import { AuthContext } from "../context/auth.context";
 
 function Dashboard() {
   const redirect = useNavigate();
-  const { authenticateUser } = useContext(AuthContext);
+  const { authenticateUser, loggedUser } = useContext(AuthContext);
 
   const handleLogout = () => {
     localStorage.removeItem("authToken");
@@ -24,6 +24,7 @@ function Dashboard() {
       </header>
       <main>
         <h1>Dashboard</h1>
+        <h2>{loggedUser.username}</h2>
         <Link to="/my-equipment">Equipment</Link>
         <section>
           <Link to="/profile">Profile</Link>
