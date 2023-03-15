@@ -14,6 +14,7 @@ function FormCreateEquipment() {
   const [deposit, setDeposit] = useState(0);
   const [isUploading, setIsUploading] = useState(false);
   const [isFetching, setIsFetching] = useState(false);
+  const [wrongFileMessage, setWrongFileMessage] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
 
   const getImgUrl = () => (imgUrl ? imgUrl : DEFAULT_IMG_URL);
@@ -51,8 +52,14 @@ function FormCreateEquipment() {
       const response = await uploadEquipmentImgService(uploadData);
       setImgUrl(response.data.equipmentImgUrl);
       setIsUploading(false);
+      setWrongFileMessage("");
     } catch (error) {
-      redirect("/error");
+      if (error.response.status === 500) {
+        setWrongFileMessage("Allowed image formats are .jpeg, .jpg and .png");
+        setIsUploading(false);
+      } else {
+        redirect("/error");
+      }
     }
   };
 
@@ -96,6 +103,7 @@ function FormCreateEquipment() {
           disabled={isUploading}
           onChange={handleFileUpload}
         />
+        {wrongFileMessage && <p>{wrongFileMessage}</p>}
         <br />
         <br />
         <label htmlFor="name">Name: </label>
@@ -131,8 +139,11 @@ function FormCreateEquipment() {
         />
         <br />
         <br />
-        {errorMessage.length ? <p>{errorMessage}</p> : null}
-        <button onClick={handleSubmit} disabled={isUploading || isFetching}>
+        {errorMessage && <p>{errorMessage}</p>}
+        <button
+          onClick={handleSubmit}
+          disabled={isUploading || wrongFileMessage || isFetching}
+        >
           PUBLISH
         </button>
       </form>
