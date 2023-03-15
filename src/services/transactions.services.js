@@ -4,4 +4,11 @@ const deleteTransactionsByEquipmentService = (equipmentId) => {
   return service.delete(`/transaction/${equipmentId}`);
 };
 
-export { deleteTransactionsByEquipmentService };
+const deleteTransactionsByUserService = (userId) => {
+  return service.delete(`/transaction/user/${userId}`);
+};
+
+export {
+  deleteTransactionsByEquipmentService,
+  deleteTransactionsByUserService,
+};

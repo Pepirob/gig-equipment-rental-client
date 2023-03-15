@@ -4,6 +4,7 @@ import { deleteUserService, getUserService } from "../services/user.services";
 import { Link, useNavigate } from "react-router-dom";
 import UserDetails from "../components/UserDetails";
 import { deleteAllEquipmentService } from "../services/equipment.services";
+import { deleteTransactionsByUserService } from "../services/transactions.services";
 
 function Profile() {
   const redirect = useNavigate();
@@ -30,12 +31,14 @@ function Profile() {
     event.preventDefault();
 
     try {
-      await deleteUserService(loggedUser._id);
+      // await deleteUserService(loggedUser._id);
       await deleteAllEquipmentService(loggedUser._id);
+      await deleteTransactionsByUserService(loggedUser._id);
+      // 2 BORRAR TODAS MIS TRANSACCIONES
 
-      localStorage.removeItem("authToken");
-      authenticateUser();
-      redirect("/");
+      // localStorage.removeItem("authToken");
+      // authenticateUser();
+      // redirect("/");
     } catch (error) {
       setErrorMessage(error.response.data);
     }
