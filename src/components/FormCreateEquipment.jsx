@@ -50,6 +50,7 @@ function FormCreateEquipment() {
 
     try {
       const response = await uploadEquipmentImgService(uploadData);
+
       setImgUrl(response.data.equipmentImgUrl);
       setIsUploading(false);
       setWrongFileMessage("");
