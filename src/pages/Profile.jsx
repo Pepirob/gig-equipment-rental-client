@@ -31,10 +31,9 @@ function Profile() {
     event.preventDefault();
 
     try {
-      // await deleteUserService(loggedUser._id);
-      await deleteAllEquipmentService(loggedUser._id);
+      await deleteUserService(loggedUser._id);
       await deleteTransactionsByUserService(loggedUser._id);
-      // 2 BORRAR TODAS MIS TRANSACCIONES
+      await deleteAllEquipmentService(loggedUser._id);
 
       // localStorage.removeItem("authToken");
       // authenticateUser();
