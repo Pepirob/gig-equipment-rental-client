@@ -4,4 +4,8 @@ const deleteTransactionsByEquipmentService = (equipmentId) => {
   return service.delete(`/transaction/${equipmentId}`);
 };
 
+const getTransactionsService = () => {
+  return service.get("/transaction");
+};
+
 export { deleteTransactionsByEquipmentService };
