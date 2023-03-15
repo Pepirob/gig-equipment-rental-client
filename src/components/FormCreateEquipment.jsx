@@ -4,6 +4,8 @@ import { createEquipmentService } from "../services/equipment.services";
 import { uploadEquipmentImgService } from "../services/upload.services";
 
 function FormCreateEquipment() {
+  const DEFAULT_IMG_URL =
+    "https://cdn-icons-png.flaticon.com/512/1249/1249374.png";
   const redirect = useNavigate();
   const [imgUrl, setImgUrl] = useState(null);
   const [name, setName] = useState("");
@@ -80,6 +82,12 @@ function FormCreateEquipment() {
   return (
     <>
       {imgUrl && <img src={imgUrl} alt="equipment pic" width="100" />}
+
+      <img
+        src={imgUrl ? imgUrl : DEFAULT_IMG_URL}
+        alt="equipment pic"
+        width="100"
+      />
 
       <form>
         <label htmlFor="img">Upload image</label>

@@ -7,7 +7,7 @@ function CreateEquipment() {
     <>
       <header>
         <Navigation />
-        <h2>Publish Advert</h2>
+        <h1>Publish new Equipment</h1>
       </header>
       <main>
         <FormCreateEquipment />
