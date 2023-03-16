@@ -79,13 +79,11 @@ function FormProfileEdit({ userData }) {
 
       if (imgUrl) {
         await updateUserService(userData._id, {
-          ...userData,
           ...basicUserData,
           img: imgUrl,
         });
       } else {
         await updateUserService(userData._id, {
-          ...userData,
           ...basicUserData,
         });
       }

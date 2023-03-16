@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { updateEquipmentService } from "../services/equipment.services";
 import { uploadEquipmentImgService } from "../services/upload.services";
+import { capitalize } from "../utils/index";
 
 function FormEditEquipment({ equipmentData }) {
   const redirect = useNavigate();
@@ -15,7 +16,7 @@ function FormEditEquipment({ equipmentData }) {
   const [wrongFileMessage, setWrongFileMessage] = useState("");
 
   useEffect(() => {
-    setName(equipmentData.name);
+    setName(capitalize(equipmentData.name));
     setDescription(equipmentData.description);
     setPricePerDay(equipmentData.pricePerDay);
     setDeposit(equipmentData.deposit);
@@ -66,6 +67,8 @@ function FormEditEquipment({ equipmentData }) {
     }
   };
 
+  const basicData = { name, description, pricePerDay, deposit };
+
   const handleSubmit = async (event) => {
     event.preventDefault();
 
@@ -74,18 +77,12 @@ function FormEditEquipment({ equipmentData }) {
 
       if (imgUrl) {
         await updateEquipmentService(equipmentData._id, {
-          name,
-          description,
-          pricePerDay,
-          deposit,
+          ...basicData,
           img: imgUrl,
         });
       } else {
         updateEquipmentService(equipmentData._id, {
-          name,
-          description,
-          pricePerDay,
-          deposit,
+          ...basicData,
         });
       }
       setIsFetching(false);
