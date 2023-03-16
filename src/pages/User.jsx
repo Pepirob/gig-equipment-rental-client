@@ -1,7 +1,10 @@
 import { useEffect, useState } from "react";
-import { Link, useParams, useNavigate } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import { getUserService } from "../services/user.services";
 import UserDetails from "../components/UserDetails";
+import Layout from "../components/Layout/Layout";
+import NavBar from "../components/NavBar/NavBar";
+import NavItem from "../components/NavItem";
 
 function User() {
   const redirect = useNavigate();
@@ -25,10 +28,10 @@ function User() {
 
   return (
     <>
-      <header>
-        <Link to="/">Home</Link>
-      </header>
-      <main>
+      <NavBar>
+        <NavItem path="/">Home</NavItem>
+      </NavBar>
+      <Layout>
         {isFetching ? (
           <h2>...loading data</h2>
         ) : (
@@ -42,7 +45,7 @@ function User() {
             )}
           </>
         )}
-      </main>
+      </Layout>
     </>
   );
 }

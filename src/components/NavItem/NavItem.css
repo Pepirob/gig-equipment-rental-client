@@ -1,0 +1,7 @@
+.nav-link {
+  color: var(--bs-white);
+}
+
+.nav-link.active {
+  color: var(--bs-info);
+}

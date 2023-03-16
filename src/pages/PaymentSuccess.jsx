@@ -3,6 +3,9 @@ import { Link, useNavigate, useLocation } from "react-router-dom";
 import { updatePaymentIntentService } from "../services/payment.services";
 import SheetTransaction from "../components/SheetTransaction";
 import LinkContact from "../components/LinkContact";
+import Layout from "../components/Layout/Layout";
+import NavBar from "../components/NavBar/NavBar";
+import NavItem from "../components/NavItem";
 
 const PaymentSuccess = () => {
   const navigate = useNavigate();
@@ -43,20 +46,19 @@ const PaymentSuccess = () => {
   }
   return (
     <>
-      {/* // todo redirect to owner */}
       <>
-        <header>
+        <NavBar>
+          <NavItem path={"/"}>Go back to Home</NavItem>
+        </NavBar>
+        <Layout>
           <h1>Thank you for your order!</h1>
-          <Link to={"/"}>Go back to Home</Link>
-        </header>
-        <main>
           <h3>Details:</h3>
           <SheetTransaction transaction={transaction} />
           <LinkContact
             owner={transaction.equipment.owner}
             client={transaction.client}
           />
-        </main>
+        </Layout>
       </>
     </>
   );

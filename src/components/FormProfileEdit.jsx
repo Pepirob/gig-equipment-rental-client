@@ -100,7 +100,6 @@ function FormProfileEdit({ userData }) {
       <img
         src={imgUrl ? imgUrl : userData.img}
         alt={`A pic of ${userData.name}`}
-        width={200}
       />
       <form>
         <label>Image: </label>

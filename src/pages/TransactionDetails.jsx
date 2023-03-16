@@ -1,5 +1,5 @@
 import { useContext, useEffect, useState } from "react";
-import { Link, useNavigate, useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import SheetTransaction from "../components/SheetTransaction";
 import { AuthContext } from "../context/auth.context";
 import {
@@ -8,6 +8,9 @@ import {
 } from "../services/transactions.services";
 import LinkContact from "../components/LinkContact";
 import { updateEquipmentService } from "../services/equipment.services";
+import Layout from "../components/Layout/Layout";
+import NavBar from "../components/NavBar/NavBar";
+import NavItem from "../components/NavItem";
 
 function TransactionDetails() {
   const redirect = useNavigate();
@@ -81,10 +84,11 @@ function TransactionDetails() {
 
   return (
     <>
-      <header>
-        <Link to="/">Home</Link> <Link to="/dashboard">Dashboard</Link>
-      </header>
-      <main>
+      <NavBar>
+        <NavItem path="/">Home</NavItem>{" "}
+        <NavItem path="/dashboard">Dashboard</NavItem>
+      </NavBar>
+      <Layout>
         {isFetching ? (
           <h2>...buscando</h2>
         ) : (
@@ -108,7 +112,7 @@ function TransactionDetails() {
             />
           </>
         )}
-      </main>
+      </Layout>
     </>
   );
 }

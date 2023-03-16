@@ -1,0 +1,11 @@
+.layout {
+  padding: 0 1rem;
+  margin-top: 5rem;
+}
+
+@media (min-width: 576px) {
+  .layout {
+    padding-left: 0;
+    padding-right: 0;
+  }
+}

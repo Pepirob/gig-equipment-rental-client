@@ -1,20 +1,18 @@
-import { Link } from "react-router-dom";
 import FormCreateEquipment from "../components/FormCreateEquipment";
+import Layout from "../components/Layout/Layout";
+import NavBar from "../components/NavBar/NavBar";
+import NavItem from "../components/NavItem";
 
 function CreateEquipment() {
   return (
     <>
-      <header>
-        <nav>
-          <Link style={{ marginRight: "1rem" }} to="/my-equipment">
-            Equipment
-          </Link>
-        </nav>
-        <h1>Publish new Equipment</h1>
-      </header>
-      <main>
+      <NavBar>
+        <NavItem path="/my-equipment">Equipment</NavItem>
+      </NavBar>
+      <h1>Publish new Equipment</h1>
+      <Layout>
         <FormCreateEquipment />
-      </main>
+      </Layout>
     </>
   );
 }

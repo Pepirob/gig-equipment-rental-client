@@ -97,7 +97,6 @@ function FormEditEquipment({ equipmentData }) {
       <img
         src={imgUrl ? imgUrl : equipmentData.img}
         alt={`A pic of ${equipmentData.name}`}
-        width="100"
       />
       <form>
         <label htmlFor="img">Image</label>

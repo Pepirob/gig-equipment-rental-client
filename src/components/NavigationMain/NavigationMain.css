@@ -1,0 +1,12 @@
+.nav-avatar {
+  background-color: grey;
+  border-radius: 999px;
+  overflow: hidden;
+  height: 2rem;
+  width: 2rem;
+}
+
+.nav-avatar-pic {
+  height: 150%;
+  width: auto;
+}

@@ -1,15 +1,14 @@
 import FormRegister from "../../components/FormRegister";
-import Navigation from "../../components/Navigation";
+import Layout from "../../components/Layout";
+import NavigationMain from "../../components/NavigationMain";
 
 function Register() {
   return (
     <>
-      <header>
-        <Navigation />
-      </header>
-      <main>
+      <NavigationMain />
+      <Layout>
         <FormRegister />
-      </main>
+      </Layout>
     </>
   );
 }

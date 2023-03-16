@@ -94,7 +94,7 @@ function FormCreateEquipment() {
 
   return (
     <>
-      <img src={getImgUrl()} alt="New Equipment pic" width="100" />
+      <img src={getImgUrl()} alt="New Equipment pic" />
 
       <form>
         <label htmlFor="img">Upload image</label>

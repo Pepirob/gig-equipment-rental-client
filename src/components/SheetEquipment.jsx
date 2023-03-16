@@ -24,7 +24,7 @@ function SheetEquipment({ item }) {
   return (
     <>
       <h1>{item.name}</h1>
-      <img src={item.img} alt="equip" width="100" />
+      <img src={item.img} alt="equip" />
       <p>{item.description}</p>
       <p>Price per day: {item.pricePerDay}€</p>
       <p>Deposit: {item.deposit}€</p>

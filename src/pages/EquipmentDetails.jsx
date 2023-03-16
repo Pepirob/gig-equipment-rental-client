@@ -1,11 +1,13 @@
 import { useEffect, useState, useContext } from "react";
-import { Link, useNavigate, useParams } from "react-router-dom";
 import { getEquipmentDetailsService } from "../services/equipment.services";
 import { AuthContext } from "../context/auth.context";
 import PaymentIntent from "../hoc/PaymentIntent";
 import SheetEquipment from "../components/SheetEquipment";
 import FormCheckout from "../components/FormCheckout";
 import FormTotalPrice from "../components/FormTotalPrice";
+import Layout from "../components/Layout/Layout";
+import NavBar from "../components/NavBar/NavBar";
+import NavItem from "../components/NavItem";
 
 function Equipment() {
   const MIN_DAYS = 1;
@@ -61,10 +63,11 @@ function Equipment() {
 
   return (
     <>
-      <header>
-        <Link to="/">Home</Link> <Link to="/dashboard">Dashboard</Link>
-      </header>
-      <main>
+      <NavBar>
+        <NavItem to="/">Home</NavItem>{" "}
+        <NavItem to="/dashboard">Dashboard</NavItem>
+      </NavBar>
+      <Layout>
         {isFetching === true ? (
           <h2>...Buscando</h2>
         ) : (
@@ -110,7 +113,7 @@ function Equipment() {
             </>
           </article>
         )}
-      </main>
+      </Layout>
     </>
   );
 }
