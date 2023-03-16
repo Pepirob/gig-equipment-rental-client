@@ -56,7 +56,8 @@ function Equipment() {
     }
   };
 
-  const isSomeoneElseEquipment = loggedUser?._id !== equipmentDetails.owner._id;
+  const isSomeoneElseEquipment =
+    loggedUser?._id !== equipmentDetails?.owner._id;
 
   return (
     <>

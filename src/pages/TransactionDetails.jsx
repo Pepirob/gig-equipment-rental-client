@@ -6,6 +6,8 @@ import {
   getTransactionDetailsService,
   updateTransactionStateService,
 } from "../services/transactions.services";
+import LinkContact from "../components/LinkContact";
+import { updateEquipmentService } from "../services/equipment.services";
 
 function TransactionDetails() {
   const redirect = useNavigate();
@@ -52,6 +54,10 @@ function TransactionDetails() {
         state: "returned",
       });
 
+      await updateEquipmentService(transaction.equipment._id, {
+        isAvailable: true,
+      });
+
       setIsFetching(false);
       setTransaction(response.data);
     } catch (error) {
@@ -88,6 +94,12 @@ function TransactionDetails() {
               </button>
             )}
             {transaction.state === "returned" && <p>Product returned</p>}
+            <br />
+            <br />
+            <LinkContact
+              owner={transaction.equipment.owner}
+              client={transaction.client}
+            />
           </>
         )}
       </main>

@@ -36,7 +36,7 @@ function SheetEquipment({ item }) {
         </>
       )}
       {/* // TODO: move to tools component */}
-      {loggedUser?._id === item.owner ? (
+      {loggedUser?._id === item.owner._id ? (
         <>
           <Link to={`/equipment/${item._id}/edit`}>Edit</Link>
           <button onClick={handleDelete}>DELETE</button>

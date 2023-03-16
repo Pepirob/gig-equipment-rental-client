@@ -1,7 +1,8 @@
 import { useEffect, useState } from "react";
 import { Link, useNavigate, useLocation } from "react-router-dom";
 import { updatePaymentIntentService } from "../services/payment.services";
-import SheetTransaction from "./SheetTransaction";
+import SheetTransaction from "../components/SheetTransaction";
+import LinkContact from "../components/LinkContact";
 
 const PaymentSuccess = () => {
   const navigate = useNavigate();
@@ -29,7 +30,7 @@ const PaymentSuccess = () => {
 
     try {
       const response = await updatePaymentIntentService(paymentIntentInfo);
-      console.log(response);
+
       setIsFetching(false);
       setTransaction(response.data);
     } catch (error) {
@@ -40,7 +41,6 @@ const PaymentSuccess = () => {
   if (isFetching) {
     return <h3>... updating payment</h3>;
   }
-
   return (
     <>
       {/* // todo redirect to owner */}
@@ -52,6 +52,10 @@ const PaymentSuccess = () => {
         <main>
           <h3>Details:</h3>
           <SheetTransaction transaction={transaction} />
+          <LinkContact
+            owner={transaction.equipment.owner}
+            client={transaction.client}
+          />
         </main>
       </>
     </>

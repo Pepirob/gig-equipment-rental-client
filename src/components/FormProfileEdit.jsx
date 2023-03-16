@@ -79,13 +79,11 @@ function FormProfileEdit({ userData }) {
 
       if (imgUrl) {
         await updateUserService(userData._id, {
-          ...userData,
           ...basicUserData,
           img: imgUrl,
         });
       } else {
         await updateUserService(userData._id, {
-          ...userData,
           ...basicUserData,
         });
       }
@@ -155,7 +153,10 @@ function FormProfileEdit({ userData }) {
         />
         <br />
         <br />
-        <button onClick={handleSubmit} disabled={isUploading || isFetching}>
+        <button
+          onClick={handleSubmit}
+          disabled={isUploading || wrongFileMessage || isFetching}
+        >
           UPDATE
         </button>
       </form>
