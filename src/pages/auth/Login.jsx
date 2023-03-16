@@ -5,9 +5,7 @@ import Layout from "../../components/Layout";
 function Login() {
   return (
     <>
-      <header>
-        <Navigation />
-      </header>
+      <Navigation />
       <Layout>
         <FormLogin />
       </Layout>

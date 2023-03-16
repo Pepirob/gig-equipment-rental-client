@@ -35,9 +35,7 @@ function MyTransactions() {
 
   return (
     <>
-      <header>
-        <Navigation />
-      </header>
+      <Navigation />
       <Layout>
         <h1>My Transactions</h1>
         {isFetching ? (

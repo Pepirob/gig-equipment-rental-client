@@ -5,9 +5,7 @@ import Navigation from "../../components/Navigation";
 function Register() {
   return (
     <>
-      <header>
-        <Navigation />
-      </header>
+      <Navigation />
       <Layout>
         <FormRegister />
       </Layout>

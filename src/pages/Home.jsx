@@ -34,9 +34,7 @@ function Home() {
 
   return (
     <>
-      <header>
-        <Navigation />
-      </header>
+      <Navigation />
       <Layout>
         <>
           <h1>Wellcome to coverGig!</h1>
