@@ -19,6 +19,8 @@ function TransactionDetails() {
   const { transactionId } = params;
   const [transaction, setTransaction] = useState(null);
   const [isFetching, setIsFetching] = useState(true);
+  const [isDelivered, setIsDelivered] = useState(false);
+  const [isReturned, setIsReturned] = useState(false);
 
   useEffect(() => {
     getData();
@@ -38,12 +40,15 @@ function TransactionDetails() {
     try {
       setIsFetching(true);
 
+      const newState = isDelivered ? "succeeded" : "delivered";
+
       const response = await updateTransactionStateService(transactionId, {
-        state: "delivered",
+        state: newState,
       });
 
       setIsFetching(false);
       setTransaction(response.data);
+      setIsDelivered(response.data.state === "delivered");
     } catch (error) {
       redirect("/error");
     }
@@ -53,16 +58,25 @@ function TransactionDetails() {
     try {
       setIsFetching(true);
 
+      const newState = isReturned ? "delivered" : "returned";
+
       const response = await updateTransactionStateService(transactionId, {
-        state: "returned",
+        state: newState,
       });
 
-      await updateEquipmentService(transaction.equipment._id, {
-        isAvailable: true,
-      });
+      if (newState === "returned") {
+        await updateEquipmentService(transaction.equipment._id, {
+          isAvailable: true,
+        });
+      } else {
+        await updateEquipmentService(transaction.equipment._id, {
+          isAvailable: false,
+        });
+      }
 
       setIsFetching(false);
       setTransaction(response.data);
+      setIsReturned(response.data.state === "returned");
     } catch (error) {
       redirect("/error");
     }
@@ -81,23 +95,15 @@ function TransactionDetails() {
           <>
             <SheetTransaction transaction={transaction} />
             {loggedUser._id === transaction.client && (
-              <button
-                hidden={transaction.state !== "succeeded"}
-                onClick={handleDeliveredState}
-              >
-                Mark as delivered
+              <button onClick={handleDeliveredState}>
+                {isDelivered ? "Mark as succeeded" : "Mark as delivered"}
               </button>
             )}
-            {transaction.state === "delivered" && <p>Product delivered</p>}
             {loggedUser._id === transaction.equipment.owner && (
-              <button
-                hidden={transaction.state !== "delivered"}
-                onClick={handleReturnedState}
-              >
-                Mark as returned
+              <button onClick={handleReturnedState}>
+                {isReturned ? "Mark as delivered" : "Mark as returned"}
               </button>
             )}
-            {transaction.state === "returned" && <p>Product returned</p>}
             <br />
             <br />
             <LinkContact
