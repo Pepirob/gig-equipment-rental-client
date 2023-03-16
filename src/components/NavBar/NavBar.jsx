@@ -4,7 +4,7 @@ import "./NavBar.css";
 
 function NavBar(props) {
   return (
-    <header class="navbar-header">
+    <header className="navbar-header">
       <Navbar bg="primary" as="nav">
         <Container as="ul">{props.children}</Container>
       </Navbar>
