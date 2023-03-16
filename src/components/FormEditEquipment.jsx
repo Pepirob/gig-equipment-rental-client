@@ -74,7 +74,6 @@ function FormEditEquipment({ equipmentData }) {
 
       if (imgUrl) {
         await updateEquipmentService(equipmentData._id, {
-          ...equipmentData,
           name,
           description,
           pricePerDay,
@@ -83,7 +82,6 @@ function FormEditEquipment({ equipmentData }) {
         });
       } else {
         updateEquipmentService(equipmentData._id, {
-          ...equipmentData,
           name,
           description,
           pricePerDay,
