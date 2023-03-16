@@ -5,6 +5,7 @@ import { Link, useNavigate } from "react-router-dom";
 import UserDetails from "../components/UserDetails";
 import { deleteAllEquipmentService } from "../services/equipment.services";
 import { deleteTransactionsByUserService } from "../services/transactions.services";
+import Layout from "../components/Layout/Layout";
 
 function Profile() {
   const redirect = useNavigate();
@@ -48,7 +49,7 @@ function Profile() {
       <header>
         <Link to="/">Home</Link>
       </header>
-      <main>
+      <Layout>
         {isFetching ? (
           <h2>...loading data</h2>
         ) : (
@@ -67,7 +68,7 @@ function Profile() {
             )}
           </>
         )}
-      </main>
+      </Layout>
     </>
   );
 }

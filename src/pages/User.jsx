@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { Link, useParams, useNavigate } from "react-router-dom";
 import { getUserService } from "../services/user.services";
 import UserDetails from "../components/UserDetails";
+import Layout from "../components/Layout/Layout";
 
 function User() {
   const redirect = useNavigate();
@@ -28,7 +29,7 @@ function User() {
       <header>
         <Link to="/">Home</Link>
       </header>
-      <main>
+      <Layout>
         {isFetching ? (
           <h2>...loading data</h2>
         ) : (
@@ -42,7 +43,7 @@ function User() {
             )}
           </>
         )}
-      </main>
+      </Layout>
     </>
   );
 }

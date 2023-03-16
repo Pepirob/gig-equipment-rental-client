@@ -4,6 +4,7 @@ import ListTransactions from "../components/ListTransactions";
 import Navigation from "../components/Navigation";
 import { AuthContext } from "../context/auth.context";
 import { getTransactionsService } from "../services/transactions.services";
+import Layout from "../components/Layout/Layout";
 
 function MyTransactions() {
   const redirect = useNavigate();
@@ -23,6 +24,7 @@ function MyTransactions() {
       redirect("/error");
     }
   };
+
   const transactionsAsOwner = transactions.filter((transaction) => {
     return transaction.equipment.owner === loggedUser._id;
   });
@@ -36,7 +38,7 @@ function MyTransactions() {
       <header>
         <Navigation />
       </header>
-      <main>
+      <Layout>
         <h1>My Transactions</h1>
         {isFetching ? (
           <h2>...Buscando</h2>
@@ -62,7 +64,7 @@ function MyTransactions() {
             )}
           </>
         )}
-      </main>
+      </Layout>
     </>
   );
 }

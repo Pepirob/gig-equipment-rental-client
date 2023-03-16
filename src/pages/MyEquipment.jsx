@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import ListEquipment from "../components/ListEquipment";
 import { getMyEquipmentService } from "../services/equipment.services";
+import Layout from "../components/Layout/Layout";
 
 function MyEquipment() {
   const redirect = useNavigate();
@@ -32,7 +33,7 @@ function MyEquipment() {
           Publish your Equipment
         </Link>
       </header>
-      <main>
+      <Layout>
         <h2>My Equipment</h2>
         {isFetching ? (
           <h1>...Buscando</h1>
@@ -45,7 +46,7 @@ function MyEquipment() {
             )}
           </>
         )}
-      </main>
+      </Layout>
     </>
   );
 }

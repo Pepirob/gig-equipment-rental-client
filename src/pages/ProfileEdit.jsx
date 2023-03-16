@@ -3,6 +3,7 @@ import { AuthContext } from "../context/auth.context";
 import { getUserService } from "../services/user.services";
 import { Link, useNavigate } from "react-router-dom";
 import FormProfileEdit from "../components/FormProfileEdit";
+import Layout from "../components/Layout/Layout";
 
 function ProfileEdit() {
   const redirect = useNavigate();
@@ -29,7 +30,7 @@ function ProfileEdit() {
       <header>
         <Link to="/profile">Profile</Link>
       </header>
-      <main>
+      <Layout>
         {isFetching ? (
           <h2>...loading data</h2>
         ) : (
@@ -38,7 +39,7 @@ function ProfileEdit() {
             <FormProfileEdit userData={user} />
           </>
         )}
-      </main>
+      </Layout>
     </>
   );
 }

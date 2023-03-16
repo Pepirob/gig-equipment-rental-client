@@ -8,6 +8,7 @@ import {
 } from "../services/transactions.services";
 import LinkContact from "../components/LinkContact";
 import { updateEquipmentService } from "../services/equipment.services";
+import Layout from "../components/Layout/Layout";
 
 function TransactionDetails() {
   const redirect = useNavigate();
@@ -70,7 +71,7 @@ function TransactionDetails() {
       <header>
         <Link to="/">Home</Link> <Link to="/dashboard">Dashboard</Link>
       </header>
-      <main>
+      <Layout>
         {isFetching ? (
           <h2>...buscando</h2>
         ) : (
@@ -102,7 +103,7 @@ function TransactionDetails() {
             />
           </>
         )}
-      </main>
+      </Layout>
     </>
   );
 }

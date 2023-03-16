@@ -1,6 +1,7 @@
 import { useContext } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { AuthContext } from "../context/auth.context";
+import Layout from "../components/Layout/Layout";
 
 function Dashboard() {
   const redirect = useNavigate();
@@ -22,7 +23,7 @@ function Dashboard() {
           Logout
         </span>
       </header>
-      <main>
+      <Layout>
         <h1>Dashboard</h1>
         <h2>{loggedUser.username}</h2>
         <section>
@@ -34,7 +35,7 @@ function Dashboard() {
           <br />
           <Link to="/profile">Profile</Link>
         </section>
-      </main>
+      </Layout>
     </>
   );
 }

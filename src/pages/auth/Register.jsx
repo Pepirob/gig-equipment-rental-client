@@ -1,4 +1,5 @@
 import FormRegister from "../../components/FormRegister";
+import Layout from "../../components/Layout";
 import Navigation from "../../components/Navigation";
 
 function Register() {
@@ -7,9 +8,9 @@ function Register() {
       <header>
         <Navigation />
       </header>
-      <main>
+      <Layout>
         <FormRegister />
-      </main>
+      </Layout>
     </>
   );
 }

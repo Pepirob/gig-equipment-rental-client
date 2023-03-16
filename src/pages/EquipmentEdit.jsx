@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import FormEditEquipment from "../components/FormEditEquipment";
 import { getEquipmentDetailsService } from "../services/equipment.services";
+import Layout from "../components/Layout/Layout";
 
 function EquipmentEdit() {
   const redirect = useNavigate();
@@ -29,7 +30,7 @@ function EquipmentEdit() {
       <header>
         <Link to={`/equipment/${equipmentId}`}>Back</Link>
       </header>
-      <main>
+      <Layout>
         {isFetching ? (
           <h2>...Buscando</h2>
         ) : (
@@ -38,7 +39,7 @@ function EquipmentEdit() {
             <FormEditEquipment equipmentData={equipment} />
           </>
         )}
-      </main>
+      </Layout>
     </>
   );
 }

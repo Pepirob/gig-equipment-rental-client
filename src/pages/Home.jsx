@@ -8,6 +8,8 @@ import {
   getLocatedEquipmentService,
   getAvailableEquipmentService,
 } from "../services/equipment.services";
+import Layout from "../components/Layout/Layout";
+import Row from "react-bootstrap/Row";
 
 function Home() {
   const redirect = useNavigate();
@@ -35,12 +37,20 @@ function Home() {
       <header>
         <Navigation />
       </header>
-      <main>
-        <h1>Home</h1>
-        <SearchForm setSearchInput={setSearchInput} />
-        {!isFetching && <ListEquipment equipment={availableEquipment} />}
-        {!isFetching && availableEquipment.length === 0 && <h2>No results</h2>}
-      </main>
+      <Layout>
+        <>
+          <h1>Wellcome to coverGig!</h1>
+          <Row as="section">
+            <SearchForm setSearchInput={setSearchInput} />
+          </Row>
+          <Row as="section">
+            {!isFetching && <ListEquipment equipment={availableEquipment} />}
+            {!isFetching && availableEquipment.length === 0 && (
+              <h2>No results</h2>
+            )}
+          </Row>
+        </>
+      </Layout>
     </>
   );
 }

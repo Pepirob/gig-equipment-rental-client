@@ -6,6 +6,7 @@ import PaymentIntent from "../hoc/PaymentIntent";
 import SheetEquipment from "../components/SheetEquipment";
 import FormCheckout from "../components/FormCheckout";
 import FormTotalPrice from "../components/FormTotalPrice";
+import Layout from "../components/Layout/Layout";
 
 function Equipment() {
   const MIN_DAYS = 1;
@@ -64,7 +65,7 @@ function Equipment() {
       <header>
         <Link to="/">Home</Link> <Link to="/dashboard">Dashboard</Link>
       </header>
-      <main>
+      <Layout>
         {isFetching === true ? (
           <h2>...Buscando</h2>
         ) : (
@@ -110,7 +111,7 @@ function Equipment() {
             </>
           </article>
         )}
-      </main>
+      </Layout>
     </>
   );
 }
