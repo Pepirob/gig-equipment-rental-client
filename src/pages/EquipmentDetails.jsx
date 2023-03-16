@@ -8,6 +8,7 @@ import FormTotalPrice from "../components/FormTotalPrice";
 import Layout from "../components/Layout/Layout";
 import NavBar from "../components/NavBar/NavBar";
 import NavItem from "../components/NavItem";
+import { useNavigate, useParams } from "react-router-dom";
 
 function Equipment() {
   const MIN_DAYS = 1;
@@ -64,7 +65,7 @@ function Equipment() {
   return (
     <>
       <NavBar>
-        <NavItem to="/">Home</NavItem>{" "}
+        <NavItem to="/">Home</NavItem>
         <NavItem to="/dashboard">Dashboard</NavItem>
       </NavBar>
       <Layout>
