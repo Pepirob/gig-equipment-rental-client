@@ -1,4 +1,5 @@
 import { useEffect, useState, useContext } from "react";
+import { useParams, useNavigate } from "react-router-dom";
 import { getEquipmentDetailsService } from "../services/equipment.services";
 import { AuthContext } from "../context/auth.context";
 import PaymentIntent from "../hoc/PaymentIntent";
