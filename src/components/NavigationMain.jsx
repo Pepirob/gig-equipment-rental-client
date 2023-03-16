@@ -1,9 +1,8 @@
 import { useContext } from "react";
-import { AuthContext } from "../../context/auth.context";
-import NavBar from "../NavBar/NavBar";
-import NavItem from "../NavItem/NavItem";
+import { AuthContext } from "../context/auth.context";
+import NavBar from "./NavBar/NavBar";
+import NavItem from "./NavItem/NavItem";
 
-NavItem;
 function Navigation() {
   const { isLoggedIn } = useContext(AuthContext);
   return (

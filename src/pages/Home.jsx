@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import ListEquipment from "../components/ListEquipment";
-import Navigation from "../components/Navigation";
+import NavigationMain from "../components/NavigationMain";
 import SearchForm from "../components/SearchForm";
 import useDebounce from "../hooks/useDebounce";
 import {
@@ -34,7 +34,7 @@ function Home() {
 
   return (
     <>
-      <Navigation />
+      <NavigationMain />
       <Layout>
         <>
           <h1>Wellcome to coverGig!</h1>

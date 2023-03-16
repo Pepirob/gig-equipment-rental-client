@@ -1,7 +1,7 @@
 import { useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import ListTransactions from "../components/ListTransactions";
-import Navigation from "../components/Navigation";
+import NavigationMain from "../components/NavigationMain";
 import { AuthContext } from "../context/auth.context";
 import { getTransactionsService } from "../services/transactions.services";
 import Layout from "../components/Layout/Layout";
@@ -35,7 +35,7 @@ function MyTransactions() {
 
   return (
     <>
-      <Navigation />
+      <NavigationMain />
       <Layout>
         <h1>My Transactions</h1>
         {isFetching ? (
