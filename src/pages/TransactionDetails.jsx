@@ -78,7 +78,7 @@ function TransactionDetails() {
             <SheetTransaction transaction={transaction} />
             {loggedUser._id === transaction.client && (
               <button
-                hidden={transaction.state === "delivered"}
+                hidden={transaction.state !== "succeeded"}
                 onClick={handleDeliveredState}
               >
                 Mark as delivered
@@ -87,7 +87,7 @@ function TransactionDetails() {
             {transaction.state === "delivered" && <p>Product delivered</p>}
             {loggedUser._id === transaction.equipment.owner && (
               <button
-                hidden={transaction.state === "returned"}
+                hidden={transaction.state !== "delivered"}
                 onClick={handleReturnedState}
               >
                 Mark as returned
