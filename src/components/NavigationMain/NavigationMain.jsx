@@ -29,7 +29,7 @@ function NavigationMain() {
 
   return (
     <NavBar>
-      <NavItem path="/">Home</NavItem>
+      {/* <NavItem path="/">Home</NavItem> */}
       {!isLoggedIn && (
         <>
           <NavItem path="/register">Register</NavItem>
