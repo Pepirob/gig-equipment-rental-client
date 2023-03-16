@@ -1,15 +1,20 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
+import { AuthContext } from "../context/auth.context";
+import { getMyEquipmentService } from "../services/equipment.services";
+import { getUserService } from "../services/user.services";
 import { useNavigate } from "react-router-dom";
 import ListEquipment from "../components/ListEquipment";
-import { getMyEquipmentService } from "../services/equipment.services";
 import Layout from "../components/Layout/Layout";
 import NavBar from "../components/NavBar/NavBar";
-import NavItem from "../components/NavItem";
+import NavigationCta from "../components/NavigationCta";
+import NavigationAvatar from "../components/NavigationAvatar";
 
 function MyEquipment() {
   const redirect = useNavigate();
-  const [myEquipment, setMyequipment] = useState(null);
+  const { loggedUser } = useContext(AuthContext);
+  const [myEquipment, setMyEquipment] = useState(null);
   const [isFetching, setIsFetching] = useState(true);
+  const [user, setUser] = useState(null);
 
   useEffect(() => {
     getData();
@@ -17,8 +22,12 @@ function MyEquipment() {
 
   const getData = async () => {
     try {
-      const response = await getMyEquipmentService();
-      setMyequipment(response.data);
+      const equipmentResponse = await getMyEquipmentService();
+
+      const userResponse = await getUserService(loggedUser._id);
+
+      setMyEquipment(equipmentResponse.data);
+      setUser(userResponse.data);
       setIsFetching(false);
     } catch (error) {
       redirect("/error");
@@ -28,8 +37,8 @@ function MyEquipment() {
   return (
     <>
       <NavBar>
-        <NavItem path="/dashboard">Dashboard</NavItem>
-        <NavItem path="/create-equipment">Publish your Equipment</NavItem>
+        <NavigationCta />
+        {user && <NavigationAvatar user={user} />}
       </NavBar>
       <Layout>
         <h2>My Equipment</h2>
