@@ -1,8 +1,10 @@
 import { useEffect, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import ListEquipment from "../components/ListEquipment";
 import { getMyEquipmentService } from "../services/equipment.services";
 import Layout from "../components/Layout/Layout";
+import NavBar from "../components/NavBar/NavBar";
+import NavItem from "../components/NavItem";
 
 function MyEquipment() {
   const redirect = useNavigate();
@@ -25,14 +27,10 @@ function MyEquipment() {
 
   return (
     <>
-      <header>
-        <Link style={{ marginRight: "1rem" }} to="/dashboard">
-          Dashboard
-        </Link>
-        <Link style={{ marginRight: "1rem" }} to="/create-equipment">
-          Publish your Equipment
-        </Link>
-      </header>
+      <NavBar>
+        <NavItem path="/dashboard">Dashboard</NavItem>
+        <NavItem path="/create-equipment">Publish your Equipment</NavItem>
+      </NavBar>
       <Layout>
         <h2>My Equipment</h2>
         {isFetching ? (

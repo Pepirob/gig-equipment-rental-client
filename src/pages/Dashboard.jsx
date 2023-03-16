@@ -2,7 +2,8 @@ import { useContext } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { AuthContext } from "../context/auth.context";
 import Layout from "../components/Layout/Layout";
-
+import NavBar from "../components/NavBar/NavBar";
+import NavItem from "../components/NavItem";
 function Dashboard() {
   const redirect = useNavigate();
   const { authenticateUser, loggedUser } = useContext(AuthContext);
@@ -17,12 +18,12 @@ function Dashboard() {
 
   return (
     <>
-      <header>
-        <Link to="/">Home</Link>
+      <NavBar>
+        <NavItem path="/">Home</NavItem>
         <span style={{ color: "red" }} onClick={handleLogout}>
           Logout
         </span>
-      </header>
+      </NavBar>
       <Layout>
         <h1>Dashboard</h1>
         <h2>{loggedUser.username}</h2>

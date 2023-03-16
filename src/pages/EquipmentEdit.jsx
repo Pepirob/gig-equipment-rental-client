@@ -1,8 +1,10 @@
 import { useEffect, useState } from "react";
-import { Link, useNavigate, useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import FormEditEquipment from "../components/FormEditEquipment";
 import { getEquipmentDetailsService } from "../services/equipment.services";
 import Layout from "../components/Layout/Layout";
+import NavBar from "../components/NavBar/NavBar";
+import NavItem from "../components/NavItem";
 
 function EquipmentEdit() {
   const redirect = useNavigate();
@@ -27,9 +29,9 @@ function EquipmentEdit() {
 
   return (
     <>
-      <header>
-        <Link to={`/equipment/${equipmentId}`}>Back</Link>
-      </header>
+      <NavBar>
+        <NavItem path={`/equipment/${equipmentId}`}>Back</NavItem>
+      </NavBar>
       <Layout>
         {isFetching ? (
           <h2>...Buscando</h2>
