@@ -40,10 +40,10 @@ function TransactionDetails() {
     try {
       setIsFetching(true);
 
-      const state = isDelivered ? "succeeded" : "delivered";
+      const newState = isDelivered ? "succeeded" : "delivered";
 
       const response = await updateTransactionStateService(transactionId, {
-        state,
+        state: newState,
       });
 
       setIsFetching(false);
@@ -58,13 +58,13 @@ function TransactionDetails() {
     try {
       setIsFetching(true);
 
-      const state = isReturned ? "delivered" : "returned";
+      const newState = isReturned ? "delivered" : "returned";
 
       const response = await updateTransactionStateService(transactionId, {
-        state,
+        state: newState,
       });
 
-      if (state === "returned") {
+      if (newState === "returned") {
         await updateEquipmentService(transaction.equipment._id, {
           isAvailable: true,
         });
