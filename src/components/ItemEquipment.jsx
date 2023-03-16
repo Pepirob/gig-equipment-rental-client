@@ -1,11 +1,12 @@
 import { Link } from "react-router-dom";
+import { capitalize } from "../utils/index";
 
 function ItemEquipment({ item }) {
   return (
     <li>
       <img src={item.img} alt="equip" width="100" />
       <Link to={`/equipment/${item._id}`}>
-        <h3>{item.name} </h3>
+        <h3>{capitalize(item.name)} </h3>
       </Link>
     </li>
   );
