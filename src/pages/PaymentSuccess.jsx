@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { Link, useNavigate, useLocation } from "react-router-dom";
 import { updatePaymentIntentService } from "../services/payment.services";
 import SheetTransaction from "../components/SheetTransaction";
-import LinkContactOwner from "../components/LinkContactOwner";
+import LinkContact from "../components/LinkContact";
 
 const PaymentSuccess = () => {
   const navigate = useNavigate();
@@ -52,7 +52,10 @@ const PaymentSuccess = () => {
         <main>
           <h3>Details:</h3>
           <SheetTransaction transaction={transaction} />
-          <LinkContactOwner ownerId={transaction.equipment.owner} />
+          <LinkContact
+            owner={transaction.equipment.owner}
+            client={transaction.client}
+          />
         </main>
       </>
     </>

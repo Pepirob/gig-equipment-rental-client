@@ -6,7 +6,7 @@ import {
   getTransactionDetailsService,
   updateTransactionStateService,
 } from "../services/transactions.services";
-import LinkContactOwner from "../components/LinkContactOwner";
+import LinkContact from "../components/LinkContact";
 
 function TransactionDetails() {
   const redirect = useNavigate();
@@ -91,7 +91,10 @@ function TransactionDetails() {
             {transaction.state === "returned" && <p>Product returned</p>}
             <br />
             <br />
-            <LinkContactOwner ownerId={transaction.equipment.owner} />
+            <LinkContact
+              owner={transaction.equipment.owner}
+              client={transaction.client}
+            />
           </>
         )}
       </main>

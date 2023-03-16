@@ -2,16 +2,18 @@ import { useContext } from "react";
 import { Link } from "react-router-dom";
 import { AuthContext } from "../context/auth.context";
 
-function LinkContactOwner({ ownerId }) {
+function LinkContactOwner({ owner, client }) {
   const { loggedUser } = useContext(AuthContext);
 
-  const isSomeoneElseEquipment = loggedUser?._id !== ownerId;
+  const isSomeoneElseEquipment = loggedUser?._id !== owner;
 
   return (
     <>
       {isSomeoneElseEquipment ? (
-        <Link to={`/user/${ownerId}`}>Contact Equipment's Owner</Link>
-      ) : null}
+        <Link to={`/user/${owner}`}>Contact Equipment's Owner</Link>
+      ) : (
+        <Link to={`/user/${client}`}>Contact Client</Link>
+      )}
     </>
   );
 }
