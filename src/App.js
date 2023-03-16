@@ -16,6 +16,7 @@ import PaymentSuccess from "./pages/PaymentSuccess";
 import CreateEquipment from "./pages/CreateEquipment";
 import MyTransactions from "./pages/MyTransactions";
 import TransactionDetails from "./pages/TransactionDetails";
+import User from "./pages/User";
 
 function App() {
   return (
@@ -69,6 +70,15 @@ function App() {
         <Route
           path="/transaction/:transactionId"
           element={<TransactionDetails />}
+        />
+
+        <Route
+          path="/user/:userId"
+          element={
+            <IsPrivate>
+              <User />
+            </IsPrivate>
+          }
         />
 
         <Route path="/create-equipment" element={<CreateEquipment />} />
