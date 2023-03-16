@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { Link, useNavigate, useLocation } from "react-router-dom";
 import { updatePaymentIntentService } from "../services/payment.services";
-import SheetTransaction from "./SheetTransaction";
+import SheetTransaction from "../components/SheetTransaction";
 
 const PaymentSuccess = () => {
   const navigate = useNavigate();
