@@ -4,8 +4,8 @@ import { getUserService } from "../../services/user.services";
 import NavBar from "../NavBar/NavBar";
 import NavItem from "../NavItem/NavItem";
 import { useNavigate } from "react-router-dom";
-import "./NavigationMain.css";
 import NavigationCta from "../NavigationCta";
+import NavigationAvatar from "../NavigationAvatar";
 
 function NavigationMain() {
   const redirect = useNavigate();
@@ -37,21 +37,7 @@ function NavigationMain() {
         </>
       )}
       <NavigationCta />
-      {isLoggedIn && user && (
-        <>
-          <NavItem path="/dashboard">
-            <div className="nav-avatar">
-              {user && (
-                <img
-                  className="nav-avatar-pic"
-                  src={user.img}
-                  alt={`A pic of ${user.name}`}
-                />
-              )}
-            </div>
-          </NavItem>
-        </>
-      )}
+      {isLoggedIn && user && <NavigationAvatar user={user} />}
     </NavBar>
   );
 }
