@@ -7,6 +7,7 @@ import {
   updateTransactionStateService,
 } from "../services/transactions.services";
 import LinkContact from "../components/LinkContact";
+import { updateEquipmentService } from "../services/equipment.services";
 
 function TransactionDetails() {
   const redirect = useNavigate();
@@ -51,6 +52,10 @@ function TransactionDetails() {
 
       const response = await updateTransactionStateService(transactionId, {
         state: "returned",
+      });
+
+      await updateEquipmentService(transaction.equipment._id, {
+        isAvailable: true,
       });
 
       setIsFetching(false);
