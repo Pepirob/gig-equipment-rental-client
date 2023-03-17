@@ -125,7 +125,7 @@ function FormEditEquipment({ equipmentData }) {
         <Form.Group className="mb-3">
           <Form.Label htmlFor="description">Description: </Form.Label>
           <Form.Control
-            type="textarea"
+            as="textarea"
             name="description"
             value={description}
             onChange={handleInput}
