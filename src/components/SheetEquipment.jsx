@@ -9,7 +9,7 @@ import { capitalize } from "../utils";
 function SheetEquipment({ equipment }) {
   const redirect = useNavigate();
   const { loggedUser } = useContext(AuthContext);
-  const { _id, owner } = equipment;
+  const { _id } = equipment;
   const [errorMessage, setErrorMessage] = useState("");
 
   const handleDelete = async () => {
