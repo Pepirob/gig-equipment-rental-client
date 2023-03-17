@@ -4,6 +4,7 @@ import { updateUserService } from "../services/user.services";
 import { uploadUserImgService } from "../services/upload.services";
 import { capitalize } from "../utils";
 import { Button, Form, Image } from "react-bootstrap";
+import ImageStyles from "./ImageStyles";
 
 function FormProfileEdit({ userData }) {
   const redirect = useNavigate();
@@ -98,11 +99,13 @@ function FormProfileEdit({ userData }) {
 
   return (
     <>
-      <Image
-        thumbnail={true}
-        src={imgUrl ? imgUrl : userData.img}
-        alt={`A pic of ${userData.name}`}
-      />
+      <ImageStyles>
+        <Image
+          thumbnail={true}
+          src={imgUrl ? imgUrl : userData.img}
+          alt={`A pic of ${userData.name}`}
+        />
+      </ImageStyles>
       <Form>
         <Form.Group className="mb-3">
           <Form.Label>Image: </Form.Label>

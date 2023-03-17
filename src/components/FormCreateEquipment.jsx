@@ -5,6 +5,7 @@ import { uploadEquipmentImgService } from "../services/upload.services";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import { FloatingLabel, Image } from "react-bootstrap";
+import ImageStyles from "./ImageStyles";
 
 function FormCreateEquipment() {
   const DEFAULT_IMG_URL =
@@ -97,7 +98,9 @@ function FormCreateEquipment() {
 
   return (
     <>
-      <Image thumbnail={true} src={getImgUrl()} alt="New Equipment pic" />
+      <ImageStyles>
+        <Image thumbnail={true} src={getImgUrl()} alt="New Equipment pic" />
+      </ImageStyles>
 
       <Form>
         <Form.Group className="mb-3">

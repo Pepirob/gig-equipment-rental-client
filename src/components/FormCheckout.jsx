@@ -5,6 +5,7 @@ import {
   useElements,
 } from "@stripe/react-stripe-js";
 import Button from "react-bootstrap/Button";
+import { Form } from "react-bootstrap";
 
 function FormCheckout() {
   const stripe = useStripe();
@@ -74,7 +75,7 @@ function FormCheckout() {
   };
 
   return (
-    <form id="payment-form" onSubmit={handleSubmit}>
+    <Form id="payment-form" onSubmit={handleSubmit}>
       <PaymentElement id="payment-element" options={paymentElementOptions} />
       <Button
         size="lg"
@@ -87,7 +88,7 @@ function FormCheckout() {
         </span>
       </Button>
       {message && <div id="payment-message">{message}</div>}
-    </form>
+    </Form>
   );
 }
 

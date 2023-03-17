@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { updateEquipmentService } from "../services/equipment.services";
 import { uploadEquipmentImgService } from "../services/upload.services";
 import { capitalize } from "../utils/index";
+import ImageStyles from "./ImageStyles";
 
 function FormEditEquipment({ equipmentData }) {
   const redirect = useNavigate();
@@ -95,11 +96,13 @@ function FormEditEquipment({ equipmentData }) {
 
   return (
     <>
-      <Image
-        thumbnail={true}
-        src={imgUrl ? imgUrl : equipmentData.img}
-        alt={`A pic of ${equipmentData.name}`}
-      />
+      <ImageStyles>
+        <Image
+          thumbnail={true}
+          src={imgUrl ? imgUrl : equipmentData.img}
+          alt={`A pic of ${equipmentData.name}`}
+        />
+      </ImageStyles>
       <Form>
         <Form.Group className="mb-3">
           <Form.Label htmlFor="img">Image</Form.Label>
