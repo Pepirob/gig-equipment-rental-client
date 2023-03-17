@@ -11,6 +11,7 @@ import { updateEquipmentService } from "../services/equipment.services";
 import Layout from "../components/Layout/Layout";
 import NavBar from "../components/NavBar/NavBar";
 import NavItem from "../components/NavItem";
+import Button from "react-bootstrap/Button";
 import PulseLoader from "react-spinners/PulseLoader";
 
 function TransactionDetails() {
@@ -94,15 +95,26 @@ function TransactionDetails() {
         ) : (
           <>
             <SheetTransaction transaction={transaction} />
+            <h4>PLEASE INFORM US ABOUT THE STATE OF YOUR RENTAL</h4>
             {loggedUser._id === transaction.client && (
-              <button onClick={handleDeliveredState}>
-                {isDelivered ? "Mark as succeeded" : "Mark as delivered"}
-              </button>
+              <>
+                <Button
+                  variant={isDelivered ? "danger" : "success"}
+                  onClick={handleDeliveredState}
+                >
+                  {isDelivered ? "Mark as non delivered" : "Mark as delivered"}
+                </Button>
+              </>
             )}
             {loggedUser._id === transaction.equipment.owner && (
-              <button onClick={handleReturnedState}>
-                {isReturned ? "Mark as delivered" : "Mark as returned"}
-              </button>
+              <>
+                <Button
+                  variant={isReturned ? "danger" : "success"}
+                  onClick={handleReturnedState}
+                >
+                  {isReturned ? "Mark as non returned" : "Mark as returned"}
+                </Button>
+              </>
             )}
             <br />
             <br />

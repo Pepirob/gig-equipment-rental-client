@@ -37,7 +37,6 @@ function SheetTransaction({ transaction }) {
         <div>
           <p>Price per Day: {transaction.equipment.pricePerDay}</p>
           <p>Deposit: {transaction.equipment.deposit}</p>
-          <p>State: {transaction.state}</p>
         </div>
       </section>
       <section>
