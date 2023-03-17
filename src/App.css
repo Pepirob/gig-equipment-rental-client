@@ -12,3 +12,13 @@
 .App a {
   text-decoration: none;
 }
+
+.card {
+  overflow: hidden;
+}
+
+.card-img-top {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
