@@ -79,7 +79,7 @@ function Equipment() {
           <>
             {equipmentDetails ? (
               <>
-                <SheetEquipment item={equipmentDetails} />
+                <SheetEquipment equipment={equipmentDetails} />
                 <section>
                   {isSomeoneElseEquipment && (
                     <>
