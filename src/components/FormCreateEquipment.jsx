@@ -4,7 +4,7 @@ import { createEquipmentService } from "../services/equipment.services";
 import { uploadEquipmentImgService } from "../services/upload.services";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
-import { FloatingLabel, Image } from "react-bootstrap";
+import { Image } from "react-bootstrap";
 import ImageStyles from "./ImageStyles";
 
 function FormCreateEquipment() {
