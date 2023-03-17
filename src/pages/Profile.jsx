@@ -7,7 +7,7 @@ import { deleteAllEquipmentService } from "../services/equipment.services";
 import { deleteTransactionsByUserService } from "../services/transactions.services";
 import Layout from "../components/Layout/Layout";
 import NavBar from "../components/NavBar/NavBar";
-import NavItem from "../components/NavItem";
+import NavigationAvatar from "../components/NavigationAvatar";
 
 function Profile() {
   const redirect = useNavigate();
@@ -48,9 +48,7 @@ function Profile() {
 
   return (
     <>
-      <NavBar>
-        <NavItem path="/">Home</NavItem>
-      </NavBar>
+      <NavBar>{userData && <NavigationAvatar user={userData} />}</NavBar>
       <Layout>
         {isFetching ? (
           <h2>...loading data</h2>

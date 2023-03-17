@@ -1,16 +1,14 @@
 import { useEffect, useState } from "react";
-import { Link, useNavigate, useLocation } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import { updatePaymentIntentService } from "../services/payment.services";
 import SheetTransaction from "../components/SheetTransaction";
 import LinkContact from "../components/LinkContact";
 import Layout from "../components/Layout/Layout";
 import NavBar from "../components/NavBar/NavBar";
-import NavItem from "../components/NavItem";
 
 const PaymentSuccess = () => {
   const navigate = useNavigate();
   const location = useLocation();
-
   const [transaction, setTransaction] = useState(null);
   const [isFetching, setIsFetching] = useState(true);
 
@@ -47,9 +45,7 @@ const PaymentSuccess = () => {
   return (
     <>
       <>
-        <NavBar>
-          <NavItem path={"/"}>Go back to Home</NavItem>
-        </NavBar>
+        <NavBar></NavBar>
         <Layout>
           <h1>Thank you for your order!</h1>
           <h3>Details:</h3>
