@@ -10,6 +10,7 @@ import {
 } from "../services/equipment.services";
 import Layout from "../components/Layout/Layout";
 import Row from "react-bootstrap/Row";
+import PulseLoader from "react-spinners/PulseLoader";
 
 function Home() {
   const redirect = useNavigate();
@@ -45,6 +46,9 @@ function Home() {
             <SearchForm setSearchInput={setSearchInput} />
           </Row>
           <Row as="section">
+            {isFetching && (
+              <PulseLoader aria-label="Loading Spinner" data-testid="loader" />
+            )}
             {!isFetching && <ListEquipment equipment={availableEquipment} />}
             {!isFetching && availableEquipment.length === 0 && (
               <h2>No results</h2>
