@@ -6,15 +6,15 @@ import { deleteSingleEquipmentService } from "../services/equipment.services";
 import { deleteTransactionsByEquipmentService } from "../services/transactions.services";
 import { capitalize } from "../utils";
 
-function SheetEquipment({ item }) {
+function SheetEquipment({ equipment }) {
   const redirect = useNavigate();
   const { loggedUser } = useContext(AuthContext);
-  const { _id, owner } = item;
+  const { _id, owner } = equipment;
   const [errorMessage, setErrorMessage] = useState("");
 
   const handleDelete = async () => {
     try {
-      await deleteSingleEquipmentService(_id, owner);
+      await deleteSingleEquipmentService(_id, loggedUser._id);
       await deleteTransactionsByEquipmentService(_id);
 
       redirect("/dashboard");
@@ -27,16 +27,16 @@ function SheetEquipment({ item }) {
     <>
       <Row as="article">
         <Col xs={12} as="h1">
-          {capitalize(item.name)}
+          {capitalize(equipment.name)}
         </Col>
         <Col xs={12} md={6}>
-          <img className="custom-image" src={item.img} alt="equip" />
+          <img className="custom-image" src={equipment.img} alt="equip" />
         </Col>
         <Col xs={12} md={6}>
-          <h3>Price per day: {item.pricePerDay}€</h3>
-          <h3>Deposit: {item.deposit}€</h3>
+          <h3>Price per day: {equipment.pricePerDay}€</h3>
+          <h3>Deposit: {equipment.deposit}€</h3>
           <h3>
-            {item.isAvailable ? (
+            {equipment.isAvailable ? (
               <span className="text-success">Available</span>
             ) : (
               <span className="text-danger">Rented</span>
@@ -44,15 +44,15 @@ function SheetEquipment({ item }) {
           </h3>
         </Col>
         <Col xs={12}>
-          <p>{item.description}</p>
+          <p>{equipment.description}</p>
         </Col>
       </Row>
 
-      {loggedUser?._id === item.owner._id ? (
+      {loggedUser?._id === equipment.owner._id ? (
         <Row as="section">
           <Col xs={3} lg={1}>
             <Link
-              to={`/equipment/${item._id}/edit`}
+              to={`/equipment/${equipment._id}/edit`}
               className="btn btn-primary"
             >
               Edit
