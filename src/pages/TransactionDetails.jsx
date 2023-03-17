@@ -11,6 +11,7 @@ import { updateEquipmentService } from "../services/equipment.services";
 import Layout from "../components/Layout/Layout";
 import NavBar from "../components/NavBar/NavBar";
 import NavItem from "../components/NavItem";
+import Button from "react-bootstrap/Button";
 import PulseLoader from "react-spinners/PulseLoader";
 
 function TransactionDetails() {
@@ -20,8 +21,8 @@ function TransactionDetails() {
   const { transactionId } = params;
   const [transaction, setTransaction] = useState(null);
   const [isFetching, setIsFetching] = useState(true);
-  const [isDelivered, setIsDelivered] = useState(false);
-  const [isReturned, setIsReturned] = useState(false);
+  const [isDelivered, setIsDelivered] = useState(true);
+  const [isReturned, setIsReturned] = useState(true);
 
   useEffect(() => {
     getData();
@@ -30,8 +31,21 @@ function TransactionDetails() {
   const getData = async () => {
     try {
       const response = await getTransactionDetailsService(transactionId);
+
       setIsFetching(false);
+
       setTransaction(response.data);
+
+      if (response.data.state === "succeeded") {
+        setIsDelivered(false);
+      } else {
+        setIsDelivered(true);
+      }
+      if (response.data.state === "delivered") {
+        setIsReturned(false);
+      } else {
+        setIsReturned(true);
+      }
     } catch (error) {
       redirect("/error");
     }
@@ -49,7 +63,7 @@ function TransactionDetails() {
 
       setIsFetching(false);
       setTransaction(response.data);
-      setIsDelivered(response.data.state === "delivered");
+      setIsDelivered(!isDelivered);
     } catch (error) {
       redirect("/error");
     }
@@ -77,7 +91,7 @@ function TransactionDetails() {
 
       setIsFetching(false);
       setTransaction(response.data);
-      setIsReturned(response.data.state === "returned");
+      setIsReturned(!isReturned);
     } catch (error) {
       redirect("/error");
     }
@@ -94,15 +108,30 @@ function TransactionDetails() {
         ) : (
           <>
             <SheetTransaction transaction={transaction} />
-            {loggedUser._id === transaction.client && (
-              <button onClick={handleDeliveredState}>
-                {isDelivered ? "Mark as succeeded" : "Mark as delivered"}
-              </button>
-            )}
+            {loggedUser._id === transaction.client &&
+              transaction.state !== "returned" && (
+                <>
+                  <h4>PLEASE INFORM US ABOUT THE STATE OF YOUR RENTAL</h4>
+                  <Button
+                    variant={isDelivered ? "danger" : "success"}
+                    onClick={handleDeliveredState}
+                  >
+                    {isDelivered
+                      ? "Mark as non delivered"
+                      : "Mark as delivered"}
+                  </Button>
+                </>
+              )}
             {loggedUser._id === transaction.equipment.owner && (
-              <button onClick={handleReturnedState}>
-                {isReturned ? "Mark as delivered" : "Mark as returned"}
-              </button>
+              <>
+                <h4>PLEASE INFORM US ABOUT THE STATE OF YOUR RENTAL</h4>
+                <Button
+                  variant={isReturned ? "danger" : "success"}
+                  onClick={handleReturnedState}
+                >
+                  {isReturned ? "Mark as non returned" : "Mark as returned"}
+                </Button>
+              </>
             )}
             <br />
             <br />
