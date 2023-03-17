@@ -7,8 +7,6 @@ import NavBar from "../components/NavBar/NavBar";
 import NavigationAvatar from "../components/NavigationAvatar";
 import PulseLoader from "react-spinners/PulseLoader";
 import { AuthContext } from "../context/auth.context";
-// AuthContext;
-// useContext;
 
 function User() {
   const redirect = useNavigate();
