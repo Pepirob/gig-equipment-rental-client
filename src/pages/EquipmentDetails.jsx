@@ -10,6 +10,8 @@ import FormTotalPrice from "../components/FormTotalPrice";
 import Layout from "../components/Layout/Layout";
 import NavBar from "../components/NavBar/NavBar";
 import NavigationAvatar from "../components/NavigationAvatar";
+import { Button } from "react-bootstrap";
+import PulseLoader from "react-spinners/PulseLoader";
 
 function Equipment() {
   const MIN_DAYS = 1;
@@ -72,7 +74,7 @@ function Equipment() {
       <NavBar>{user && <NavigationAvatar user={user} />}</NavBar>
       <Layout>
         {isFetching === true ? (
-          <h2>...Buscando</h2>
+          <PulseLoader aria-label="Loading Spinner" data-testid="loader" />
         ) : (
           <article>
             <>
@@ -91,11 +93,15 @@ function Equipment() {
                               deposit={equipmentDetails.deposit}
                             />
                             {showPayButton && (
-                              <button onClick={handleRent}>PAY</button>
+                              <Button variant="primary" onClick={handleRent}>
+                                PAY
+                              </Button>
                             )}
                           </>
                         ) : (
-                          <button onClick={handleTotalPrice}>RENT</button>
+                          <Button variant="primary" onClick={handleTotalPrice}>
+                            RENT
+                          </Button>
                         )}
                       </>
                     )}

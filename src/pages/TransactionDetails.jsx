@@ -11,6 +11,7 @@ import { updateEquipmentService } from "../services/equipment.services";
 import Layout from "../components/Layout/Layout";
 import NavBar from "../components/NavBar/NavBar";
 import NavItem from "../components/NavItem";
+import PulseLoader from "react-spinners/PulseLoader";
 
 function TransactionDetails() {
   const redirect = useNavigate();
@@ -89,7 +90,7 @@ function TransactionDetails() {
       </NavBar>
       <Layout>
         {isFetching ? (
-          <h2>...buscando</h2>
+          <PulseLoader aria-label="Loading Spinner" data-testid="loader" />
         ) : (
           <>
             <SheetTransaction transaction={transaction} />

@@ -8,6 +8,7 @@ import Layout from "../components/Layout/Layout";
 import NavBar from "../components/NavBar/NavBar";
 import NavigationCta from "../components/NavigationCta";
 import NavigationAvatar from "../components/NavigationAvatar";
+import PulseLoader from "react-spinners/PulseLoader";
 
 function MyEquipment() {
   const redirect = useNavigate();
@@ -43,7 +44,7 @@ function MyEquipment() {
       <Layout>
         <h2>My Equipment</h2>
         {isFetching ? (
-          <h1>...Buscando</h1>
+          <PulseLoader aria-label="Loading Spinner" data-testid="loader" />
         ) : (
           <>
             {myEquipment.length ? (

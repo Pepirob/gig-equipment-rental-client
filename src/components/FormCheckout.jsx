@@ -75,20 +75,21 @@ function FormCheckout() {
   };
 
   return (
-    <Form id="payment-form" onSubmit={handleSubmit}>
+    <form id="payment-form" onSubmit={handleSubmit}>
       <PaymentElement id="payment-element" options={paymentElementOptions} />
       <Button
         size="lg"
         variant="success"
         disabled={isLoading || !stripe || !elements}
         id="submit"
+        type="submit"
       >
-        <span id="button-text">
+        <span id="Button-text">
           {isLoading ? <div className="spinner" id="spinner"></div> : "Pay now"}
         </span>
       </Button>
       {message && <div id="payment-message">{message}</div>}
-    </Form>
+    </form>
   );
 }
 
