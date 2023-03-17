@@ -85,7 +85,6 @@ function TransactionDetails() {
   return (
     <>
       <NavBar>
-        <NavItem path="/">Home</NavItem>{" "}
         <NavItem path="/dashboard">Dashboard</NavItem>
       </NavBar>
       <Layout>

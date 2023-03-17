@@ -4,7 +4,7 @@ import { getUserService } from "../services/user.services";
 import UserDetails from "../components/UserDetails";
 import Layout from "../components/Layout/Layout";
 import NavBar from "../components/NavBar/NavBar";
-import NavItem from "../components/NavItem";
+import NavigationAvatar from "../components/NavigationAvatar";
 
 function User() {
   const redirect = useNavigate();
@@ -28,9 +28,7 @@ function User() {
 
   return (
     <>
-      <NavBar>
-        <NavItem path="/">Home</NavItem>
-      </NavBar>
+      <NavBar>{userData && <NavigationAvatar user={userData} />}</NavBar>
       <Layout>
         {isFetching ? (
           <h2>...loading data</h2>
