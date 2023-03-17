@@ -8,7 +8,6 @@ function SearchForm({ setSearchInput }) {
     <>
       <Form>
         <Form.Group className="mb-3">
-          <Form.Label htmlFor="searchInput">SEARCH</Form.Label>
           <Form.Control
             type="text"
             name="searchInput"
