@@ -8,6 +8,7 @@ import { deleteTransactionsByUserService } from "../services/transactions.servic
 import Layout from "../components/Layout/Layout";
 import NavBar from "../components/NavBar/NavBar";
 import NavigationAvatar from "../components/NavigationAvatar";
+import PulseLoader from "react-spinners/PulseLoader";
 
 function Profile() {
   const redirect = useNavigate();
@@ -51,7 +52,7 @@ function Profile() {
       <NavBar>{userData && <NavigationAvatar user={userData} />}</NavBar>
       <Layout>
         {isFetching ? (
-          <h2>...loading data</h2>
+          <PulseLoader aria-label="Loading Spinner" data-testid="loader" />
         ) : (
           <>
             {userData ? (

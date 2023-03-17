@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { updateUserService } from "../services/user.services";
 import { uploadUserImgService } from "../services/upload.services";
 import { capitalize } from "../utils";
-import { Button, Form, Image } from "react-bootstrap";
+import { Button, Form, Image, Spinner } from "react-bootstrap";
 import ImageStyles from "./ImageStyles";
 
 function FormProfileEdit({ userData }) {
@@ -127,7 +127,11 @@ function FormProfileEdit({ userData }) {
           />
         </Form.Group>
         {wrongFileMessage && <p>{wrongFileMessage}</p>}
-        {isUploading ? <h3>... uploading image</h3> : null}
+        {isUploading ? (
+          <Spinner animation="border" role="status">
+            <span className="visually-hidden">Loading...</span>
+          </Spinner>
+        ) : null}
 
         <Form.Group className="mb-3">
           <Form.Label htmlFor="email">Email</Form.Label>

@@ -4,7 +4,7 @@ import { createEquipmentService } from "../services/equipment.services";
 import { uploadEquipmentImgService } from "../services/upload.services";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
-import { Image } from "react-bootstrap";
+import { Image, Spinner } from "react-bootstrap";
 import ImageStyles from "./ImageStyles";
 
 function FormCreateEquipment() {
@@ -113,7 +113,11 @@ function FormCreateEquipment() {
           />
         </Form.Group>
         {wrongFileMessage && <p>{wrongFileMessage}</p>}
-        {isUploading ? <h3>... uploading image</h3> : null}
+        {isUploading ? (
+          <Spinner animation="border" role="status">
+            <span className="visually-hidden">Loading...</span>
+          </Spinner>
+        ) : null}
         <Form.Group className="mb-3">
           <Form.Label htmlFor="name">Name: </Form.Label>
           <Form.Control

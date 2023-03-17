@@ -5,6 +5,7 @@ import { getEquipmentDetailsService } from "../services/equipment.services";
 import Layout from "../components/Layout/Layout";
 import NavBar from "../components/NavBar/NavBar";
 import NavItem from "../components/NavItem";
+import PulseLoader from "react-spinners/PulseLoader";
 
 function EquipmentEdit() {
   const redirect = useNavigate();
@@ -34,7 +35,7 @@ function EquipmentEdit() {
       </NavBar>
       <Layout>
         {isFetching ? (
-          <h2>...Buscando</h2>
+          <PulseLoader aria-label="Loading Spinner" data-testid="loader" />
         ) : (
           <>
             <h1>Edit Equipment: {equipment.name} </h1>

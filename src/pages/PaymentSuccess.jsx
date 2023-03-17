@@ -5,6 +5,7 @@ import SheetTransaction from "../components/SheetTransaction";
 import LinkContact from "../components/LinkContact";
 import Layout from "../components/Layout/Layout";
 import NavBar from "../components/NavBar/NavBar";
+import PulseLoader from "react-spinners/PulseLoader";
 
 const PaymentSuccess = () => {
   const navigate = useNavigate();
@@ -40,7 +41,7 @@ const PaymentSuccess = () => {
   };
 
   if (isFetching) {
-    return <h3>... updating payment</h3>;
+    return <PulseLoader aria-label="Loading Spinner" data-testid="loader" />;
   }
   return (
     <>

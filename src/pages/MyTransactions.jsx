@@ -5,6 +5,7 @@ import NavigationMain from "../components/NavigationMain";
 import { AuthContext } from "../context/auth.context";
 import { getTransactionsService } from "../services/transactions.services";
 import Layout from "../components/Layout/Layout";
+import PulseLoader from "react-spinners/PulseLoader";
 
 function MyTransactions() {
   const redirect = useNavigate();
@@ -39,7 +40,7 @@ function MyTransactions() {
       <Layout>
         <h1>My Transactions</h1>
         {isFetching ? (
-          <h2>...Buscando</h2>
+          <PulseLoader aria-label="Loading Spinner" data-testid="loader" />
         ) : (
           <>
             {transactions.length ? (
