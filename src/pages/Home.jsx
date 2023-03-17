@@ -11,7 +11,7 @@ import {
 import Layout from "../components/Layout/Layout";
 import Row from "react-bootstrap/Row";
 import PulseLoader from "react-spinners/PulseLoader";
-
+import HomeLogo from "../components/HomeLogo/HomeLogo";
 function Home() {
   const redirect = useNavigate();
   const [availableEquipment, setAvailableEquipment] = useState(null);
@@ -38,9 +38,13 @@ function Home() {
       <NavigationMain />
       <Layout>
         <>
-          <Row as="section">
+          <HomeLogo />
+          <Row style={{ textAlign: "center" }} as="section">
             <h1>Wellcome to coverGig!</h1>
-            <h2>Start renting equipment near your venue</h2>
+            <h2>
+              Start renting equipment near your venue from other musicians like
+              you
+            </h2>
           </Row>
           <Row as="section">
             <SearchForm setSearchInput={setSearchInput} />
