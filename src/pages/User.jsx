@@ -1,7 +1,11 @@
 import { useEffect, useState } from "react";
-import { Link, useParams, useNavigate } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import { getUserService } from "../services/user.services";
 import UserDetails from "../components/UserDetails";
+import Layout from "../components/Layout/Layout";
+import NavBar from "../components/NavBar/NavBar";
+import NavigationAvatar from "../components/NavigationAvatar";
+import PulseLoader from "react-spinners/PulseLoader";
 
 function User() {
   const redirect = useNavigate();
@@ -25,12 +29,10 @@ function User() {
 
   return (
     <>
-      <header>
-        <Link to="/">Home</Link>
-      </header>
-      <main>
+      <NavBar>{userData && <NavigationAvatar user={userData} />}</NavBar>
+      <Layout>
         {isFetching ? (
-          <h2>...loading data</h2>
+          <PulseLoader aria-label="Loading Spinner" data-testid="loader" />
         ) : (
           <>
             {userData ? (
@@ -42,7 +44,7 @@ function User() {
             )}
           </>
         )}
-      </main>
+      </Layout>
     </>
   );
 }

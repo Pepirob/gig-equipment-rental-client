@@ -5,6 +5,10 @@ import { Link, useNavigate } from "react-router-dom";
 import UserDetails from "../components/UserDetails";
 import { deleteAllEquipmentService } from "../services/equipment.services";
 import { deleteTransactionsByUserService } from "../services/transactions.services";
+import Layout from "../components/Layout/Layout";
+import NavBar from "../components/NavBar/NavBar";
+import NavigationAvatar from "../components/NavigationAvatar";
+import PulseLoader from "react-spinners/PulseLoader";
 
 function Profile() {
   const redirect = useNavigate();
@@ -45,12 +49,10 @@ function Profile() {
 
   return (
     <>
-      <header>
-        <Link to="/">Home</Link>
-      </header>
-      <main>
+      <NavBar>{userData && <NavigationAvatar user={userData} />}</NavBar>
+      <Layout>
         {isFetching ? (
-          <h2>...loading data</h2>
+          <PulseLoader aria-label="Loading Spinner" data-testid="loader" />
         ) : (
           <>
             {userData ? (
@@ -67,7 +69,7 @@ function Profile() {
             )}
           </>
         )}
-      </main>
+      </Layout>
     </>
   );
 }

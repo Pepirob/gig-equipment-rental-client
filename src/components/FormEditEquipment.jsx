@@ -1,8 +1,10 @@
 import { useEffect, useState } from "react";
+import { Button, Form, Image } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 import { updateEquipmentService } from "../services/equipment.services";
 import { uploadEquipmentImgService } from "../services/upload.services";
 import { capitalize } from "../utils/index";
+import ImageStyles from "./ImageStyles";
 
 function FormEditEquipment({ equipmentData }) {
   const redirect = useNavigate();
@@ -94,62 +96,76 @@ function FormEditEquipment({ equipmentData }) {
 
   return (
     <>
-      <img
-        src={imgUrl ? imgUrl : equipmentData.img}
-        alt={`A pic of ${equipmentData.name}`}
-        width="100"
-      />
-      <form>
-        <label htmlFor="img">Image</label>
-        <input
-          type="file"
-          name="img"
-          disabled={isUploading}
-          onChange={handleFileUpload}
+      <ImageStyles>
+        <Image
+          thumbnail={true}
+          src={imgUrl ? imgUrl : equipmentData.img}
+          alt={`A pic of ${equipmentData.name}`}
         />
+      </ImageStyles>
+      <Form>
+        <Form.Group className="mb-3">
+          <Form.Label htmlFor="img">Image</Form.Label>
+          <Form.Control
+            type="file"
+            name="img"
+            disabled={isUploading}
+            onChange={handleFileUpload}
+          />
+        </Form.Group>
         {wrongFileMessage && <p>{wrongFileMessage}</p>}
-        <br />
-        <br />
-        <label htmlFor="name">Name</label>
-        <input type="text" name="name" value={name} onChange={handleInput} />
-        <br />
-        <br />
-        <label htmlFor="description">Description: </label>
-        <input
-          type="textarea"
-          name="description"
-          value={description}
-          onChange={handleInput}
-        />
-        <br />
-        <br />
-        <label htmlFor="pricePerDay">Price per Day: </label>
-        <input
-          min={0}
-          type="number"
-          name="pricePerDay"
-          value={pricePerDay}
-          onChange={handleInput}
-        />
-        <br />
-        <br />
-        <label htmlFor="deposit">Deposit: </label>
-        <input
-          min={0}
-          type="number"
-          name="deposit"
-          value={deposit}
-          onChange={handleInput}
-        />
-        <br />
-        <br />
-        <button
+
+        <Form.Group className="mb-3">
+          <Form.Label htmlFor="name">Name</Form.Label>
+          <Form.Control
+            type="text"
+            name="name"
+            value={name}
+            onChange={handleInput}
+          />
+        </Form.Group>
+
+        <Form.Group className="mb-3">
+          <Form.Label htmlFor="description">Description: </Form.Label>
+          <Form.Control
+            as="textarea"
+            name="description"
+            value={description}
+            onChange={handleInput}
+          />
+        </Form.Group>
+
+        <Form.Group className="mb-3">
+          <Form.Label htmlFor="pricePerDay">Price per Day: </Form.Label>
+          <Form.Control
+            min={0}
+            type="number"
+            name="pricePerDay"
+            value={pricePerDay}
+            onChange={handleInput}
+          />
+        </Form.Group>
+
+        <Form.Group className="mb-3">
+          <Form.Label htmlFor="deposit">Deposit: </Form.Label>
+          <Form.Control
+            min={0}
+            type="number"
+            name="deposit"
+            value={deposit}
+            onChange={handleInput}
+          />
+        </Form.Group>
+
+        <Button
+          variant="success"
+          size="lg"
           onClick={handleSubmit}
           disabled={isUploading || wrongFileMessage || isFetching}
         >
           UPDATE
-        </button>
-      </form>
+        </Button>
+      </Form>
     </>
   );
 }

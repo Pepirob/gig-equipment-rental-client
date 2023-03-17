@@ -1,13 +1,16 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import ListEquipment from "../components/ListEquipment";
-import Navigation from "../components/Navigation";
+import NavigationMain from "../components/NavigationMain";
 import SearchForm from "../components/SearchForm";
 import useDebounce from "../hooks/useDebounce";
 import {
   getLocatedEquipmentService,
   getAvailableEquipmentService,
 } from "../services/equipment.services";
+import Layout from "../components/Layout/Layout";
+import Row from "react-bootstrap/Row";
+import PulseLoader from "react-spinners/PulseLoader";
 
 function Home() {
   const redirect = useNavigate();
@@ -32,15 +35,27 @@ function Home() {
 
   return (
     <>
-      <header>
-        <Navigation />
-      </header>
-      <main>
-        <h1>Home</h1>
-        <SearchForm setSearchInput={setSearchInput} />
-        {!isFetching && <ListEquipment equipment={availableEquipment} />}
-        {!isFetching && availableEquipment.length === 0 && <h2>No results</h2>}
-      </main>
+      <NavigationMain />
+      <Layout>
+        <>
+          <Row as="section">
+            <h1>Wellcome to coverGig!</h1>
+            <h2>Start renting equipment near your venue</h2>
+          </Row>
+          <Row as="section">
+            <SearchForm setSearchInput={setSearchInput} />
+          </Row>
+          <Row as="section">
+            {isFetching && (
+              <PulseLoader aria-label="Loading Spinner" data-testid="loader" />
+            )}
+            {!isFetching && <ListEquipment equipment={availableEquipment} />}
+            {!isFetching && availableEquipment.length === 0 && (
+              <h2>No results</h2>
+            )}
+          </Row>
+        </>
+      </Layout>
     </>
   );
 }

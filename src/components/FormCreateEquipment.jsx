@@ -2,6 +2,10 @@ import { useState } from "react";
 import { useNavigate } from "react-router";
 import { createEquipmentService } from "../services/equipment.services";
 import { uploadEquipmentImgService } from "../services/upload.services";
+import Button from "react-bootstrap/Button";
+import Form from "react-bootstrap/Form";
+import { Image, Spinner } from "react-bootstrap";
+import ImageStyles from "./ImageStyles";
 
 function FormCreateEquipment() {
   const DEFAULT_IMG_URL =
@@ -94,61 +98,76 @@ function FormCreateEquipment() {
 
   return (
     <>
-      <img src={getImgUrl()} alt="New Equipment pic" width="100" />
+      <ImageStyles>
+        <Image thumbnail={true} src={getImgUrl()} alt="New Equipment pic" />
+      </ImageStyles>
 
-      <form>
-        <label htmlFor="img">Upload image</label>
-        <input
-          type="file"
-          name="img"
-          disabled={isUploading}
-          onChange={handleFileUpload}
-        />
+      <Form>
+        <Form.Group className="mb-3">
+          <Form.Label htmlFor="img">Upload image</Form.Label>
+          <Form.Control
+            type="file"
+            name="img"
+            disabled={isUploading}
+            onChange={handleFileUpload}
+          />
+        </Form.Group>
         {wrongFileMessage && <p>{wrongFileMessage}</p>}
-        {isUploading ? <h3>... uploading image</h3> : null}
-        <br />
-        <br />
-        <label htmlFor="name">Name: </label>
-        <input type="text" name="name" value={name} onChange={handleInput} />
-        <br />
-        <br />
-        <label htmlFor="description">Description: </label>
-        <input
-          type="textarea"
-          name="description"
-          value={description}
-          onChange={handleInput}
-        />
-        <br />
-        <br />
-        <label htmlFor="pricePerDay">Price per Day: </label>
-        <input
-          min={0}
-          type="number"
-          name="pricePerDay"
-          value={pricePerDay}
-          onChange={handleInput}
-        />
-        <br />
-        <br />
-        <label htmlFor="deposit">Deposit: </label>
-        <input
-          min={0}
-          type="number"
-          name="deposit"
-          value={deposit}
-          onChange={handleInput}
-        />
-        <br />
-        <br />
+        {isUploading ? (
+          <Spinner animation="border" role="status">
+            <span className="visually-hidden">Loading...</span>
+          </Spinner>
+        ) : null}
+        <Form.Group className="mb-3">
+          <Form.Label htmlFor="name">Name: </Form.Label>
+          <Form.Control
+            type="text"
+            name="name"
+            value={name}
+            onChange={handleInput}
+          />
+        </Form.Group>
+        <Form.Group className="mb-3">
+          <Form.Label htmlFor="name">Description: </Form.Label>
+          <Form.Control
+            as="textarea"
+            name="description"
+            value={description}
+            onChange={handleInput}
+            style={{ height: "100px" }}
+          />
+        </Form.Group>
+        <Form.Group className="mb-3">
+          <Form.Label htmlFor="pricePerDay">Price per Day: </Form.Label>
+          <Form.Control
+            min={0}
+            type="number"
+            name="pricePerDay"
+            value={pricePerDay}
+            onChange={handleInput}
+          />
+        </Form.Group>
+        <Form.Group className="mb-3">
+          <Form.Label htmlFor="deposit">Deposit: </Form.Label>
+          <Form.Control
+            min={0}
+            type="number"
+            name="deposit"
+            value={deposit}
+            onChange={handleInput}
+          />
+        </Form.Group>
+
         {errorMessage && <p>{errorMessage}</p>}
-        <button
+        <Button
+          variant="success"
+          size="lg"
           onClick={handleSubmit}
           disabled={isUploading || wrongFileMessage || isFetching}
         >
           PUBLISH
-        </button>
-      </form>
+        </Button>
+      </Form>
     </>
   );
 }

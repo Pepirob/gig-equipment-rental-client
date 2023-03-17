@@ -3,6 +3,8 @@ import { useNavigate } from "react-router-dom";
 import { updateUserService } from "../services/user.services";
 import { uploadUserImgService } from "../services/upload.services";
 import { capitalize } from "../utils";
+import { Button, Form, Image, Spinner } from "react-bootstrap";
+import ImageStyles from "./ImageStyles";
 
 function FormProfileEdit({ userData }) {
   const redirect = useNavigate();
@@ -97,69 +99,81 @@ function FormProfileEdit({ userData }) {
 
   return (
     <>
-      <img
-        src={imgUrl ? imgUrl : userData.img}
-        alt={`A pic of ${userData.name}`}
-        width={200}
-      />
-      <form>
-        <label>Image: </label>
-        <input
-          type="file"
-          name="image"
-          onChange={handleFileUpload}
-          disabled={isUploading}
+      <ImageStyles>
+        <Image
+          thumbnail={true}
+          src={imgUrl ? imgUrl : userData.img}
+          alt={`A pic of ${userData.name}`}
         />
-        <br />
-        <br />
+      </ImageStyles>
+      <Form>
+        <Form.Group className="mb-3">
+          <Form.Label>Image: </Form.Label>
+          <Form.Control
+            type="file"
+            name="image"
+            onChange={handleFileUpload}
+            disabled={isUploading}
+          />
+        </Form.Group>
+
+        <Form.Group className="mb-3">
+          <Form.Label htmlFor="username">Username</Form.Label>
+          <Form.Control
+            type="text"
+            name="username"
+            value={username}
+            onChange={handleInput}
+          />
+        </Form.Group>
         {wrongFileMessage && <p>{wrongFileMessage}</p>}
-        {isUploading ? <h3>... uploading image</h3> : null}
-        <label htmlFor="username">Username</label>
-        <input
-          type="text"
-          name="username"
-          value={username}
-          onChange={handleInput}
-        />
-        <br />
-        <br />
-        <label htmlFor="email">Email</label>
-        <input
-          type="email"
-          name="email"
-          value={email}
-          onChange={handleInput}
-          autoComplete="email"
-        />
-        <br />
-        <br />
-        <label htmlFor="location">Location</label>
-        <input
-          type="text"
-          name="location"
-          value={location}
-          onChange={handleInput}
-        />
-        <br />
-        <br />
-        <label htmlFor="phoneNumber">Phone</label>
-        <input
-          type="tel"
-          name="phoneNumber"
-          pattern="^\+[1-9]\d{1,14}$"
-          value={phoneNumber}
-          onChange={handleInput}
-          autoComplete="tel"
-        />
-        <br />
-        <br />
-        <button
+        {isUploading ? (
+          <Spinner animation="border" role="status">
+            <span className="visually-hidden">Loading...</span>
+          </Spinner>
+        ) : null}
+
+        <Form.Group className="mb-3">
+          <Form.Label htmlFor="email">Email</Form.Label>
+          <Form.Control
+            type="email"
+            name="email"
+            value={email}
+            onChange={handleInput}
+            autoComplete="email"
+          />
+        </Form.Group>
+
+        <Form.Group className="mb-3">
+          <Form.Label htmlFor="location">Location</Form.Label>
+          <Form.Control
+            type="text"
+            name="location"
+            value={location}
+            onChange={handleInput}
+          />
+        </Form.Group>
+
+        <Form.Group className="mb-3">
+          <Form.Label htmlFor="phoneNumber">Phone</Form.Label>
+          <Form.Control
+            type="tel"
+            name="phoneNumber"
+            pattern="^\+[1-9]\d{1,14}$"
+            value={phoneNumber}
+            onChange={handleInput}
+            autoComplete="tel"
+          />
+        </Form.Group>
+        <Button
+          variant="success"
+          size="lg"
           onClick={handleSubmit}
           disabled={isUploading || wrongFileMessage || isFetching}
         >
           UPDATE
-        </button>
-      </form>
+        </Button>
+      </Form>
     </>
   );
 }

@@ -33,7 +33,7 @@ function SheetTransaction({ transaction }) {
     <>
       <section>
         <h1>{transaction.equipment.name}</h1>
-        <img src={transaction.equipment.img} width="100" />
+        <img src={transaction.equipment.img} />
         <div>
           <p>Price per Day: {transaction.equipment.pricePerDay}</p>
           <p>Deposit: {transaction.equipment.deposit}</p>

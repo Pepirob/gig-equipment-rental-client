@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { Button, Form } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 import { signupService } from "../services/auth.services";
 
@@ -50,62 +51,71 @@ function FormRegister() {
 
   return (
     <>
-      <form>
-        <label htmlFor="username">Username</label>
-        <input
-          type="text"
-          name="username"
-          value={username}
-          onChange={handleInput}
-          autoComplete="username"
-        />
-        <br />
-        <br />
-        <label htmlFor="email">Email</label>
-        <input
-          type="email"
-          name="email"
-          value={email}
-          onChange={handleInput}
-          autoComplete="email"
-        />
-        <br />
-        <br />
-        <label htmlFor="location">Location</label>
-        <input
-          type="text"
-          name="location"
-          value={location}
-          onChange={handleInput}
-        />
-        <br />
-        <br />
-        <label htmlFor="phoneNumber">Phone</label>
-        <input
-          type="tel"
-          name="phoneNumber"
-          pattern="^\+[1-9]\d{1,14}$"
-          value={phoneNumber}
-          onChange={handleInput}
-          autoComplete="tel"
-        />
-        <br />
-        <br />
-        <label htmlFor="password">Password</label>
-        <input
-          type="password"
-          name="password"
-          value={password}
-          onChange={handleInput}
-          autoComplete="new-password"
-        />
-        <br />
-        <br />
+      <Form>
+        <Form.Group className="mb-3">
+          <Form.Label htmlFor="username">Username</Form.Label>
+          <Form.Control
+            type="text"
+            name="username"
+            value={username}
+            onChange={handleInput}
+            autoComplete="username"
+          />
+        </Form.Group>
+
+        <Form.Group className="mb-3">
+          <Form.Label htmlFor="email">Email</Form.Label>
+          <Form.Control
+            type="email"
+            name="email"
+            value={email}
+            onChange={handleInput}
+            autoComplete="email"
+          />
+        </Form.Group>
+
+        <Form.Group className="mb-3">
+          <Form.Label htmlFor="location">Location</Form.Label>
+          <Form.Control
+            type="text"
+            name="location"
+            value={location}
+            onChange={handleInput}
+          />
+        </Form.Group>
+
+        <Form.Group className="mb-3">
+          <Form.Label htmlFor="phoneNumber">Phone</Form.Label>
+          <Form.Control
+            type="tel"
+            name="phoneNumber"
+            pattern="^\+[1-9]\d{1,14}$"
+            value={phoneNumber}
+            onChange={handleInput}
+            autoComplete="tel"
+          />
+        </Form.Group>
+        <Form.Group className="mb-3">
+          <Form.Label htmlFor="password">Password</Form.Label>
+          <Form.Control
+            type="password"
+            name="password"
+            value={password}
+            onChange={handleInput}
+            autoComplete="new-password"
+          />
+        </Form.Group>
+
         {errorMessage.length ? <p>{errorMessage}</p> : null}
-        <button onClick={handleSubmit} disabled={isFetching}>
+        <Button
+          variant="success"
+          size="lg"
+          onClick={handleSubmit}
+          disabled={isFetching}
+        >
           SIGNUP
-        </button>
-      </form>
+        </Button>
+      </Form>
     </>
   );
 }

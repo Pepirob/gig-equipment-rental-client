@@ -1,13 +1,15 @@
 import { useEffect, useState } from "react";
-import { Link, useNavigate, useLocation } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import { updatePaymentIntentService } from "../services/payment.services";
 import SheetTransaction from "../components/SheetTransaction";
 import LinkContact from "../components/LinkContact";
+import Layout from "../components/Layout/Layout";
+import NavBar from "../components/NavBar/NavBar";
+import PulseLoader from "react-spinners/PulseLoader";
 
 const PaymentSuccess = () => {
   const navigate = useNavigate();
   const location = useLocation();
-
   const [transaction, setTransaction] = useState(null);
   const [isFetching, setIsFetching] = useState(true);
 
@@ -39,24 +41,21 @@ const PaymentSuccess = () => {
   };
 
   if (isFetching) {
-    return <h3>... updating payment</h3>;
+    return <PulseLoader aria-label="Loading Spinner" data-testid="loader" />;
   }
   return (
     <>
-      {/* // todo redirect to owner */}
       <>
-        <header>
+        <NavBar></NavBar>
+        <Layout>
           <h1>Thank you for your order!</h1>
-          <Link to={"/"}>Go back to Home</Link>
-        </header>
-        <main>
           <h3>Details:</h3>
           <SheetTransaction transaction={transaction} />
           <LinkContact
             owner={transaction.equipment.owner}
             client={transaction.client}
           />
-        </main>
+        </Layout>
       </>
     </>
   );

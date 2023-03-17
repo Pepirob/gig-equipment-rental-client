@@ -1,0 +1,15 @@
+.nav-avatar {
+  background-color: grey;
+  border-radius: 999px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 2rem;
+  width: 2rem;
+  overflow: hidden;
+}
+
+.nav-avatar-pic {
+  height: 150%;
+  width: auto;
+}

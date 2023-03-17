@@ -1,7 +1,9 @@
 import { useContext } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { AuthContext } from "../context/auth.context";
-
+import Layout from "../components/Layout/Layout";
+import NavBar from "../components/NavBar/NavBar";
+import NavItem from "../components/NavItem";
 function Dashboard() {
   const redirect = useNavigate();
   const { authenticateUser, loggedUser } = useContext(AuthContext);
@@ -16,13 +18,12 @@ function Dashboard() {
 
   return (
     <>
-      <header>
-        <Link to="/">Home</Link>
+      <NavBar>
         <span style={{ color: "red" }} onClick={handleLogout}>
           Logout
         </span>
-      </header>
-      <main>
+      </NavBar>
+      <Layout>
         <h1>Dashboard</h1>
         <h2>{loggedUser.username}</h2>
         <section>
@@ -34,7 +35,7 @@ function Dashboard() {
           <br />
           <Link to="/profile">Profile</Link>
         </section>
-      </main>
+      </Layout>
     </>
   );
 }

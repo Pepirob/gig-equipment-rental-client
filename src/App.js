@@ -1,4 +1,5 @@
 import { Route, Routes } from "react-router-dom";
+import "bootstrap/dist/css/bootstrap.min.css";
 import "./App.css";
 import Home from "./pages/Home";
 import Register from "./pages/auth/Register";
@@ -66,12 +67,22 @@ function App() {
             </IsPrivate>
           }
         />
-        <Route path="/my-transactions" element={<MyTransactions />} />
+        <Route
+          path="/my-transactions"
+          element={
+            <IsPrivate>
+              <MyTransactions />
+            </IsPrivate>
+          }
+        />
         <Route
           path="/transaction/:transactionId"
-          element={<TransactionDetails />}
+          element={
+            <IsPrivate>
+              <TransactionDetails />
+            </IsPrivate>
+          }
         />
-
         <Route
           path="/user/:userId"
           element={
@@ -80,9 +91,22 @@ function App() {
             </IsPrivate>
           }
         />
-
-        <Route path="/create-equipment" element={<CreateEquipment />} />
-        <Route path="/payment-success" element={<PaymentSuccess />} />
+        <Route
+          path="/create-equipment"
+          element={
+            <IsPrivate>
+              <CreateEquipment />
+            </IsPrivate>
+          }
+        />
+        <Route
+          path="/payment-success"
+          element={
+            <IsPrivate>
+              <PaymentSuccess />
+            </IsPrivate>
+          }
+        />
 
         <Route path="/error" element={<Error />} />
         <Route path="/*" element={<NotFound />} />

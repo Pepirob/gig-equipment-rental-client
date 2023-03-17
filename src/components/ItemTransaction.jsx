@@ -12,7 +12,7 @@ function ItemTransaction({ item }) {
 
   return (
     <li>
-      <img src={item.equipment.img} width="100" />
+      <img src={item.equipment.img} />
       <div>
         <Link to={`/transaction/${item._id}`}>
           {capitalize(item.equipment.name)}

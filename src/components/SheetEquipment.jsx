@@ -1,8 +1,10 @@
 import { useContext, useState } from "react";
+import { Col, Row, Button } from "react-bootstrap";
 import { Link, useNavigate } from "react-router-dom";
 import { AuthContext } from "../context/auth.context";
 import { deleteSingleEquipmentService } from "../services/equipment.services";
 import { deleteTransactionsByEquipmentService } from "../services/transactions.services";
+import { capitalize } from "../utils";
 
 function SheetEquipment({ item }) {
   const redirect = useNavigate();
@@ -23,25 +25,46 @@ function SheetEquipment({ item }) {
 
   return (
     <>
-      <h1>{item.name}</h1>
-      <img src={item.img} alt="equip" width="100" />
-      <p>{item.description}</p>
-      <p>Price per day: {item.pricePerDay}€</p>
-      <p>Deposit: {item.deposit}€</p>
-      {item.isAvailable ? (
-        <p style={{ color: "green" }}>Available</p>
-      ) : (
-        <>
-          <p style={{ color: "red" }}>Rented</p>
-        </>
-      )}
-      {/* // TODO: move to tools component */}
+      <Row as="article">
+        <Col xs={12} as="h1">
+          {capitalize(item.name)}
+        </Col>
+        <Col xs={12} md={6}>
+          <img className="custom-image" src={item.img} alt="equip" />
+        </Col>
+        <Col xs={12} md={6}>
+          <h3>Price per day: {item.pricePerDay}€</h3>
+          <h3>Deposit: {item.deposit}€</h3>
+          <h3>
+            {item.isAvailable ? (
+              <span className="text-success">Available</span>
+            ) : (
+              <span className="text-danger">Rented</span>
+            )}
+          </h3>
+        </Col>
+        <Col xs={12}>
+          <p>{item.description}</p>
+        </Col>
+      </Row>
+
       {loggedUser?._id === item.owner._id ? (
-        <>
-          <Link to={`/equipment/${item._id}/edit`}>Edit</Link>
-          <button onClick={handleDelete}>DELETE</button>
+        <Row as="section">
+          <Col xs={3} lg={1}>
+            <Link
+              to={`/equipment/${item._id}/edit`}
+              className="btn btn-primary"
+            >
+              Edit
+            </Link>
+          </Col>
+          <Col xs={3} lg={1}>
+            <Button variant="danger" onClick={handleDelete}>
+              DELETE
+            </Button>
+          </Col>
           {errorMessage && <p>{errorMessage}</p>}
-        </>
+        </Row>
       ) : null}
     </>
   );

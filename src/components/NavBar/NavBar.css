@@ -1,0 +1,24 @@
+.navbar {
+  padding: 0.75rem;
+}
+
+.navbar-homelink {
+  color: white;
+}
+
+.navbar-header {
+  position: fixed;
+  top: 0;
+  width: 100vw;
+  z-index: 2;
+}
+
+.navbar-header .container-sm {
+  display: flex;
+  justify-content: space-between;
+}
+
+.navbar-header .container {
+  justify-content: flex-end;
+  gap: 0.5rem;
+}

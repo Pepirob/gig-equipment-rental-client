@@ -1,5 +1,5 @@
 import { useContext, useEffect, useState } from "react";
-import { Link, useNavigate, useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import SheetTransaction from "../components/SheetTransaction";
 import { AuthContext } from "../context/auth.context";
 import {
@@ -8,6 +8,10 @@ import {
 } from "../services/transactions.services";
 import LinkContact from "../components/LinkContact";
 import { updateEquipmentService } from "../services/equipment.services";
+import Layout from "../components/Layout/Layout";
+import NavBar from "../components/NavBar/NavBar";
+import NavItem from "../components/NavItem";
+import PulseLoader from "react-spinners/PulseLoader";
 
 function TransactionDetails() {
   const redirect = useNavigate();
@@ -16,6 +20,8 @@ function TransactionDetails() {
   const { transactionId } = params;
   const [transaction, setTransaction] = useState(null);
   const [isFetching, setIsFetching] = useState(true);
+  const [isDelivered, setIsDelivered] = useState(false);
+  const [isReturned, setIsReturned] = useState(false);
 
   useEffect(() => {
     getData();
@@ -35,12 +41,15 @@ function TransactionDetails() {
     try {
       setIsFetching(true);
 
+      const newState = isDelivered ? "succeeded" : "delivered";
+
       const response = await updateTransactionStateService(transactionId, {
-        state: "delivered",
+        state: newState,
       });
 
       setIsFetching(false);
       setTransaction(response.data);
+      setIsDelivered(response.data.state === "delivered");
     } catch (error) {
       redirect("/error");
     }
@@ -50,16 +59,25 @@ function TransactionDetails() {
     try {
       setIsFetching(true);
 
+      const newState = isReturned ? "delivered" : "returned";
+
       const response = await updateTransactionStateService(transactionId, {
-        state: "returned",
+        state: newState,
       });
 
-      await updateEquipmentService(transaction.equipment._id, {
-        isAvailable: true,
-      });
+      if (newState === "returned") {
+        await updateEquipmentService(transaction.equipment._id, {
+          isAvailable: true,
+        });
+      } else {
+        await updateEquipmentService(transaction.equipment._id, {
+          isAvailable: false,
+        });
+      }
 
       setIsFetching(false);
       setTransaction(response.data);
+      setIsReturned(response.data.state === "returned");
     } catch (error) {
       redirect("/error");
     }
@@ -67,33 +85,25 @@ function TransactionDetails() {
 
   return (
     <>
-      <header>
-        <Link to="/">Home</Link> <Link to="/dashboard">Dashboard</Link>
-      </header>
-      <main>
+      <NavBar>
+        <NavItem path="/dashboard">Dashboard</NavItem>
+      </NavBar>
+      <Layout>
         {isFetching ? (
-          <h2>...buscando</h2>
+          <PulseLoader aria-label="Loading Spinner" data-testid="loader" />
         ) : (
           <>
             <SheetTransaction transaction={transaction} />
             {loggedUser._id === transaction.client && (
-              <button
-                hidden={transaction.state !== "succeeded"}
-                onClick={handleDeliveredState}
-              >
-                Mark as delivered
+              <button onClick={handleDeliveredState}>
+                {isDelivered ? "Mark as succeeded" : "Mark as delivered"}
               </button>
             )}
-            {transaction.state === "delivered" && <p>Product delivered</p>}
             {loggedUser._id === transaction.equipment.owner && (
-              <button
-                hidden={transaction.state !== "delivered"}
-                onClick={handleReturnedState}
-              >
-                Mark as returned
+              <button onClick={handleReturnedState}>
+                {isReturned ? "Mark as delivered" : "Mark as returned"}
               </button>
             )}
-            {transaction.state === "returned" && <p>Product returned</p>}
             <br />
             <br />
             <LinkContact
@@ -102,7 +112,7 @@ function TransactionDetails() {
             />
           </>
         )}
-      </main>
+      </Layout>
     </>
   );
 }
