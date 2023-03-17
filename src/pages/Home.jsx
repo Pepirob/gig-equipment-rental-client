@@ -37,7 +37,10 @@ function Home() {
       <NavigationMain />
       <Layout>
         <>
-          <h1>Wellcome to coverGig!</h1>
+          <Row as="section">
+            <h1>Wellcome to coverGig!</h1>
+            <h2>Start renting equipment near your venue</h2>
+          </Row>
           <Row as="section">
             <SearchForm setSearchInput={setSearchInput} />
           </Row>
