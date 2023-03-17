@@ -20,8 +20,8 @@ function TransactionDetails() {
   const { transactionId } = params;
   const [transaction, setTransaction] = useState(null);
   const [isFetching, setIsFetching] = useState(true);
-  const [isDelivered, setIsDelivered] = useState(false);
-  const [isReturned, setIsReturned] = useState(false);
+  const [isDelivered, setIsDelivered] = useState(true);
+  const [isReturned, setIsReturned] = useState(true);
 
   useEffect(() => {
     getData();
@@ -30,8 +30,21 @@ function TransactionDetails() {
   const getData = async () => {
     try {
       const response = await getTransactionDetailsService(transactionId);
+
       setIsFetching(false);
+
       setTransaction(response.data);
+
+      if (response.data.state === "succeeded") {
+        setIsDelivered(false);
+      } else {
+        setIsDelivered(true);
+      }
+      if (response.data.state === "delivered") {
+        setIsReturned(false);
+      } else {
+        setIsReturned(true);
+      }
     } catch (error) {
       redirect("/error");
     }
@@ -49,7 +62,7 @@ function TransactionDetails() {
 
       setIsFetching(false);
       setTransaction(response.data);
-      setIsDelivered(response.data.state === "delivered");
+      setIsDelivered(!isDelivered);
     } catch (error) {
       redirect("/error");
     }
@@ -77,7 +90,7 @@ function TransactionDetails() {
 
       setIsFetching(false);
       setTransaction(response.data);
-      setIsReturned(response.data.state === "returned");
+      setIsReturned(!isReturned);
     } catch (error) {
       redirect("/error");
     }
