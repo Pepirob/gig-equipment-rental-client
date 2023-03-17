@@ -1,12 +1,13 @@
 import ItemEquipment from "./ItemEquipment";
+import Row from "react-bootstrap/Row";
 
 function ListEquipment({ equipment }) {
   return (
-    <ul>
+    <Row as="ul">
       {equipment.map((item) => {
         return <ItemEquipment key={item._id} item={item} />;
       })}
-    </ul>
+    </Row>
   );
 }
 
