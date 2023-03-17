@@ -21,8 +21,8 @@ function TransactionDetails() {
   const { transactionId } = params;
   const [transaction, setTransaction] = useState(null);
   const [isFetching, setIsFetching] = useState(true);
-  const [isDelivered, setIsDelivered] = useState(false);
-  const [isReturned, setIsReturned] = useState(false);
+  const [isDelivered, setIsDelivered] = useState(true);
+  const [isReturned, setIsReturned] = useState(true);
 
   useEffect(() => {
     getData();
@@ -31,8 +31,21 @@ function TransactionDetails() {
   const getData = async () => {
     try {
       const response = await getTransactionDetailsService(transactionId);
+
       setIsFetching(false);
+
       setTransaction(response.data);
+
+      if (response.data.state === "succeeded") {
+        setIsDelivered(false);
+      } else {
+        setIsDelivered(true);
+      }
+      if (response.data.state === "delivered") {
+        setIsReturned(false);
+      } else {
+        setIsReturned(true);
+      }
     } catch (error) {
       redirect("/error");
     }
@@ -50,7 +63,7 @@ function TransactionDetails() {
 
       setIsFetching(false);
       setTransaction(response.data);
-      setIsDelivered(response.data.state === "delivered");
+      setIsDelivered(!isDelivered);
     } catch (error) {
       redirect("/error");
     }
@@ -78,7 +91,7 @@ function TransactionDetails() {
 
       setIsFetching(false);
       setTransaction(response.data);
-      setIsReturned(response.data.state === "returned");
+      setIsReturned(!isReturned);
     } catch (error) {
       redirect("/error");
     }
@@ -95,19 +108,23 @@ function TransactionDetails() {
         ) : (
           <>
             <SheetTransaction transaction={transaction} />
-            <h4>PLEASE INFORM US ABOUT THE STATE OF YOUR RENTAL</h4>
-            {loggedUser._id === transaction.client && (
-              <>
-                <Button
-                  variant={isDelivered ? "danger" : "success"}
-                  onClick={handleDeliveredState}
-                >
-                  {isDelivered ? "Mark as non delivered" : "Mark as delivered"}
-                </Button>
-              </>
-            )}
+            {loggedUser._id === transaction.client &&
+              transaction.state !== "returned" && (
+                <>
+                  <h4>PLEASE INFORM US ABOUT THE STATE OF YOUR RENTAL</h4>
+                  <Button
+                    variant={isDelivered ? "danger" : "success"}
+                    onClick={handleDeliveredState}
+                  >
+                    {isDelivered
+                      ? "Mark as non delivered"
+                      : "Mark as delivered"}
+                  </Button>
+                </>
+              )}
             {loggedUser._id === transaction.equipment.owner && (
               <>
+                <h4>PLEASE INFORM US ABOUT THE STATE OF YOUR RENTAL</h4>
                 <Button
                   variant={isReturned ? "danger" : "success"}
                   onClick={handleReturnedState}
