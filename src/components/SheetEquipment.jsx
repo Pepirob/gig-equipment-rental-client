@@ -1,11 +1,10 @@
 import { useContext, useState } from "react";
-import { Card, Col, Container, ListGroup, Row } from "react-bootstrap";
+import { Col, Row, Button } from "react-bootstrap";
 import { Link, useNavigate } from "react-router-dom";
 import { AuthContext } from "../context/auth.context";
 import { deleteSingleEquipmentService } from "../services/equipment.services";
 import { deleteTransactionsByEquipmentService } from "../services/transactions.services";
 import { capitalize } from "../utils";
-import ImageStyles from "./ImageStyles";
 
 function SheetEquipment({ item }) {
   const redirect = useNavigate();
@@ -26,48 +25,47 @@ function SheetEquipment({ item }) {
 
   return (
     <>
-      <Container fluid="md">
-        <Row>
-          <Col className="d-flex flex-column justify-content-center">
-            <h1>{capitalize(item.name)}</h1>
-            <ImageStyles>
-              <img src={item.img} alt="equip" />
-            </ImageStyles>
-          </Col>
-          <Col className="d-flex flex-column justify-content-center">
-            <Card style={{ width: "18rem" }}>
-              <ListGroup variant="flush">
-                <ListGroup.Item>
-                  Price per day: {item.pricePerDay}€
-                </ListGroup.Item>
-                <ListGroup.Item>Deposit: {item.deposit}€</ListGroup.Item>
-                <ListGroup.Item>
-                  {item.isAvailable ? (
-                    <p className="text-success">Available</p>
-                  ) : (
-                    <p className="text-danger">Rented</p>
-                  )}
-                </ListGroup.Item>
-              </ListGroup>
-            </Card>
+      <Row as="article">
+        <Col xs={12} as="h1">
+          {capitalize(item.name)}
+        </Col>
+        <Col xs={12} md={6}>
+          <img className="custom-image" src={item.img} alt="equip" />
+        </Col>
+        <Col xs={12} md={6}>
+          <h3>Price per day: {item.pricePerDay}€</h3>
+          <h3>Deposit: {item.deposit}€</h3>
+          <h3>
+            {item.isAvailable ? (
+              <span className="text-success">Available</span>
+            ) : (
+              <span className="text-danger">Rented</span>
+            )}
+          </h3>
+        </Col>
+        <Col xs={12}>
+          <p>{item.description}</p>
+        </Col>
+      </Row>
 
-            {loggedUser?._id === item.owner._id ? (
-              <>
-                <Link
-                  to={`/equipment/${item._id}/edit`}
-                  className="btn btn-primary me-2"
-                >
-                  Edit
-                </Link>
-                <button onClick={handleDelete} className="btn btn-danger">
-                  DELETE
-                </button>
-                {errorMessage && <p>{errorMessage}</p>}
-              </>
-            ) : null}
+      {loggedUser?._id === item.owner._id ? (
+        <Row as="section">
+          <Col xs={3} lg={1}>
+            <Link
+              to={`/equipment/${item._id}/edit`}
+              className="btn btn-primary"
+            >
+              Edit
+            </Link>
           </Col>
+          <Col xs={3} lg={1}>
+            <Button variant="danger" onClick={handleDelete}>
+              DELETE
+            </Button>
+          </Col>
+          {errorMessage && <p>{errorMessage}</p>}
         </Row>
-      </Container>
+      ) : null}
     </>
   );
 }
