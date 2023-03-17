@@ -75,51 +75,49 @@ function Equipment() {
         {isFetching === true ? (
           <h2>...Buscando</h2>
         ) : (
-          <article>
-            <>
-              {equipmentDetails ? (
-                <>
-                  <SheetEquipment item={equipmentDetails} />
-                  <section>
-                    {isSomeoneElseEquipment && (
-                      <>
-                        {showTotalDays ? (
-                          <>
-                            <FormTotalPrice
-                              setTotalDays={setTotalDays}
-                              totalDays={totalDays}
-                              pricePerDay={equipmentDetails.pricePerDay}
-                              deposit={equipmentDetails.deposit}
-                            />
-                            {showPayButton && (
-                              <Button variant="primary" onClick={handleRent}>
-                                PAY
-                              </Button>
-                            )}
-                          </>
-                        ) : (
-                          <Button variant="primary" onClick={handleTotalPrice}>
-                            RENT
-                          </Button>
-                        )}
-                      </>
-                    )}
+          <>
+            {equipmentDetails ? (
+              <>
+                <SheetEquipment item={equipmentDetails} />
+                <section>
+                  {isSomeoneElseEquipment && (
+                    <>
+                      {showTotalDays ? (
+                        <>
+                          <FormTotalPrice
+                            setTotalDays={setTotalDays}
+                            totalDays={totalDays}
+                            pricePerDay={equipmentDetails.pricePerDay}
+                            deposit={equipmentDetails.deposit}
+                          />
+                          {showPayButton && (
+                            <Button variant="primary" onClick={handleRent}>
+                              PAY
+                            </Button>
+                          )}
+                        </>
+                      ) : (
+                        <Button variant="primary" onClick={handleTotalPrice}>
+                          RENT
+                        </Button>
+                      )}
+                    </>
+                  )}
 
-                    {showPaymentIntent && isSomeoneElseEquipment && (
-                      <PaymentIntent
-                        productDetails={equipmentDetails}
-                        totalDays={totalDays}
-                      >
-                        <FormCheckout />
-                      </PaymentIntent>
-                    )}
-                  </section>
-                </>
-              ) : (
-                <h2>We're sorry! This equipment isn't currently available</h2>
-              )}
-            </>
-          </article>
+                  {showPaymentIntent && isSomeoneElseEquipment && (
+                    <PaymentIntent
+                      productDetails={equipmentDetails}
+                      totalDays={totalDays}
+                    >
+                      <FormCheckout />
+                    </PaymentIntent>
+                  )}
+                </section>
+              </>
+            ) : (
+              <h2>We're sorry! This equipment isn't currently available</h2>
+            )}
+          </>
         )}
       </Layout>
     </>
