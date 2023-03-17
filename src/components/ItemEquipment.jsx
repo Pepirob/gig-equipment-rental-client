@@ -1,16 +1,24 @@
 import { Link } from "react-router-dom";
 import { capitalize } from "../utils/index";
-import ImageStyles from "./ImageStyles";
+import Card from "react-bootstrap/Card";
+import Col from "react-bootstrap/Col";
 
 function ItemEquipment({ item }) {
   return (
-    <li>
-      <img src={item.img} alt="equip" />
-
-      <Link to={`/equipment/${item._id}`}>
-        <h3>{capitalize(item.name)} </h3>
-      </Link>
-    </li>
+    <Col xs={12} md={4} lg={3}>
+      <Card>
+        <Link to={`/equipment/${item._id}`}>
+          <Card.Img
+            variant="top"
+            src={item.img}
+            alt={`A pic of ${item.name}`}
+          />
+          <Card.Body>
+            <Card.Title as="h3">{capitalize(item.name)} </Card.Title>
+          </Card.Body>
+        </Link>
+      </Card>
+    </Col>
   );
 }
 
