@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { getEquipmentDetailsService } from "../services/equipment.services";
 import PulseLoader from "react-spinners/PulseLoader";
 import { capitalize } from "../utils";
+import { Col, Row, Button } from "react-bootstrap";
 
 function SheetTransaction({ transaction }) {
   const redirect = useNavigate();
@@ -38,26 +39,37 @@ function SheetTransaction({ transaction }) {
       )}
       {equipment && (
         <>
-          <section>
-            <h1>{capitalize(transaction.equipment.name)}</h1>
-            <img src={transaction.equipment.img} />
-            <div>
+          <Row as="article">
+            <Col xs={12} as="h1">
+              {capitalize(transaction.equipment.name)}
+            </Col>
+            <Col xs={12} md={6}>
+              <Col xs={12} md={6}>
+                <img
+                  className="custom-image"
+                  src={transaction.equipment.img}
+                  alt="equip"
+                />
+              </Col>
+            </Col>
+            <Col xs={12} md={6}>
               <p>Price per Day: {transaction.equipment.pricePerDay}</p>
               <p>Deposit: {transaction.equipment.deposit}</p>
-              <p>Current State: {capitalize(transaction.state)}</p>
-            </div>
-          </section>
-          <section>
-            <p>
-              Renting period:{" "}
-              <span>
-                {transactionCreatedDay.getDate()}/
-                {transactionCreatedDay.getMonth() + 1}/
-                {transactionCreatedDay.getFullYear()} - {lastDayRent.getDate()}/
-                {lastDayRent.getMonth() + 1}/{lastDayRent.getFullYear()}
-              </span>
-            </p>
-          </section>
+              <h3>Current State: {capitalize(transaction.state)}</h3>
+            </Col>
+            <Col as="section" xs={12} md={6}>
+              <p>
+                Renting period:{" "}
+                <span>
+                  {transactionCreatedDay.getDate()}/
+                  {transactionCreatedDay.getMonth() + 1}/
+                  {transactionCreatedDay.getFullYear()} -{" "}
+                  {lastDayRent.getDate()}/{lastDayRent.getMonth() + 1}/
+                  {lastDayRent.getFullYear()}
+                </span>
+              </p>
+            </Col>
+          </Row>
         </>
       )}
     </>

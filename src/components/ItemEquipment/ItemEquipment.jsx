@@ -6,7 +6,7 @@ import "./ItemEquipment.css";
 
 function ItemEquipment({ item }) {
   return (
-    <Col xs={12} md={4} lg={3}>
+    <Col as="li" xs={12} md={4} lg={3}>
       <Card className="item-equipment-card">
         <Link to={`/equipment/${item._id}`}>
           <Card.Img
@@ -16,7 +16,7 @@ function ItemEquipment({ item }) {
             alt={`A pic of ${item.name}`}
           />
           <Card.Body>
-            <Card.Title as="h3">{capitalize(item.name)} </Card.Title>
+            <Card.Title as="h3">{capitalize(item.name)}</Card.Title>
           </Card.Body>
         </Link>
       </Card>
