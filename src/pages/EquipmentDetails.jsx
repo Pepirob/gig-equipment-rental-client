@@ -35,9 +35,13 @@ function Equipment() {
     try {
       const response = await getEquipmentDetailsService(equipmentId);
 
-      const userResponse = await getUserService(loggedUser._id);
       setEquipmentDetails(response.data);
-      setUser(userResponse.data);
+
+      if (isLoggedIn) {
+        const userResponse = await getUserService(loggedUser._id);
+        setUser(userResponse.data);
+      }
+
       setIsFetching(false);
     } catch (error) {
       redirect("/error");
