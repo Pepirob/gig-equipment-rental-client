@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { getEquipmentDetailsService } from "../services/equipment.services";
+import PulseLoader from "react-spinners/PulseLoader";
+import { capitalize } from "../utils";
 
 function SheetTransaction({ transaction }) {
   const redirect = useNavigate();
@@ -31,25 +33,33 @@ function SheetTransaction({ transaction }) {
 
   return (
     <>
-      <section>
-        <h1>{transaction.equipment.name}</h1>
-        <img src={transaction.equipment.img} />
-        <div>
-          <p>Price per Day: {transaction.equipment.pricePerDay}</p>
-          <p>Deposit: {transaction.equipment.deposit}</p>
-        </div>
-      </section>
-      <section>
-        <p>
-          Renting period:{" "}
-          <span>
-            {transactionCreatedDay.getDate()}/
-            {transactionCreatedDay.getMonth() + 1}/
-            {transactionCreatedDay.getFullYear()} - {lastDayRent.getDate()}/
-            {lastDayRent.getMonth() + 1}/{lastDayRent.getFullYear()}
-          </span>
-        </p>
-      </section>
+      {isFetching && (
+        <PulseLoader aria-label="Loading Spinner" data-testid="loader" />
+      )}
+      {equipment && (
+        <>
+          <section>
+            <h1>{capitalize(transaction.equipment.name)}</h1>
+            <img src={transaction.equipment.img} />
+            <div>
+              <p>Price per Day: {transaction.equipment.pricePerDay}</p>
+              <p>Deposit: {transaction.equipment.deposit}</p>
+              <p>Current State: {capitalize(transaction.state)}</p>
+            </div>
+          </section>
+          <section>
+            <p>
+              Renting period:{" "}
+              <span>
+                {transactionCreatedDay.getDate()}/
+                {transactionCreatedDay.getMonth() + 1}/
+                {transactionCreatedDay.getFullYear()} - {lastDayRent.getDate()}/
+                {lastDayRent.getMonth() + 1}/{lastDayRent.getFullYear()}
+              </span>
+            </p>
+          </section>
+        </>
+      )}
     </>
   );
 }
