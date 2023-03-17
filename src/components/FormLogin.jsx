@@ -1,4 +1,5 @@
 import { useState, useContext } from "react";
+import { Form, Button } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 import { AuthContext } from "../context/auth.context";
 import { loginService } from "../services/auth.services";
@@ -45,33 +46,39 @@ function FormLogin() {
   };
   return (
     <>
-      <form>
-        <label htmlFor="identifier">Email / Username</label>
-        <input
-          type="text"
-          name="identifier"
-          value={identifier}
-          onChange={handleInput}
-          autoComplete="username"
-        />
-        <br />
-        <br />
-        <label htmlFor="password">Password</label>
-        <input
-          type="password"
-          name="password"
-          value={password}
-          onChange={handleInput}
-          autoComplete="current-password"
-        />
-        <br />
-        <br />
+      <Form>
+        <Form.Group className="mb-3">
+          <Form.Label htmlFor="identifier">Email / Username</Form.Label>
+          <Form.Control
+            type="text"
+            name="identifier"
+            value={identifier}
+            onChange={handleInput}
+            autoComplete="username"
+          />
+        </Form.Group>
+
+        <Form.Group className="mb-3">
+          <Form.Label htmlFor="password">Password</Form.Label>
+          <Form.Control
+            type="password"
+            name="password"
+            value={password}
+            onChange={handleInput}
+            autoComplete="current-password"
+          />
+        </Form.Group>
 
         {errorMessage.length ? <p>{errorMessage}</p> : null}
-        <button onClick={handleLogin} disabled={isFetching}>
+        <Button
+          variant="success"
+          size="lg"
+          onClick={handleLogin}
+          disabled={isFetching}
+        >
           LOGIN
-        </button>
-      </form>
+        </Button>
+      </Form>
     </>
   );
 }

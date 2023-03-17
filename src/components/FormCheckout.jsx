@@ -4,6 +4,8 @@ import {
   useStripe,
   useElements,
 } from "@stripe/react-stripe-js";
+import Button from "react-bootstrap/Button";
+import { Form } from "react-bootstrap";
 
 function FormCheckout() {
   const stripe = useStripe();
@@ -73,15 +75,20 @@ function FormCheckout() {
   };
 
   return (
-    <form id="payment-form" onSubmit={handleSubmit}>
+    <Form id="payment-form" onSubmit={handleSubmit}>
       <PaymentElement id="payment-element" options={paymentElementOptions} />
-      <button disabled={isLoading || !stripe || !elements} id="submit">
+      <Button
+        size="lg"
+        variant="success"
+        disabled={isLoading || !stripe || !elements}
+        id="submit"
+      >
         <span id="button-text">
           {isLoading ? <div className="spinner" id="spinner"></div> : "Pay now"}
         </span>
-      </button>
+      </Button>
       {message && <div id="payment-message">{message}</div>}
-    </form>
+    </Form>
   );
 }
 

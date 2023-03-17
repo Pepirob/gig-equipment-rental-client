@@ -9,8 +9,8 @@ function CreateEquipment() {
       <NavBar>
         <NavItem path="/my-equipment">Equipment</NavItem>
       </NavBar>
-      <h1>Publish new Equipment</h1>
       <Layout>
+        <h1>Publish new Equipment</h1>
         <FormCreateEquipment />
       </Layout>
     </>
