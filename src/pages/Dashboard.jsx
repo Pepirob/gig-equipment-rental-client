@@ -19,7 +19,6 @@ function Dashboard() {
   return (
     <>
       <NavBar>
-        <NavItem path="/">Home</NavItem>
         <span style={{ color: "red" }} onClick={handleLogout}>
           Logout
         </span>

@@ -1,7 +1,7 @@
 import { useEffect, useState, useContext } from "react";
 import { AuthContext } from "../context/auth.context";
 import { getUserService } from "../services/user.services";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import FormProfileEdit from "../components/FormProfileEdit";
 import Layout from "../components/Layout/Layout";
 import NavBar from "../components/NavBar/NavBar";
@@ -30,7 +30,7 @@ function ProfileEdit() {
   return (
     <>
       <NavBar>
-        <NavItem to="/profile">Profile</NavItem>
+        <NavItem path="/profile">Back</NavItem>
       </NavBar>
       <Layout>
         {isFetching ? (
