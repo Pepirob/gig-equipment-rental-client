@@ -5,6 +5,7 @@ import NavigationMain from "../components/NavigationMain";
 import { AuthContext } from "../context/auth.context";
 import { getTransactionsService } from "../services/transactions.services";
 import Layout from "../components/Layout/Layout";
+import Row from "react-bootstrap/Row";
 import PulseLoader from "react-spinners/PulseLoader";
 
 function MyTransactions() {
@@ -46,16 +47,16 @@ function MyTransactions() {
             {transactions.length ? (
               <>
                 {transactionsAsOwner.length ? (
-                  <>
+                  <Row as="section">
                     <h2>As Owner</h2>
                     <ListTransactions transactions={transactionsAsOwner} />
-                  </>
+                  </Row>
                 ) : null}
                 {transactionsAsClient.length ? (
-                  <>
+                  <Row as="section">
                     <h2>As Client</h2>
                     <ListTransactions transactions={transactionsAsClient} />
-                  </>
+                  </Row>
                 ) : null}
               </>
             ) : (

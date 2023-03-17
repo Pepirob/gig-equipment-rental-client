@@ -1,0 +1,12 @@
+.item-transaction-image {
+  height: 10rem;
+  width: auto;
+}
+
+.item-transaction-card {
+  margin-bottom: 2rem;
+}
+
+.item-transaction-text {
+  color: black;
+}
