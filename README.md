@@ -1,8 +1,43 @@
 # CoverGig
 
-## Description
+## Project Tech Description
+
+A single page application built over MERN stack
+
+This project is generated with:
+
+- [Ironlauncher](https://www.npmjs.com/package/ironlauncher) on server side
+- [Create-React-App](https://create-react-app.dev/) on client side
+
+## Product Description
 
 CoverGig is an app for the rental of instruments and sound equipment for concerts between individuals.
+
+## Getting Started
+
+### Install dependencies:
+
+```bash
+npm install
+# or
+yarn add
+```
+
+### Set environment:
+
+This project is using [Cloudinary](https://cloudinary.com/) as image storage, [Stripe](https://stripe.com/en-es) software for payment system and [Jason-Web-Tokens](https://jwt.io/) as authentication/authorization method. Place your required secrets on:
+
+```bash
+gig-equipment-rental-client/.env.local
+```
+
+### Run
+
+```bash
+npm run start
+# or
+yarn rev
+```
 
 ## User Stories
 
@@ -11,6 +46,7 @@ CoverGig is an app for the rental of instruments and sound equipment for concert
 - **Register/Login:** As a user I can login to the platform so that I can access to the site utilities.
 - **Logout:** As a user I can logout from the platform so no one else can use it.
 - **Edit/delete profile:** As a user I can edit and delete my own account so I have own management will.
+- **Renting process ensurence:** As a user I can't delete equipment, nor my account whenever a transaction process is opened so that the exchange is safer
 - **Rent your Equipment** As a user I can upload my own equipment for renting others
 - **List Equipment** As a user I want to see the equipment so that i can choose one to rent
 - **Search Equipment by location** As a user I want to search equipment by location so that I can rent nearby equipment
