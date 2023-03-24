@@ -1,6 +1,6 @@
 # CoverGig
 
-Link to server side repo: (https://github.com/Pepirob/gig-equipment-rental-server)
+Link to server side repo: https://github.com/Pepirob/gig-equipment-rental-server
 
 ## Project Tech Description
 
