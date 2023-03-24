@@ -1,5 +1,7 @@
 # CoverGig
 
+[RESTapi](https://github.com/Pepirob/gig-equipment-rental-server)
+
 ## Project Tech Description
 
 A single page application built over MERN stack
