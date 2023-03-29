@@ -1,11 +1,17 @@
 import { useState, useRef, useEffect } from "react";
 import { capitalize } from "../utils";
-import { Form } from "react-bootstrap";
+import Form from "react-bootstrap/Form";
+import Button from "react-bootstrap/Button";
+import Spinner from "react-bootstrap/Spinner";
+import { updateUserService } from "../services/user.services";
+import { redirect } from "react-router-dom";
 
 function UserDetails({ user }) {
   const inputRef = useRef(null);
+  const buttonRef = useRef(null);
   const [username, setUsername] = useState("");
   const [onInput, setOnInput] = useState(false);
+  const [isFetching, setIsFetching] = useState(false);
 
   useEffect(() => {
     setUsername(user.username);
@@ -15,7 +21,13 @@ function UserDetails({ user }) {
     }
 
     const handleClickOutside = (event) => {
-      if (inputRef.current && !inputRef.current.contains(event.target)) {
+      if (
+        inputRef.current &&
+        !inputRef.current.contains(event.target) &&
+        !buttonRef.current.contains(event.target) &&
+        !isFetching
+      ) {
+        console.log("fuuuuuck");
         setOnInput(false);
       }
     };
@@ -37,29 +49,63 @@ function UserDetails({ user }) {
     setUsername(value);
   };
 
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+    try {
+      setIsFetching(true);
+
+      await updateUserService(user._id, { username });
+
+      setIsFetching(false);
+      setOnInput(false);
+    } catch (error) {
+      redirect("/error");
+    }
+  };
+
   return (
     <>
       {onInput ? (
-        <Form.Group className="mb-3">
-          <Form.Label htmlFor="username">Username</Form.Label>
-          <Form.Control
-            type="text"
-            name="username"
-            value={username}
-            onChange={handleInput}
-            ref={inputRef}
-          />
-        </Form.Group>
+        <Form>
+          <Form.Group className="mb-3">
+            <Form.Label htmlFor="username">Username</Form.Label>
+            <Form.Control
+              type="text"
+              name="username"
+              value={username}
+              onChange={handleInput}
+              ref={inputRef}
+            />
+          </Form.Group>
+          <Button
+            variant="success"
+            onClick={handleSubmit}
+            ref={buttonRef}
+            disabled={isFetching}
+          >
+            {isFetching ? (
+              <>
+                <Spinner
+                  as="span"
+                  animation="border"
+                  size="sm"
+                  role="status"
+                  aria-hidden="true"
+                  variant="light"
+                />
+                <span style={{ marginLeft: ".5rem" }}>loading</span>
+              </>
+            ) : (
+              "UPDATE"
+            )}
+          </Button>
+        </Form>
       ) : (
         <h1 onClick={handleTextClick}>{user.username}'s Profile</h1>
       )}
 
       <section>
-        <img
-          src={user.img}
-          alt={`${user.username} profile image`}
-          height={100}
-        />
+        <img src={user.img} alt={`${user.username} profile pic`} height={100} />
         <h2>{capitalize(user.location)}</h2>
         <h3>{user.email}</h3>
         <h3>{user.phoneNumber}</h3>
