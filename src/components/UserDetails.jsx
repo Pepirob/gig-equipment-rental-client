@@ -6,24 +6,17 @@ function UserDetails({ user }) {
   const inputRef = useRef(null);
   const [username, setUsername] = useState("");
   const [onInput, setOnInput] = useState(false);
-  const [isInputFocused, setIsInputFocused] = useState(false);
 
   useEffect(() => {
     setUsername(user.username);
 
     if (inputRef.current && onInput) {
       inputRef.current.focus();
-      setIsInputFocused(true);
     }
 
     const handleClickOutside = (event) => {
-      if (
-        inputRef.current &&
-        !inputRef.current.contains(event.target) &&
-        isInputFocused
-      ) {
+      if (inputRef.current && !inputRef.current.contains(event.target)) {
         setOnInput(false);
-        setIsInputFocused(false);
       }
     };
 
@@ -32,9 +25,10 @@ function UserDetails({ user }) {
     return () => {
       document.removeEventListener("click", handleClickOutside);
     };
-  }, [onInput, isInputFocused]);
+  }, [onInput]);
 
-  const handleTextClick = () => {
+  const handleTextClick = (event) => {
+    event.stopPropagation();
     setOnInput(true);
   };
 
