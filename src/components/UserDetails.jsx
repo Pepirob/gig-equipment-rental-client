@@ -52,7 +52,7 @@ function UserDetails({ user }) {
           <Form.Control
             type="text"
             name="username"
-            value={username}
+            placeholder={user.username}
             onChange={handleInput}
             ref={inputRef}
           />
