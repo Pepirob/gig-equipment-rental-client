@@ -1,14 +1,16 @@
-import { useState, useRef, useEffect } from "react";
+import { useState, useRef, useEffect, useContext } from "react";
 import { capitalize } from "../utils";
+import { AuthContext } from "../context/auth.context";
+import { updateUserService } from "../services/user.services";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import Spinner from "react-bootstrap/Spinner";
-import { updateUserService } from "../services/user.services";
 import { redirect } from "react-router-dom";
 
 function UserDetails({ user }) {
   const inputRef = useRef(null);
   const buttonRef = useRef(null);
+  const { loggedUser, authenticateUser } = useContext(AuthContext);
   const [username, setUsername] = useState("");
   const [onInput, setOnInput] = useState(false);
   const [isFetching, setIsFetching] = useState(false);
@@ -27,7 +29,6 @@ function UserDetails({ user }) {
         !buttonRef.current.contains(event.target) &&
         !isFetching
       ) {
-        console.log("fuuuuuck");
         setOnInput(false);
       }
     };
@@ -40,8 +41,10 @@ function UserDetails({ user }) {
   }, [onInput]);
 
   const handleTextClick = (event) => {
-    event.stopPropagation();
-    setOnInput(true);
+    if (user._id === loggedUser._id) {
+      event.stopPropagation();
+      setOnInput(true);
+    }
   };
 
   const handleInput = (event) => {
