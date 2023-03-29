@@ -5,11 +5,13 @@ import { Form } from "react-bootstrap";
 function UserDetails({ user }) {
   const inputRef = useRef(null);
   const [username, setUsername] = useState("");
-  const [isText, setIsText] = useState(true);
+  const [onInput, setOnInput] = useState(false);
   const [isInputFocused, setIsInputFocused] = useState(false);
 
   useEffect(() => {
-    if (inputRef.current && !isText) {
+    setUsername(user.username);
+
+    if (inputRef.current && onInput) {
       inputRef.current.focus();
       setIsInputFocused(true);
     }
@@ -20,9 +22,8 @@ function UserDetails({ user }) {
         !inputRef.current.contains(event.target) &&
         isInputFocused
       ) {
-        setIsText(true);
+        setOnInput(false);
         setIsInputFocused(false);
-        setUsername("");
       }
     };
 
@@ -31,10 +32,10 @@ function UserDetails({ user }) {
     return () => {
       document.removeEventListener("click", handleClickOutside);
     };
-  }, [isText, isInputFocused]);
+  }, [onInput, isInputFocused]);
 
   const handleTextClick = () => {
-    setIsText(false);
+    setOnInput(true);
   };
 
   const handleInput = (event) => {
@@ -44,19 +45,19 @@ function UserDetails({ user }) {
 
   return (
     <>
-      {isText ? (
-        <h1 onClick={handleTextClick}>{user.username}'s Profile</h1>
-      ) : (
+      {onInput ? (
         <Form.Group className="mb-3">
           <Form.Label htmlFor="username">Username</Form.Label>
           <Form.Control
             type="text"
             name="username"
-            placeholder={user.username}
+            value={username}
             onChange={handleInput}
             ref={inputRef}
           />
         </Form.Group>
+      ) : (
+        <h1 onClick={handleTextClick}>{user.username}'s Profile</h1>
       )}
 
       <section>
