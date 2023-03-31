@@ -2,6 +2,7 @@ import { useState, useRef, useEffect, useContext } from "react";
 import { capitalize } from "../utils";
 import { AuthContext } from "../context/auth.context";
 import { updateUserService } from "../services/user.services";
+import Icon from "./Icon";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import Spinner from "react-bootstrap/Spinner";
@@ -71,7 +72,7 @@ function UserDetails({ user }) {
       {onInput ? (
         <Form>
           <Form.Group className="mb-3">
-            <Form.Label htmlFor="username">Username</Form.Label>
+            <Form.Label htmlFor="username">Edit your username</Form.Label>
             <Form.Control
               type="text"
               name="username"
@@ -104,7 +105,17 @@ function UserDetails({ user }) {
           </Button>
         </Form>
       ) : (
-        <h1 onClick={handleTextClick}>{user.username}'s Profile</h1>
+        <>
+          <h1 onClick={handleTextClick}>
+            {user.username}'s Profile{" "}
+            <Icon
+              iconName="Pencil"
+              color="green"
+              size={24}
+              title="Click for username editing"
+            />
+          </h1>
+        </>
       )}
 
       <section>
