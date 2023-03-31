@@ -3,7 +3,7 @@ import Spinner from "react-bootstrap/Spinner";
 
 const ButtonSpinner = ({ isLoading, children, ...props }) => {
   return (
-    <Button disabled={isLoading} {...props}>
+    <Button {...props}>
       {isLoading ? (
         <>
           <Spinner

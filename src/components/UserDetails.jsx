@@ -3,7 +3,7 @@ import { capitalize } from "../utils";
 import { AuthContext } from "../context/auth.context";
 import { updateUserService } from "../services/user.services";
 import Icon from "./Icon";
-import ButtonSpinner from "./ButtonSpinner/ButtonSpinner";
+import ButtonSpinner from "./ButtonSpinner";
 import Form from "react-bootstrap/Form";
 import { redirect } from "react-router-dom";
 
@@ -82,6 +82,7 @@ function UserDetails({ user }) {
             variant="success"
             isLoading={isFetching}
             onClick={handleSubmit}
+            disabled={isFetching}
           >
             UPDATE
           </ButtonSpinner>

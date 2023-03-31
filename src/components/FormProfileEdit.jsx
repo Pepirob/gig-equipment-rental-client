@@ -3,7 +3,8 @@ import { useNavigate } from "react-router-dom";
 import { updateUserService } from "../services/user.services";
 import { uploadUserImgService } from "../services/upload.services";
 import { capitalize } from "../utils";
-import { Button, Form, Image, Spinner } from "react-bootstrap";
+import ButtonSpinner from "./ButtonSpinner";
+import { Form, Image, Spinner } from "react-bootstrap";
 import ImageStyles from "./ImageStyles";
 
 function FormProfileEdit({ userData }) {
@@ -165,14 +166,15 @@ function FormProfileEdit({ userData }) {
             autoComplete="tel"
           />
         </Form.Group>
-        <Button
+        <ButtonSpinner
           variant="success"
+          isLoading={isFetching}
           size="lg"
           onClick={handleSubmit}
           disabled={isUploading || wrongFileMessage || isFetching}
         >
           UPDATE
-        </Button>
+        </ButtonSpinner>
       </Form>
     </>
   );
