@@ -21,24 +21,24 @@ function UserDetails({ user }) {
       inputRef.current.focus();
     }
 
-    const handleClickOutside = (event) => {
-      if (
-        inputRef.current &&
-        !inputRef.current.contains(event.target) &&
-        !isFetching
-      ) {
-        setOnInput(false);
-      }
-    };
-
-    document.addEventListener("click", handleClickOutside);
+    document.addEventListener("click", handleClickOut);
 
     return () => {
-      document.removeEventListener("click", handleClickOutside);
+      document.removeEventListener("click", handleClickOut);
     };
   }, [onInput]);
 
-  const handleTextClick = (event) => {
+  const handleClickOut = (event) => {
+    if (
+      inputRef.current &&
+      !inputRef.current.contains(event.target) &&
+      !isFetching
+    ) {
+      setOnInput(false);
+    }
+  };
+
+  const handleClickText = (event) => {
     if (user._id === loggedUser._id) {
       event.stopPropagation();
       setOnInput(true);
@@ -89,7 +89,7 @@ function UserDetails({ user }) {
         </Form>
       ) : (
         <>
-          <h1 onClick={handleTextClick}>
+          <h1 onClick={handleClickText}>
             {user.username}'s Profile{" "}
             <Icon
               iconName="Pencil"
