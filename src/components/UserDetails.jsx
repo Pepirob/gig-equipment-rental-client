@@ -3,14 +3,12 @@ import { capitalize } from "../utils";
 import { AuthContext } from "../context/auth.context";
 import { updateUserService } from "../services/user.services";
 import Icon from "./Icon";
+import ButtonSpinner from "./ButtonSpinner/ButtonSpinner";
 import Form from "react-bootstrap/Form";
-import Button from "react-bootstrap/Button";
-import Spinner from "react-bootstrap/Spinner";
 import { redirect } from "react-router-dom";
 
 function UserDetails({ user }) {
   const inputRef = useRef(null);
-  const buttonRef = useRef(null);
   const { loggedUser } = useContext(AuthContext);
   const [username, setUsername] = useState("");
   const [onInput, setOnInput] = useState(false);
@@ -27,7 +25,6 @@ function UserDetails({ user }) {
       if (
         inputRef.current &&
         !inputRef.current.contains(event.target) &&
-        !buttonRef.current.contains(event.target) &&
         !isFetching
       ) {
         setOnInput(false);
@@ -81,28 +78,13 @@ function UserDetails({ user }) {
               ref={inputRef}
             />
           </Form.Group>
-          <Button
+          <ButtonSpinner
             variant="success"
+            isLoading={isFetching}
             onClick={handleSubmit}
-            ref={buttonRef}
-            disabled={isFetching}
           >
-            {isFetching ? (
-              <>
-                <Spinner
-                  as="span"
-                  animation="border"
-                  size="sm"
-                  role="status"
-                  aria-hidden="true"
-                  variant="light"
-                />
-                <span style={{ marginLeft: ".5rem" }}>loading</span>
-              </>
-            ) : (
-              "UPDATE"
-            )}
-          </Button>
+            UPDATE
+          </ButtonSpinner>
         </Form>
       ) : (
         <>
