@@ -10,7 +10,7 @@ import { redirect } from "react-router-dom";
 function UserDetails({ user }) {
   const inputRef = useRef(null);
   const buttonRef = useRef(null);
-  const { loggedUser, authenticateUser } = useContext(AuthContext);
+  const { loggedUser } = useContext(AuthContext);
   const [username, setUsername] = useState("");
   const [onInput, setOnInput] = useState(false);
   const [isFetching, setIsFetching] = useState(false);
