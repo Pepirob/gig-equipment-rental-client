@@ -3,12 +3,12 @@ import { capitalize } from "../utils";
 import { AuthContext } from "../context/auth.context";
 import { updateUserService } from "../services/user.services";
 import Icon from "./Icon";
-import ButtonSpinner from "./ButtonSpinner";
 import Form from "react-bootstrap/Form";
 import { redirect } from "react-router-dom";
 
 function UserDetails({ user }) {
   const inputRef = useRef(null);
+  const usernameRef = useRef(user.username);
   const { loggedUser } = useContext(AuthContext);
   const [username, setUsername] = useState("");
   const [onInput, setOnInput] = useState(false);
@@ -28,13 +28,17 @@ function UserDetails({ user }) {
     };
   }, [onInput]);
 
+  useEffect(() => {
+    usernameRef.current = username;
+  }, [username]);
+
   const handleClickOut = (event) => {
     if (
       inputRef.current &&
       !inputRef.current.contains(event.target) &&
       !isFetching
     ) {
-      setOnInput(false);
+      handleSubmit(event);
     }
   };
 
@@ -50,17 +54,20 @@ function UserDetails({ user }) {
     setUsername(value);
   };
 
-  const handleSubmit = async (event) => {
-    event.preventDefault();
-    try {
-      setIsFetching(true);
+  const handleSubmit = async () => {
+    if (username !== usernameRef.current) {
+      try {
+        setIsFetching(true);
 
-      await updateUserService(user._id, { username });
+        await updateUserService(user._id, { username: usernameRef.current });
 
-      setIsFetching(false);
+        setIsFetching(false);
+        setOnInput(false);
+      } catch (error) {
+        redirect("/error");
+      }
+    } else {
       setOnInput(false);
-    } catch (error) {
-      redirect("/error");
     }
   };
 
@@ -78,14 +85,6 @@ function UserDetails({ user }) {
               ref={inputRef}
             />
           </Form.Group>
-          <ButtonSpinner
-            variant="success"
-            isLoading={isFetching}
-            onClick={handleSubmit}
-            disabled={isFetching}
-          >
-            UPDATE
-          </ButtonSpinner>
         </Form>
       ) : (
         <>
