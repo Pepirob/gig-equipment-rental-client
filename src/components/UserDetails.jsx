@@ -38,7 +38,11 @@ function UserDetails({ user }) {
       !inputRef.current.contains(event.target) &&
       !isFetching
     ) {
-      handleSubmit(event);
+      if (username !== usernameRef.current) {
+        handleSubmit(usernameRef.current);
+      } else {
+        setOnInput(false);
+      }
     }
   };
 
@@ -49,25 +53,28 @@ function UserDetails({ user }) {
     }
   };
 
-  const handleInput = (event) => {
+  const handleInputChange = (event) => {
     const value = event.target.value;
     setUsername(value);
   };
 
-  const handleSubmit = async () => {
-    if (username !== usernameRef.current) {
-      try {
-        setIsFetching(true);
+  const handleInputKeyDown = (event) => {
+    if (event.key === "Enter") {
+      event.preventDefault();
+      handleSubmit(username);
+    }
+  };
 
-        await updateUserService(user._id, { username: usernameRef.current });
+  const handleSubmit = async (inputData) => {
+    try {
+      setIsFetching(true);
 
-        setIsFetching(false);
-        setOnInput(false);
-      } catch (error) {
-        redirect("/error");
-      }
-    } else {
+      await updateUserService(user._id, { username: inputData });
+
+      setIsFetching(false);
       setOnInput(false);
+    } catch (error) {
+      redirect("/error");
     }
   };
 
@@ -81,7 +88,8 @@ function UserDetails({ user }) {
               type="text"
               name="username"
               value={username}
-              onChange={handleInput}
+              onChange={handleInputChange}
+              onKeyDown={handleInputKeyDown}
               ref={inputRef}
             />
           </Form.Group>
