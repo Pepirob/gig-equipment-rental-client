@@ -90,12 +90,14 @@ function UserDetails({ user }) {
         <>
           <h1 onClick={handleClickText}>
             {user.username}'s Profile{" "}
-            <Icon
-              iconName="Pencil"
-              color="green"
-              size={24}
-              title="Click for username editing"
-            />
+            {user._id === loggedUser._id && (
+              <Icon
+                iconName="Pencil"
+                color="green"
+                size={24}
+                title="Click for username editing"
+              />
+            )}
           </h1>
         </>
       )}
