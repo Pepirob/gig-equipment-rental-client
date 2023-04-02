@@ -15,7 +15,9 @@ function UserDetails({ user }) {
 
   useEffect(() => {
     setUsername(user.username);
+  }, []);
 
+  useEffect(() => {
     if (inputRef.current && onInput) {
       inputRef.current.focus();
     }
@@ -79,7 +81,7 @@ function UserDetails({ user }) {
       ) : (
         <>
           <h1 onClick={handleClickText}>
-            {user.username}'s Profile{" "}
+            {username}'s Profile{" "}
             {user._id === loggedUser._id && (
               <Icon
                 iconName="Pencil"
