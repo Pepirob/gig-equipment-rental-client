@@ -8,7 +8,6 @@ import { redirect } from "react-router-dom";
 
 function UserDetails({ user }) {
   const inputRef = useRef(null);
-  const usernameRef = useRef(user.username);
   const { loggedUser } = useContext(AuthContext);
   const [username, setUsername] = useState("");
   const [onInput, setOnInput] = useState(false);
@@ -20,31 +19,7 @@ function UserDetails({ user }) {
     if (inputRef.current && onInput) {
       inputRef.current.focus();
     }
-
-    document.addEventListener("click", handleClickOut);
-
-    return () => {
-      document.removeEventListener("click", handleClickOut);
-    };
   }, [onInput]);
-
-  useEffect(() => {
-    usernameRef.current = username;
-  }, [username]);
-
-  const handleClickOut = (event) => {
-    if (
-      inputRef.current &&
-      !inputRef.current.contains(event.target) &&
-      !isFetching
-    ) {
-      if (username !== usernameRef.current) {
-        handleSubmit(usernameRef.current);
-      } else {
-        setOnInput(false);
-      }
-    }
-  };
 
   const handleClickText = (event) => {
     if (user._id === loggedUser._id) {
@@ -61,6 +36,12 @@ function UserDetails({ user }) {
   const handleInputKeyDown = (event) => {
     if (event.key === "Enter") {
       event.preventDefault();
+      handleSubmit(username);
+    }
+  };
+
+  const handleInputBlur = () => {
+    if (!isFetching) {
       handleSubmit(username);
     }
   };
@@ -90,6 +71,7 @@ function UserDetails({ user }) {
               value={username}
               onChange={handleInputChange}
               onKeyDown={handleInputKeyDown}
+              onBlur={handleInputBlur}
               ref={inputRef}
             />
           </Form.Group>
