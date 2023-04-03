@@ -5,7 +5,6 @@ import {
   useElements,
 } from "@stripe/react-stripe-js";
 import Button from "react-bootstrap/Button";
-import { Form } from "react-bootstrap";
 
 function FormCheckout() {
   const stripe = useStripe();
