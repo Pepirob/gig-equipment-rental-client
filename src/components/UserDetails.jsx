@@ -1,111 +1,74 @@
-import { useState, useRef, useEffect, useContext } from "react";
+import { useState, useRef, useContext } from "react";
 import { capitalize } from "../utils";
 import { AuthContext } from "../context/auth.context";
 import { updateUserService } from "../services/user.services";
 import EditableData from "./EditableData";
 import ImageStyles from "./ImageStyles";
-import Icon from "./Icon";
-import Form from "react-bootstrap/Form";
 import Image from "react-bootstrap/Image";
-import { redirect } from "react-router-dom";
 
 function UserDetails({ user }) {
-  const inputRef = useRef(null);
+  const usernameRef = useRef("");
   const locationRef = useRef("");
   const { loggedUser } = useContext(AuthContext);
-  const [username, setUsername] = useState("");
-  const [onInput, setOnInput] = useState(false);
   const [isFetching, setIsFetching] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
 
-  useEffect(() => {
-    setUsername(user.username);
-  }, []);
-
-  useEffect(() => {
-    if (inputRef.current && onInput) {
-      inputRef.current.focus();
-    }
-  }, [onInput]);
-
-  const handleClickText = (event) => {
-    if (user._id === loggedUser._id) {
-      event.stopPropagation();
-      setOnInput(true);
-    }
-  };
-
-  const handleInputChange = (event) => {
-    const value = event.target.value;
-    setUsername(value);
-  };
-
-  const handleInputKeyDown = (event) => {
-    if (event.key === "Enter") {
-      event.preventDefault();
-      handleSubmit(username);
-    }
-  };
-
-  const handleInputBlur = () => {
-    if (!isFetching) {
-      handleSubmit(username);
-    }
-  };
+  const propertiesMap = new Map([
+    ["username", usernameRef],
+    ["location", locationRef],
+  ]);
 
   const setLocationRef = (editedData) => {
     locationRef.current = editedData;
   };
 
-  const handleEditBlur = () => {
-    if (!isFetching) {
-      handleSubmit({ location: locationRef.current });
+  const setUsernameRef = (editedData) => {
+    usernameRef.current = editedData;
+  };
+
+  const handleLocationBlur = () => {
+    if (!isFetching && locationRef.current.length) {
+      handleSubmit("location");
     }
   };
 
-  const handleSubmit = async (inputData) => {
+  const handleUsernameBlur = () => {
+    if (!isFetching && usernameRef.current.length) {
+      handleSubmit("username");
+    }
+  };
+
+  const handleSubmit = async (key) => {
+    const patch = {
+      [key]: propertiesMap.get(`${key}`).current,
+    };
+
     try {
       setIsFetching(true);
 
-      await updateUserService(user._id, { ...inputData });
+      await updateUserService(user._id, patch);
 
       setIsFetching(false);
-      setOnInput(false);
     } catch (error) {
-      redirect("/error");
+      setIsFetching(false);
+      setErrorMessage(error.response.data.errorMessage);
     }
   };
 
   return (
     <>
-      {onInput ? (
-        <Form>
-          <Form.Group className="mb-3">
-            <Form.Label htmlFor="username">Edit your username</Form.Label>
-            <Form.Control
-              type="text"
-              name="username"
-              value={username}
-              onChange={handleInputChange}
-              onKeyDown={handleInputKeyDown}
-              onBlur={handleInputBlur}
-              ref={inputRef}
-            />
-          </Form.Group>
-        </Form>
-      ) : (
+      {errorMessage.length ? <p>{errorMessage}</p> : null}
+      {user._id === loggedUser._id ? (
         <>
-          <h1 onClick={handleClickText}>
-            {username}'s Profile{" "}
-            {user._id === loggedUser._id && (
-              <Icon
-                iconName="Pencil"
-                color="green"
-                size={24}
-                title="Click for username editing"
-              />
-            )}
-          </h1>
+          <EditableData
+            tagName="h1"
+            initData={user.username}
+            setData={setUsernameRef}
+            onBlur={handleUsernameBlur}
+          />
         </>
+      ) : (
+        <h1>{user.username}</h1>
       )}
 
       <section>
@@ -114,15 +77,15 @@ function UserDetails({ user }) {
             thumbnail={true}
             src={user.img}
             alt={`${user.username} profile pic`}
-            height={100}
           />
         </ImageStyles>
+
         {user._id === loggedUser._id ? (
           <EditableData
             tagName="h2"
             initData={capitalize(user.location)}
             setData={setLocationRef}
-            onBlur={handleEditBlur}
+            onBlur={handleLocationBlur}
           />
         ) : (
           <h2>{capitalize(user.location)}</h2>
