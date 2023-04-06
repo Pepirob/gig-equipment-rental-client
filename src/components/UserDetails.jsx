@@ -13,7 +13,7 @@ function UserDetails({ user }) {
   const [isFetching, setIsFetching] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
 
-  const propertiesMap = new Map([
+  const refsMap = new Map([
     ["username", usernameRef],
     ["location", locationRef],
   ]);
@@ -26,23 +26,21 @@ function UserDetails({ user }) {
     usernameRef.current = editedData;
   };
 
-  const handleLocationBlur = () => {
-    if (!isFetching && locationRef.current.length) {
-      handleSubmit("location");
+  const getPatch = (refName) => {
+    const ref = refsMap.get(`${refName}`);
+
+    if (ref.current) {
+      return { [refName]: ref.current };
     }
   };
 
-  const handleUsernameBlur = () => {
-    if (!isFetching && usernameRef.current.length) {
-      handleSubmit("username");
+  const handleBlur = (refName) => {
+    if (!isFetching && getPatch(refName)) {
+      handleSubmit(getPatch(refName));
     }
   };
 
-  const handleSubmit = async (key) => {
-    const patch = {
-      [key]: propertiesMap.get(`${key}`).current,
-    };
-
+  const handleSubmit = async (patch) => {
     try {
       setIsFetching(true);
 
@@ -64,7 +62,7 @@ function UserDetails({ user }) {
             tagName="h1"
             initData={user.username}
             setData={setUsernameRef}
-            onBlur={handleUsernameBlur}
+            onBlur={() => handleBlur("username")}
           />
         </>
       ) : (
@@ -85,7 +83,7 @@ function UserDetails({ user }) {
             tagName="h2"
             initData={capitalize(user.location)}
             setData={setLocationRef}
-            onBlur={handleLocationBlur}
+            onBlur={() => handleBlur("location")}
           />
         ) : (
           <h2>{capitalize(user.location)}</h2>
