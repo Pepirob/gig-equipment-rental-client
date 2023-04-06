@@ -17,6 +17,7 @@ function FormProfileEdit({ userData }) {
   const [phoneNumber, setPhoneNumber] = useState("");
   const [isFetching, setIsFetching] = useState(false);
   const [wrongFileMessage, setWrongFileMessage] = useState("");
+  const [errorMessage, setErrorMessage] = useState("");
 
   useEffect(() => {
     setUsername(userData.username);
@@ -94,7 +95,8 @@ function FormProfileEdit({ userData }) {
       setIsFetching(false);
       redirect("/profile");
     } catch (error) {
-      redirect("/error");
+      setIsFetching(false);
+      setErrorMessage(error.response.data.errorMessage);
     }
   };
 
@@ -128,11 +130,14 @@ function FormProfileEdit({ userData }) {
           />
         </Form.Group>
         {wrongFileMessage && <p>{wrongFileMessage}</p>}
+
         {isUploading ? (
           <Spinner animation="border" role="status">
             <span className="visually-hidden">Loading...</span>
           </Spinner>
         ) : null}
+
+        {errorMessage.length ? <p>{errorMessage}</p> : null}
 
         <Form.Group className="mb-3">
           <Form.Label htmlFor="email">Email</Form.Label>
