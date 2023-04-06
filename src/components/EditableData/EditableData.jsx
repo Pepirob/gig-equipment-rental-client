@@ -17,7 +17,7 @@ const EditableData = ({ initData, tagName, setData, ...props }) => {
       allowedAttributes: [],
     };
 
-    const sanitizedValue = sanitizeHtml(event.target.value);
+    const sanitizedValue = sanitizeHtml(event.target.value, sanitizeConfig);
 
     setContent(sanitizedValue);
     setData(sanitizedValue);
