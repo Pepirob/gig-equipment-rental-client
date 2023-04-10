@@ -1,10 +1,11 @@
-import { useState, useRef, useContext } from "react";
+import { useState, useRef, useContext, useEffect } from "react";
 import { capitalize } from "../utils";
 import { AuthContext } from "../context/auth.context";
 import { updateUserService } from "../services/user.services";
 import EditableData from "./EditableData";
 import ImageStyles from "./ImageStyles";
 import Image from "react-bootstrap/Image";
+import { toast } from "sonner";
 
 function UserDetails({ user }) {
   const usernameRef = useRef("");
@@ -12,24 +13,33 @@ function UserDetails({ user }) {
   const { loggedUser } = useContext(AuthContext);
   const [isFetching, setIsFetching] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
+  const [username, setUsername] = useState("");
+  const [location, setLocation] = useState("");
+
+  useEffect(() => {
+    setUsername(user.username);
+    setLocation(user.location);
+  }, []);
 
   const refsMap = new Map([
     ["username", usernameRef],
     ["location", locationRef],
   ]);
 
-  const setLocationRef = (editedData) => {
+  const setLocationData = (editedData) => {
     locationRef.current = editedData;
   };
 
-  const setUsernameRef = (editedData) => {
+  const setUsernameData = (editedData) => {
+    setErrorMessage("");
     usernameRef.current = editedData;
   };
 
   const getPatch = (refName) => {
     const ref = refsMap.get(`${refName}`);
+    const isPrevData = ref.current === user[refName];
 
-    if (ref.current) {
+    if (ref.current && !isPrevData) {
       return { [refName]: ref.current };
     }
   };
@@ -47,6 +57,7 @@ function UserDetails({ user }) {
       await updateUserService(user._id, patch);
 
       setIsFetching(false);
+      toast.success("Event has been created");
     } catch (error) {
       setIsFetching(false);
       setErrorMessage(error.response.data.errorMessage);
@@ -56,38 +67,47 @@ function UserDetails({ user }) {
   return (
     <>
       {errorMessage.length ? <p>{errorMessage}</p> : null}
-      {user._id === loggedUser._id ? (
+
+      {username && (
         <>
-          <EditableData
-            tagName="h1"
-            initData={user.username}
-            setData={setUsernameRef}
-            onBlur={() => handleBlur("username")}
-          />
+          {user._id === loggedUser._id ? (
+            <EditableData
+              tagName="h1"
+              initData={username}
+              setData={setUsernameData}
+              onBlur={() => handleBlur("username")}
+            />
+          ) : (
+            <h1>{username}</h1>
+          )}
         </>
-      ) : (
-        <h1>{user.username}</h1>
       )}
 
       <section>
         <ImageStyles>
-          <Image
-            thumbnail={true}
-            src={user.img}
-            alt={`${user.username} profile pic`}
-          />
+          {username && (
+            <Image
+              thumbnail={true}
+              src={user.img}
+              alt={`${username} profile pic`}
+            />
+          )}
         </ImageStyles>
-
-        {user._id === loggedUser._id ? (
-          <EditableData
-            tagName="h2"
-            initData={capitalize(user.location)}
-            setData={setLocationRef}
-            onBlur={() => handleBlur("location")}
-          />
-        ) : (
-          <h2>{capitalize(user.location)}</h2>
+        {location && (
+          <>
+            {user._id === loggedUser._id ? (
+              <EditableData
+                tagName="h2"
+                initData={capitalize(location)}
+                setData={setLocationData}
+                onBlur={() => handleBlur("location")}
+              />
+            ) : (
+              <h2>{capitalize(location)}</h2>
+            )}
+          </>
         )}
+
         <h3>{user.email}</h3>
         <h3>{user.phoneNumber}</h3>
       </section>
