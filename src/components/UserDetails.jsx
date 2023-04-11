@@ -12,7 +12,6 @@ function UserDetails({ user }) {
   const locationRef = useRef("");
   const { loggedUser } = useContext(AuthContext);
   const [isFetching, setIsFetching] = useState(false);
-  const [errorMessage, setErrorMessage] = useState("");
   const [username, setUsername] = useState("");
   const [location, setLocation] = useState("");
 
@@ -31,7 +30,6 @@ function UserDetails({ user }) {
   };
 
   const setUsernameData = (editedData) => {
-    setErrorMessage("");
     usernameRef.current = editedData;
   };
 
@@ -73,14 +71,13 @@ function UserDetails({ user }) {
       });
     } catch (error) {
       setIsFetching(false);
-      setErrorMessage(error.response.data.errorMessage);
+
+      toast.error(error.response.data.errorMessage);
     }
   };
 
   return (
     <>
-      {errorMessage.length ? <p>{errorMessage}</p> : null}
-
       {username && (
         <>
           {user._id === loggedUser._id ? (
