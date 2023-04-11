@@ -35,12 +35,22 @@ function UserDetails({ user }) {
     usernameRef.current = editedData;
   };
 
-  const getPatch = (refName) => {
-    const ref = refsMap.get(`${refName}`);
-    const isPrevData = ref.current === user[refName];
+  const getRefCurrent = (refName) => {
+    return refsMap.get(`${refName}`).current;
+  };
 
-    if (ref.current && !isPrevData) {
-      return { [refName]: ref.current };
+  const getDescription = (refName) => {
+    return `New ${refName} is ${getRefCurrent(refName)}`;
+  };
+
+  const getPatch = (refName) => {
+    const isPrevData = getRefCurrent(refName) === user[refName];
+
+    if (getRefCurrent(refName) && !isPrevData) {
+      return {
+        description: getDescription(refName),
+        data: { [refName]: getRefCurrent(refName) },
+      };
     }
   };
 
@@ -54,11 +64,13 @@ function UserDetails({ user }) {
     try {
       setIsFetching(true);
 
-      await updateUserService(user._id, patch);
+      await updateUserService(user._id, patch.data);
 
       setIsFetching(false);
 
-      toast.success("User profile has been updated");
+      toast.success("User profile has been updated", {
+        description: patch.description,
+      });
     } catch (error) {
       setIsFetching(false);
       setErrorMessage(error.response.data.errorMessage);
