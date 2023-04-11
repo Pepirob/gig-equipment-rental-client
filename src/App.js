@@ -18,6 +18,7 @@ import CreateEquipment from "./pages/CreateEquipment";
 import MyTransactions from "./pages/MyTransactions";
 import TransactionDetails from "./pages/TransactionDetails";
 import User from "./pages/User";
+import { Toaster } from "sonner";
 
 function App() {
   return (
@@ -111,6 +112,7 @@ function App() {
         <Route path="/error" element={<Error />} />
         <Route path="/*" element={<NotFound />} />
       </Routes>
+      <Toaster richColors />
     </div>
   );
 }

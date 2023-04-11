@@ -57,7 +57,8 @@ function UserDetails({ user }) {
       await updateUserService(user._id, patch);
 
       setIsFetching(false);
-      toast.success("Event has been created");
+
+      toast.success("User profile has been updated");
     } catch (error) {
       setIsFetching(false);
       setErrorMessage(error.response.data.errorMessage);
