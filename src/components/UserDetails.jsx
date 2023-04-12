@@ -17,7 +17,7 @@ function UserDetails({ user }) {
   useEffect(() => {
     setEditableState({
       username: user.username,
-      location: user.location,
+      location: capitalize(user.location),
     });
   }, []);
 
@@ -47,7 +47,7 @@ function UserDetails({ user }) {
   };
 
   const getPatch = (refName) => {
-    const isPrevData = getRefCurrent(refName) === user[refName];
+    const isPrevData = getRefCurrent(refName) === editableState[refName];
 
     if (getRefCurrent(refName) && !isPrevData) {
       return {
@@ -113,12 +113,12 @@ function UserDetails({ user }) {
             {user._id === loggedUser._id ? (
               <EditableData
                 tagName="h2"
-                initData={capitalize(editableState?.location)}
+                initData={editableState?.location}
                 setData={setLocationData}
                 onBlur={() => handleBlur("location")}
               />
             ) : (
-              <h2>{capitalize(editableState?.location)}</h2>
+              <h2>{editableState?.location}</h2>
             )}
           </>
         )}
