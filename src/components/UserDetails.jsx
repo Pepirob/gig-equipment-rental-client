@@ -12,12 +12,13 @@ function UserDetails({ user }) {
   const locationRef = useRef("");
   const { loggedUser } = useContext(AuthContext);
   const [isFetching, setIsFetching] = useState(false);
-  const [username, setUsername] = useState("");
-  const [location, setLocation] = useState("");
+  const [editableState, setEditableState] = useState(null);
 
   useEffect(() => {
-    setUsername(user.username);
-    setLocation(user.location);
+    setEditableState({
+      username: user.username,
+      location: user.location,
+    });
   }, []);
 
   const refsMap = new Map([
@@ -26,10 +27,14 @@ function UserDetails({ user }) {
   ]);
 
   const setLocationData = (editedData) => {
+    const newLocation = { location: editedData };
+    setEditableState({ ...editableState, ...newLocation });
     locationRef.current = editedData;
   };
 
   const setUsernameData = (editedData) => {
+    const newUsername = { username: editedData };
+    setEditableState({ ...editableState, ...newUsername });
     usernameRef.current = editedData;
   };
 
@@ -78,42 +83,42 @@ function UserDetails({ user }) {
 
   return (
     <>
-      {username && (
+      {editableState?.username && (
         <>
           {user._id === loggedUser._id ? (
             <EditableData
               tagName="h1"
-              initData={username}
+              initData={editableState?.username}
               setData={setUsernameData}
               onBlur={() => handleBlur("username")}
             />
           ) : (
-            <h1>{username}</h1>
+            <h1>{editableState?.username}</h1>
           )}
         </>
       )}
 
       <section>
         <ImageStyles>
-          {username && (
+          {editableState?.username && (
             <Image
               thumbnail={true}
               src={user.img}
-              alt={`${username} profile pic`}
+              alt={`${editableState?.username} profile pic`}
             />
           )}
         </ImageStyles>
-        {location && (
+        {editableState?.location && (
           <>
             {user._id === loggedUser._id ? (
               <EditableData
                 tagName="h2"
-                initData={capitalize(location)}
+                initData={capitalize(editableState?.location)}
                 setData={setLocationData}
                 onBlur={() => handleBlur("location")}
               />
             ) : (
-              <h2>{capitalize(location)}</h2>
+              <h2>{capitalize(editableState?.location)}</h2>
             )}
           </>
         )}
