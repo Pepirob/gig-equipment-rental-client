@@ -3,7 +3,8 @@ import { useNavigate } from "react-router-dom";
 import { updateUserService } from "../services/user.services";
 import { uploadUserImgService } from "../services/upload.services";
 import { capitalize } from "../utils";
-import { Button, Form, Image, Spinner } from "react-bootstrap";
+import ButtonSpinner from "./ButtonSpinner";
+import { Form, Image, Spinner } from "react-bootstrap";
 import ImageStyles from "./ImageStyles";
 
 function FormProfileEdit({ userData }) {
@@ -16,6 +17,7 @@ function FormProfileEdit({ userData }) {
   const [phoneNumber, setPhoneNumber] = useState("");
   const [isFetching, setIsFetching] = useState(false);
   const [wrongFileMessage, setWrongFileMessage] = useState("");
+  const [errorMessage, setErrorMessage] = useState("");
 
   useEffect(() => {
     setUsername(userData.username);
@@ -93,7 +95,8 @@ function FormProfileEdit({ userData }) {
       setIsFetching(false);
       redirect("/profile");
     } catch (error) {
-      redirect("/error");
+      setIsFetching(false);
+      setErrorMessage(error.response.data.errorMessage);
     }
   };
 
@@ -127,11 +130,14 @@ function FormProfileEdit({ userData }) {
           />
         </Form.Group>
         {wrongFileMessage && <p>{wrongFileMessage}</p>}
+
         {isUploading ? (
           <Spinner animation="border" role="status">
             <span className="visually-hidden">Loading...</span>
           </Spinner>
         ) : null}
+
+        {errorMessage.length ? <p>{errorMessage}</p> : null}
 
         <Form.Group className="mb-3">
           <Form.Label htmlFor="email">Email</Form.Label>
@@ -165,14 +171,15 @@ function FormProfileEdit({ userData }) {
             autoComplete="tel"
           />
         </Form.Group>
-        <Button
+        <ButtonSpinner
           variant="success"
+          isLoading={isFetching}
           size="lg"
           onClick={handleSubmit}
           disabled={isUploading || wrongFileMessage || isFetching}
         >
           UPDATE
-        </Button>
+        </ButtonSpinner>
       </Form>
     </>
   );
