@@ -1,8 +1,5 @@
-import { useEffect, useState, useContext } from "react";
-import { useParams, useNavigate } from "react-router-dom";
-import { getEquipmentDetailsService } from "../services/equipment.services";
-import { getUserService } from "../services/user.services";
-import { AuthContext } from "../context/auth.context";
+import { useParams } from "react-router-dom";
+
 import PaymentIntent from "../hoc/PaymentIntent";
 import SheetEquipment from "../components/SheetEquipment";
 import FormCheckout from "../components/FormCheckout";
@@ -12,66 +9,38 @@ import NavBar from "../components/NavBar/NavBar";
 import NavigationAvatar from "../components/NavigationAvatar";
 import { Button } from "react-bootstrap";
 import PulseLoader from "react-spinners/PulseLoader";
+import { usePrice } from "../hooks/usePrice";
+import { useDays } from "../hooks/useDays";
+import { DATA_TYPE, useEquipmentData } from "../hooks/useEquipmentData";
 
 function Equipment() {
-  const MIN_DAYS = 1;
-  const { isLoggedIn, loggedUser } = useContext(AuthContext);
-  const redirect = useNavigate();
   const params = useParams();
   const { equipmentId } = params;
-  const [equipmentDetails, setEquipmentDetails] = useState(null);
-  const [isFetching, setIsFetching] = useState(true);
-  const [showPaymentIntent, setShowPaymentIntent] = useState(false);
-  const [totalDays, setTotalDays] = useState(MIN_DAYS);
-  const [showTotalDays, setShowTotalDays] = useState(false);
-  const [showPayButton, setShowPayButton] = useState(false);
-  const [user, setUser] = useState(null);
+  const { totalDays, setTotalDays } = useDays();
+  const {
+    getRent,
+    getTotalPrice,
+    showPayButton,
+    showPaymentIntent,
+    showTotalDays,
+  } = usePrice();
 
-  useEffect(() => {
-    getData();
-  }, []);
-
-  const getData = async () => {
-    try {
-      const response = await getEquipmentDetailsService(equipmentId);
-
-      setEquipmentDetails(response.data);
-
-      if (isLoggedIn) {
-        const userResponse = await getUserService(loggedUser._id);
-        setUser(userResponse.data);
-      }
-
-      setIsFetching(false);
-    } catch (error) {
-      redirect("/error");
-    }
-  };
+  const { equipment, isFetching, user, loggedUser } = useEquipmentData({
+    query: equipmentId,
+    type: DATA_TYPE.EQUIPMENT_DETAILS,
+  });
 
   const handleTotalPrice = (event) => {
     event.preventDefault();
-
-    if (isLoggedIn) {
-      setShowTotalDays(true);
-      setShowPayButton(true);
-    } else {
-      redirect("/login");
-    }
+    getTotalPrice();
   };
 
   const handleRent = (event) => {
     event.preventDefault();
-
-    if (isLoggedIn) {
-      setShowPaymentIntent(true);
-      setShowPayButton(false);
-    } else {
-      redirect("/login");
-    }
+    getRent();
   };
 
-  const isSomeoneElseEquipment =
-    loggedUser?._id !== equipmentDetails?.owner._id;
+  const isSomeoneElseEquipment = loggedUser?._id !== equipment?.owner._id;
 
   return (
     <>
@@ -81,9 +50,9 @@ function Equipment() {
           <PulseLoader aria-label="Loading Spinner" data-testid="loader" />
         ) : (
           <>
-            {equipmentDetails ? (
+            {equipment ? (
               <>
-                <SheetEquipment equipment={equipmentDetails} />
+                <SheetEquipment equipment={equipment} />
                 <section>
                   {isSomeoneElseEquipment && (
                     <>
@@ -92,8 +61,8 @@ function Equipment() {
                           <FormTotalPrice
                             setTotalDays={setTotalDays}
                             totalDays={totalDays}
-                            pricePerDay={equipmentDetails.pricePerDay}
-                            deposit={equipmentDetails.deposit}
+                            pricePerDay={equipment.pricePerDay}
+                            deposit={equipment.deposit}
                           />
                           {showPayButton && (
                             <Button variant="primary" onClick={handleRent}>
@@ -111,7 +80,7 @@ function Equipment() {
 
                   {showPaymentIntent && isSomeoneElseEquipment && (
                     <PaymentIntent
-                      productDetails={equipmentDetails}
+                      productDetails={equipment}
                       totalDays={totalDays}
                     >
                       <FormCheckout />

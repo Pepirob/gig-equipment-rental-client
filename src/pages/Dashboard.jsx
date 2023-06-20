@@ -3,7 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { AuthContext } from "../context/auth.context";
 import Layout from "../components/Layout/Layout";
 import NavBar from "../components/NavBar/NavBar";
-import NavItem from "../components/NavItem";
+
 function Dashboard() {
   const redirect = useNavigate();
   const { authenticateUser, loggedUser } = useContext(AuthContext);

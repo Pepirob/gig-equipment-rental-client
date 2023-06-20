@@ -1,39 +1,15 @@
-import { useContext, useEffect, useState } from "react";
-import { AuthContext } from "../context/auth.context";
-import { getMyEquipmentService } from "../services/equipment.services";
-import { getUserService } from "../services/user.services";
-import { useNavigate } from "react-router-dom";
 import ListEquipment from "../components/ListEquipment";
 import Layout from "../components/Layout/Layout";
 import NavBar from "../components/NavBar/NavBar";
 import NavigationCta from "../components/NavigationCta";
 import NavigationAvatar from "../components/NavigationAvatar";
 import PulseLoader from "react-spinners/PulseLoader";
+import { DATA_TYPE, useEquipmentData } from "../hooks/useEquipmentData";
 
 function MyEquipment() {
-  const redirect = useNavigate();
-  const { loggedUser } = useContext(AuthContext);
-  const [myEquipment, setMyEquipment] = useState(null);
-  const [isFetching, setIsFetching] = useState(true);
-  const [user, setUser] = useState(null);
-
-  useEffect(() => {
-    getData();
-  }, []);
-
-  const getData = async () => {
-    try {
-      const equipmentResponse = await getMyEquipmentService();
-
-      const userResponse = await getUserService(loggedUser._id);
-
-      setMyEquipment(equipmentResponse.data);
-      setUser(userResponse.data);
-      setIsFetching(false);
-    } catch (error) {
-      redirect("/error");
-    }
-  };
+  const { equipment, isFetching, user } = useEquipmentData({
+    type: DATA_TYPE.MY_EQUIPMENT,
+  });
 
   return (
     <>
@@ -47,8 +23,8 @@ function MyEquipment() {
           <PulseLoader aria-label="Loading Spinner" data-testid="loader" />
         ) : (
           <>
-            {myEquipment.length ? (
-              <ListEquipment equipment={myEquipment} />
+            {equipment.length ? (
+              <ListEquipment equipment={equipment} />
             ) : (
               <h2>You have no equipment</h2>
             )}

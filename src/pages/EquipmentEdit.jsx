@@ -1,32 +1,18 @@
-import { useEffect, useState } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import FormEditEquipment from "../components/FormEditEquipment";
-import { getEquipmentDetailsService } from "../services/equipment.services";
 import Layout from "../components/Layout/Layout";
 import NavBar from "../components/NavBar/NavBar";
 import NavItem from "../components/NavItem";
 import PulseLoader from "react-spinners/PulseLoader";
+import { DATA_TYPE, useEquipmentData } from "../hooks/useEquipmentData";
 
 function EquipmentEdit() {
-  const redirect = useNavigate();
   const params = useParams();
   const { equipmentId } = params;
-  const [equipment, setEquipment] = useState(null);
-  const [isFetching, setIsFetching] = useState(true);
-
-  useEffect(() => {
-    getData();
-  }, []);
-
-  const getData = async () => {
-    try {
-      const response = await getEquipmentDetailsService(equipmentId);
-      setEquipment(response.data);
-      setIsFetching(false);
-    } catch (error) {
-      redirect("/error");
-    }
-  };
+  const { equipment, isFetching } = useEquipmentData({
+    query: equipmentId,
+    type: DATA_TYPE.EQUIPMENT_DETAILS,
+  });
 
   return (
     <>
