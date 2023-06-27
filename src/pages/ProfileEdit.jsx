@@ -1,33 +1,14 @@
-import { useEffect, useState, useContext } from "react";
-import { AuthContext } from "../context/auth.context";
-import { getUserService } from "../services/user.services";
-import { useNavigate } from "react-router-dom";
+
 import FormProfileEdit from "../components/FormProfileEdit";
 import Layout from "../components/Layout/Layout";
 import NavBar from "../components/NavBar/NavBar";
 import NavItem from "../components/NavItem";
 import PulseLoader from "react-spinners/PulseLoader";
+import { useUser } from "../hooks/useUser";
 
 function ProfileEdit() {
-  const redirect = useNavigate();
-  const { loggedUser } = useContext(AuthContext);
-  const [user, setUser] = useState(null);
-  const [isFetching, setIsFetching] = useState(true);
-
-  useEffect(() => {
-    getData();
-  }, []);
-
-  const getData = async () => {
-    try {
-      const response = await getUserService(loggedUser._id);
-      setUser(response.data);
-      setIsFetching(false);
-    } catch (error) {
-      redirect("/error");
-    }
-  };
-
+  const { userData, isFetching } = useUser()
+  const user = userData
   return (
     <>
       <NavBar>
