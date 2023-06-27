@@ -1,31 +1,16 @@
-import { useContext, useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+
 import ListTransactions from "../components/ListTransactions";
 import NavigationMain from "../components/NavigationMain";
-import { AuthContext } from "../context/auth.context";
-import { getTransactionsService } from "../services/transactions.services";
 import Layout from "../components/Layout/Layout";
 import Row from "react-bootstrap/Row";
 import PulseLoader from "react-spinners/PulseLoader";
+import { useUser } from "../hooks/useUser";
+import { DATA_TYPE, useData } from "../hooks/useData";
 
 function MyTransactions() {
-  const redirect = useNavigate();
-  const { loggedUser } = useContext(AuthContext);
-  const [transactions, setTransactions] = useState([]);
-  const [isFetching, setIsFetching] = useState(true);
-
-  useEffect(() => {
-    getData();
-  }, []);
-  const getData = async () => {
-    try {
-      const response = await getTransactionsService();
-      setTransactions(response.data);
-      setIsFetching(false);
-    } catch (error) {
-      redirect("/error");
-    }
-  };
+  const { loggedUser } = useUser();
+  const { data, isFetching } = useData({ type: DATA_TYPE.TRANSACTIONS })
+  const transactions = data
 
   const transactionsAsOwner = transactions.filter((transaction) => {
     return transaction.equipment.owner === loggedUser._id;

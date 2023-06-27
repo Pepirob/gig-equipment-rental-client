@@ -5,15 +5,18 @@ import {
 } from "../services/equipment.services";
 
 import { useNavigate } from "react-router-dom";
+import { getTransactionsService } from "../services/transactions.services";
 
 export const DATA_SERVICE = {
   EQUIPMENT_DETAILS: getEquipmentDetailsService,
   MY_EQUIPMENT: getMyEquipmentService,
+  TRANSACTIONS: getTransactionsService
 };
 
 export const DATA_TYPE = {
   EQUIPMENT_DETAILS: "EQUIPMENT_DETAILS",
   MY_EQUIPMENT: "MY_EQUIPMENT",
+  TRANSACTIONS: "TRANSACTIONS"
 };
 
 export function useData({ query, type }) {
@@ -28,6 +31,8 @@ export function useData({ query, type }) {
     service = DATA_SERVICE.EQUIPMENT_DETAILS;
   } else if (type === DATA_TYPE.MY_EQUIPMENT) {
     service = DATA_SERVICE.MY_EQUIPMENT;
+  } else if (type === DATA_TYPE.TRANSACTIONS) {
+    service = DATA_SERVICE.TRANSACTIONS;
   }
 
   useEffect(() => {
@@ -36,7 +41,7 @@ export function useData({ query, type }) {
 
   const getData = async () => {
     try {
-      const response = await service(query);
+      const response = await service(query ? query : '');
       setData(response.data);
       setIsFetching(false);
     } catch (error) {
