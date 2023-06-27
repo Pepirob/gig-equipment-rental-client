@@ -4,12 +4,14 @@ import NavBar from "../components/NavBar/NavBar";
 import NavigationCta from "../components/NavigationCta";
 import NavigationAvatar from "../components/NavigationAvatar";
 import PulseLoader from "react-spinners/PulseLoader";
-import { DATA_TYPE, useEquipmentData } from "../hooks/useEquipmentData";
+import { DATA_TYPE, useData } from "../hooks/useData";
 
 function MyEquipment() {
-  const { equipment, isFetching, user } = useEquipmentData({
+  const { data, isFetching, user } = useData({
     type: DATA_TYPE.MY_EQUIPMENT,
   });
+
+  const equipment = data
 
   return (
     <>
