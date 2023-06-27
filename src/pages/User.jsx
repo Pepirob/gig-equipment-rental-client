@@ -1,38 +1,19 @@
-import { useContext, useEffect, useState } from "react";
-import { useParams, useNavigate } from "react-router-dom";
-import { getUserService } from "../services/user.services";
+
+import { useParams } from "react-router-dom";
+
 import UserDetails from "../components/UserDetails";
 import Layout from "../components/Layout/Layout";
 import NavBar from "../components/NavBar/NavBar";
 import NavigationAvatar from "../components/NavigationAvatar";
 import PulseLoader from "react-spinners/PulseLoader";
-import { AuthContext } from "../context/auth.context";
+
+import { useUser } from "../hooks/useUser";
 
 function User() {
-  const redirect = useNavigate();
-  const { loggedUser } = useContext(AuthContext);
   const { userId } = useParams();
-  const [ownerData, setOwnerData] = useState(null);
-  const [clientData, setClientData] = useState(null);
-  const [isFetching, setIsFetching] = useState(true);
+  const { user, isFetching, ownerData } = useUser({ query: userId })
+  const clientData = user
 
-  useEffect(() => {
-    getData();
-  }, []);
-
-  const getData = async () => {
-    try {
-      const responseOwner = await getUserService(userId);
-
-      const responseClient = await getUserService(loggedUser._id);
-
-      setOwnerData(responseOwner.data);
-      setClientData(responseClient.data);
-      setIsFetching(false);
-    } catch (error) {
-      redirect("/error");
-    }
-  };
 
   return (
     <>
