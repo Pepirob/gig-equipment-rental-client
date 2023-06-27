@@ -1,5 +1,4 @@
 import { useParams } from "react-router-dom";
-
 import PaymentIntent from "../hoc/PaymentIntent";
 import SheetEquipment from "../components/SheetEquipment";
 import FormCheckout from "../components/FormCheckout";
@@ -11,7 +10,7 @@ import { Button } from "react-bootstrap";
 import PulseLoader from "react-spinners/PulseLoader";
 import { usePrice } from "../hooks/usePrice";
 import { useDays } from "../hooks/useDays";
-import { DATA_TYPE, useEquipmentData } from "../hooks/useEquipmentData";
+import { DATA_TYPE, useData } from "../hooks/useData";
 
 function Equipment() {
   const params = useParams();
@@ -25,7 +24,7 @@ function Equipment() {
     showTotalDays,
   } = usePrice();
 
-  const { equipment, isFetching, user, loggedUser } = useEquipmentData({
+  const { data, isFetching, user, loggedUser } = useData({
     query: equipmentId,
     type: DATA_TYPE.EQUIPMENT_DETAILS,
   });
@@ -40,13 +39,15 @@ function Equipment() {
     getRent();
   };
 
+  const equipment = data
+
   const isSomeoneElseEquipment = loggedUser?._id !== equipment?.owner._id;
 
   return (
     <>
       <NavBar>{user && <NavigationAvatar user={user} />}</NavBar>
       <Layout>
-        {isFetching === true ? (
+        {isFetching ? (
           <PulseLoader aria-label="Loading Spinner" data-testid="loader" />
         ) : (
           <>

@@ -1,20 +1,11 @@
-import { useContext } from "react";
-import { Link, useNavigate } from "react-router-dom";
-import { AuthContext } from "../context/auth.context";
+
+import { Link, } from "react-router-dom";
 import Layout from "../components/Layout/Layout";
 import NavBar from "../components/NavBar/NavBar";
+import { useLogout } from "../hooks/useLogout";
 
 function Dashboard() {
-  const redirect = useNavigate();
-  const { authenticateUser, loggedUser } = useContext(AuthContext);
-
-  const handleLogout = () => {
-    localStorage.removeItem("authToken");
-
-    authenticateUser();
-
-    redirect("/");
-  };
+  const { loggedUser, handleLogout } = useLogout()
 
   return (
     <>
